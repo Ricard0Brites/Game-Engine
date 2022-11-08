@@ -1,6 +1,7 @@
 #include "GameEngine.h"
 #include "SDLWrapper.h"
 #include "Window.h"
+#include "Logger/Logger.h"
 #include <iostream>
 
 void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight)
@@ -14,6 +15,7 @@ void GameEngine::start()
 	bool isRunning = true;
 	SDL_Event ev;
 	
+	system("Color 07");
 	//------- Game Loop -------------------------------------------------------------------------------
 	while (isRunning)
 	{
@@ -26,11 +28,11 @@ void GameEngine::start()
 		}
 		window->updateSurface();
 
-
 		_FrameEnd = clock(); // DeltaTime Frame end
 		DeltaTime = double(_FrameEnd - _FrameStart) / double(CLOCKS_PER_SEC); // Calculates the DeltaTime
 		
 		_TimeOfExecution = clock(); // Updates time of execution
+		DEBUGLOG;
 	}
 	//-------------------------------------------------------------------------------------------------
 }

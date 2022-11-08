@@ -27,6 +27,7 @@
   <ItemGroup>
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="InitError.h" />
+    <ClInclude Include="Logger\Logger.h" />
     <ClInclude Include="SDLWrapper.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
