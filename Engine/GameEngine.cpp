@@ -32,7 +32,6 @@ void GameEngine::start()
 		DeltaTime = double(_FrameEnd - _FrameStart) / double(CLOCKS_PER_SEC); // Calculates the DeltaTime
 		
 		_TimeOfExecution = clock(); // Updates time of execution
-		DEBUGLOG;
 	}
 	//-------------------------------------------------------------------------------------------------
 }

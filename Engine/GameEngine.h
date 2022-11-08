@@ -24,7 +24,8 @@ protected:
 
 private:
 	/* Variables to calculate DeltaTime */
-	clock_t _FrameStart, _FrameEnd, _TimeOfExecution;
+	clock_t _FrameStart, _FrameEnd;
+	clock_t _TimeOfExecution;
 #pragma endregion
 
 };
