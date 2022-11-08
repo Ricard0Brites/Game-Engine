@@ -1,0 +1,5 @@
+﻿  GameEngine.cpp
+C:\Users\Gustavo\source\repos\Game using Game Engine\Engine\SDLWrapper.h(8,47): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+  Window.cpp
+  Generating Code...
+  Engine.vcxproj -> C:\Users\Gustavo\source\repos\Game using Game Engine\x64\Debug\Engine.lib
