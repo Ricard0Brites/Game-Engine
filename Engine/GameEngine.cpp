@@ -13,26 +13,26 @@ void GameEngine::start()
 {
 	bool isRunning = true;
 	SDL_Event ev;
-	
-	system("Color 07");
+
 	//------- Game Loop -------------------------------------------------------------------------------
 	while (isRunning)
 	{
-		_FrameStart = clock(); // Delta Time - frame Start
+		// Delta Time - frame Start
+		_FrameStart = clock(); 
 
-		while (SDL_PollEvent(&ev) != 0)
-		{
-			if (ev.type == SDL_QUIT)
-				isRunning = false;
+		// Stops execution
+		SDL_PollEvent(&ev);
+		if (ev.type == SDL_QUIT)isRunning = false;
 
 	
-			//Call listem for input function here (&ev)
-			_InputSystem.ListenForInput(&ev);
-		}
-		window->updateSurface();
+		//Call listem for input function here (&ev)
+		_InputSystem.ListenForInput(&ev);
 
-		_FrameEnd = clock(); // DeltaTime Frame end
-		DeltaTime = double(_FrameEnd - _FrameStart) / double(CLOCKS_PER_SEC); // Calculates the DeltaTime
+		window->updateSurface();
+		
+		// DeltaTime Frame end
+		_FrameEnd = clock(); 
+		DeltaTime = double(_FrameEnd - _FrameStart) / double(CLOCKS_PER_SEC);
 		
 		_TimeOfExecution = clock(); // Updates time of execution
 	}
