@@ -1,7 +1,3 @@
 ﻿  GameEngine.cpp
-F:\Year 3\Programming\Engine Project\Game Engine\Engine\SDLWrapper.h(8,12): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
-F:\Year 3\Programming\Engine Project\Game Engine\Engine\GameEngine.cpp(35,3): warning C4002: too many arguments for function-like macro invocation 'LOG'
-F:\Year 3\Programming\Engine Project\Game Engine\Engine\GameEngine.cpp(35,3): warning C4473: 'printf' : not enough arguments passed for format string
-F:\Year 3\Programming\Engine Project\Game Engine\Engine\GameEngine.cpp(35,3): message : placeholders and their parameters expect 1 variadic arguments, but 0 were provided
-F:\Year 3\Programming\Engine Project\Game Engine\Engine\GameEngine.cpp(35,3): message : the missing variadic argument 1 is required by format string '%s'
-  Engine.vcxproj -> F:\Year 3\Programming\Engine Project\Game Engine\x64\Debug\Engine.lib
+C:\Users\Alex\Documents\Github\Game-Engine\Engine\SDLWrapper.h(8,12): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+  Engine.vcxproj -> C:\Users\Alex\Documents\Github\Game-Engine\x64\Debug\Engine.lib

@@ -10,9 +10,10 @@ int main(int argc, char ** argv)
 {
     GameEngine engine;
          
-    engine.init("Xennon Clone!!!", 640, 480);
+    engine.init("Engenho", 640, 480);
 
     engine.start();
+
 
     return 0;
 }

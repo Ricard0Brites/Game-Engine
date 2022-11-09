@@ -25,6 +25,11 @@ void GameEngine::start()
 		{
 			if (ev.type == SDL_QUIT)
 				isRunning = false;
+
+	
+			ListenForInput(&ev);
+
+			
 		}
 		window->updateSurface();
 
@@ -41,4 +46,44 @@ GameEngine::~GameEngine()
 	delete window;
 	delete sdl;
 }
-	
+
+
+void GameEngine::ListenForInput(SDL_Event* key)
+{
+
+
+	if ((*key).type == SDL_KEYDOWN)
+	{
+		//std::cout << "Key Pressed" << std::endl;
+
+		if (SDLK_a == (*key).key.keysym.sym)
+		{
+			std::cout << "A is Pressed - Move Left" << std::endl;
+		}
+		else if (SDLK_d == (*key).key.keysym.sym)
+		{
+			std::cout << "D is Pressed - Move Right" << std::endl;
+		}
+		else if (SDLK_w == (*key).key.keysym.sym)
+		{
+			std::cout << "W is Pressed - Move Right" << std::endl;
+		}
+		else if (SDLK_s == (*key).key.keysym.sym)
+		{
+			std::cout << "S is Pressed - Move Right" << std::endl;
+		}
+		else if (SDLK_SPACE == (*key).key.keysym.sym)
+		{
+			std::cout << "D is Pressed - Move Right" << std::endl;
+		}
+	}
+
+	if ((*key).type == SDL_KEYUP)
+	{
+		std::cout << "Key released" << std::endl;
+	}
+
+
+
+
+}

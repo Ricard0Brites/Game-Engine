@@ -25,6 +25,9 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Events\ApplicationEvents.h" />
+    <ClInclude Include="Events\Event.h" />
+    <ClInclude Include="Events\KeyEvent.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="InitError.h" />
     <ClInclude Include="Logger\Logger.h" />

@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <time.h>
+#include "../include/SDL2/SDL_events.h"
+
 
 class GameEngine
 {
@@ -26,6 +28,9 @@ private:
 	/* Variables to calculate DeltaTime */
 	clock_t _FrameStart, _FrameEnd;
 	clock_t _TimeOfExecution;
+
+	void ListenForInput(SDL_Event* key);
+
 #pragma endregion
 
 };
