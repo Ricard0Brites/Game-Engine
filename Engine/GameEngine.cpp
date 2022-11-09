@@ -43,4 +43,5 @@ GameEngine::~GameEngine()
 {
 	delete window;
 	delete sdl;
+	delete &_InputSystem;
 }

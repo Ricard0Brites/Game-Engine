@@ -7,7 +7,7 @@ InputSystem::InputSystem()
 
 InputSystem::~InputSystem()
 {
-
+	delete &_KeyState;
 }
 
 void InputSystem::ListenForInput(SDL_Event* key)
