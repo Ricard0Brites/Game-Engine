@@ -1,6 +1,8 @@
 #include "Window.h"
 #include "InitError.h"
 
+
+
 Window::Window(std::string title, int windowWidth, int windowHeight)
 {
 	window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL);

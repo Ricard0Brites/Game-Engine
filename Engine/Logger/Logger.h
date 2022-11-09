@@ -1,6 +1,7 @@
 #pragma once
 
 #include<stdio.h>
+#include <iostream>
 
 #define ANSI_RED "\x1b[31m" 
 #define ANSI_GREEN "\x1b[32m" 

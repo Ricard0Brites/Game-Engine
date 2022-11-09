@@ -19,12 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Systems\Input\InputSystem.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="InitError.cpp" />
     <ClCompile Include="SDLWrapper.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Events\ApplicationEvents.h" />
+    <ClInclude Include="Events\Event.h" />
+    <ClInclude Include="Systems\Input\InputSystem.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="InitError.h" />
     <ClInclude Include="Logger\Logger.h" />

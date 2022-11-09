@@ -2,7 +2,6 @@
 #include "SDLWrapper.h"
 #include "Window.h"
 #include "Logger/Logger.h"
-#include <iostream>
 
 void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight)
 {
@@ -25,6 +24,10 @@ void GameEngine::start()
 		{
 			if (ev.type == SDL_QUIT)
 				isRunning = false;
+
+	
+			//Call listem for input function here (&ev)
+			_InputSystem.ListenForInput(&ev);
 		}
 		window->updateSurface();
 
@@ -41,4 +44,3 @@ GameEngine::~GameEngine()
 	delete window;
 	delete sdl;
 }
-	
