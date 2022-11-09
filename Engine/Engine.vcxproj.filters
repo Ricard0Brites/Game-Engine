@@ -27,6 +27,9 @@
     <ClCompile Include="Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\Input\InputSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InitError.h">
@@ -47,7 +50,7 @@
     <ClInclude Include="Events\ApplicationEvents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Events\KeyEvent.h">
+    <ClInclude Include="Systems\Input\InputSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Events\Event.h">

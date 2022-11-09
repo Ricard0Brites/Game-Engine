@@ -2,7 +2,6 @@
 #include "SDLWrapper.h"
 #include "Window.h"
 #include "Logger/Logger.h"
-#include <iostream>
 
 void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight)
 {
@@ -27,9 +26,8 @@ void GameEngine::start()
 				isRunning = false;
 
 	
-			ListenForInput(&ev);
-
-			
+			//Call listem for input function here (&ev)
+			_InputSystem.ListenForInput(&ev);
 		}
 		window->updateSurface();
 
@@ -45,45 +43,4 @@ GameEngine::~GameEngine()
 {
 	delete window;
 	delete sdl;
-}
-
-
-void GameEngine::ListenForInput(SDL_Event* key)
-{
-
-
-	if ((*key).type == SDL_KEYDOWN)
-	{
-		//std::cout << "Key Pressed" << std::endl;
-
-		if (SDLK_a == (*key).key.keysym.sym)
-		{
-			std::cout << "A is Pressed - Move Left" << std::endl;
-		}
-		else if (SDLK_d == (*key).key.keysym.sym)
-		{
-			std::cout << "D is Pressed - Move Right" << std::endl;
-		}
-		else if (SDLK_w == (*key).key.keysym.sym)
-		{
-			std::cout << "W is Pressed - Move Right" << std::endl;
-		}
-		else if (SDLK_s == (*key).key.keysym.sym)
-		{
-			std::cout << "S is Pressed - Move Right" << std::endl;
-		}
-		else if (SDLK_SPACE == (*key).key.keysym.sym)
-		{
-			std::cout << "D is Pressed - Move Right" << std::endl;
-		}
-	}
-
-	if ((*key).type == SDL_KEYUP)
-	{
-		std::cout << "Key released" << std::endl;
-	}
-
-
-
-
 }

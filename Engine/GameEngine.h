@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
 #include <time.h>
-#include "../include/SDL2/SDL_events.h"
+#include <iostream>
+
+#include "Systems/Input/InputSystem.h"
 
 
 class GameEngine
@@ -29,9 +31,11 @@ private:
 	clock_t _FrameStart, _FrameEnd;
 	clock_t _TimeOfExecution;
 
-	void ListenForInput(SDL_Event* key);
-
 #pragma endregion
+#pragma region InputSystem
+	InputSystem _InputSystem;
+#pragma endregion
+
 
 };
 
