@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Actor.cpp" />
+    <ClCompile Include="Systems\EventSystem\EventSystem.cpp" />
     <ClCompile Include="Systems\Input\InputSystem.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="InitError.cpp" />
@@ -26,8 +28,12 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Data\DataTypes.h" />
     <ClInclude Include="Events\ApplicationEvents.h" />
     <ClInclude Include="Events\Event.h" />
+    <ClInclude Include="Object\Actor.h" />
+    <ClInclude Include="Object\object.h" />
+    <ClInclude Include="Systems\EventSystem\EventSystem.h" />
     <ClInclude Include="Systems\Input\InputSystem.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="InitError.h" />

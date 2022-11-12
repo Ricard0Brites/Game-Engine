@@ -2,9 +2,14 @@
 #include <string>
 #include <time.h>
 #include <iostream>
+#include <list>
 
+//systems
 #include "Systems/Input/InputSystem.h"
+#include "Systems/EventSystem/EventSystem.h"
 
+
+class Actor;
 
 class GameEngine
 {
@@ -17,6 +22,7 @@ public:
 private:
 	class SDLWrapper* sdl;
 	class Window* window;
+	bool _HasRun = false;
 
 #pragma region Time Management
 public:
@@ -32,10 +38,11 @@ private:
 	clock_t _TimeOfExecution;
 
 #pragma endregion
-#pragma region InputSystem
 	InputSystem _InputSystem;
-#pragma endregion
-
-
+	EventSystem _EventSystem;
+	std::list<Actor*> _Actors;
+public:
+// Creates an Actor of type T and returns a reference to said object
+	template <typename T>
+	T* CreateActor();
 };
-
