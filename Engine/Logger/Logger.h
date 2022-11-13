@@ -24,7 +24,7 @@
 //logs the file name and the function that called this macro... this is useful to check execution orders
 #define EXECUTIONLOG LOG( "\n\nDEBUG LOG ----------------------------------------------------------------------------\n" "Function: " FUNCTIONNAME "\n" "File: "FILENAME "\nEND ----------------------------------------------------------------------------------\n\n",4)
 //logs anything provided as log as it is valid and has a value to print... this log does not support coloring
-#define LOGALL(message) std::cout << message << std::endl;
+#define LOGALL(message) std::cout << message << std::endl
 // Returns the line of code (number) in which this macro is called from
 #define LINENUMBER __LINE__
 //returns the file name in which this macro is called from
