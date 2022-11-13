@@ -6,7 +6,6 @@ InputSystem::InputSystem()
 
 InputSystem::~InputSystem()
 {
-	
 }
 
 void InputSystem::ListenForInput(SDL_Event* key)

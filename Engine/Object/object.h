@@ -10,5 +10,4 @@ public:
 	virtual void BeginPlay();
 	virtual void Tick(float DeltaSeconds);
 	virtual void OnKeyPressed(SDL_KeyCode KeyCode);
-
 };

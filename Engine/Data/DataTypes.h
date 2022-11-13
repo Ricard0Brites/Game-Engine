@@ -1,4 +1,8 @@
 #pragma once
+#include "..\Object\Actor.h"
+#include "..\Logger\Logger.h"
+
+class Actor;
 
 class Vector
 {
@@ -52,7 +56,43 @@ public:
 	Vector operator/(float a) { Vector temp;  temp.X = X / a, temp.Y = Y / a, temp.Z = Z / a; return temp; };
 
 	//bool
-	bool operator==(Vector a){ if( Y == a.Y && Z == a.Z && X == a.X ) return true; return false; }
-	bool operator!=(Vector a){ if( Y != a.Y || Z != a.Z || X != a.X ) return true; return false; }
+	bool operator==(const Vector a){ if( Y == a.Y && Z == a.Z && X == a.X ) return true; return false; }
+	bool operator!=(const Vector a){ if( Y != a.Y || Z != a.Z || X != a.X ) return true; return false; }
 
+};
+
+class Transform
+{
+public:
+	Transform();
+	~Transform();
+
+	// whether this transform is relative to a parent or not
+	bool IsRelative = false;
+	// Set this transforms' owner reference
+	void SetOwner(Actor* NewOwner);
+	// Returns a reference to the owner
+	Actor* GetOwner() { return Owner; };
+
+// World --------------------------
+	// Returns a copy of World location
+	Vector GetWorldLocation();
+	// Returns a copy of World rotation
+	Vector GetWorldRotation();
+	// Returns a copy of World Scale
+	Vector GetWorldScale();
+
+// Relative --------------------------
+	// Returns a copy of Relativelocation
+	Vector GetRelativeLocation();
+	// Returns a copy of Relative rotation
+	Vector GetRelativeRotation();
+	// Returns a copy of Relative Scale
+	Vector GetRelativeScale();
+
+private:
+	Vector Location, Rotation, Scale;
+	Actor* Owner = nullptr;
+
+	Transform operator=(const Transform a) { Location = a.Location, Rotation = a.Rotation, Scale = a.Scale, IsRelative = a.IsRelative; return *this; };
 };
