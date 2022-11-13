@@ -23,7 +23,7 @@ public:
 	// Returns a copy of a custom made Vector
 	static Vector CreateVector(float PayloadX, float PayloadY, float PayloadZ) { Vector* temp = new Vector; temp->X = PayloadX; temp->Y = PayloadY; temp->Z = PayloadZ; return *temp; };
 
-	//operators
+	//operators ----------------------------
 
 	//vector
 	Vector operator=(const Vector a){ X = a.X, Y = a.Y, Z = a.Z; return *this; };
@@ -34,22 +34,22 @@ public:
 	Vector operator/=(const Vector a){ X/=a.X, Y/=a.Y, Z/=a.Z; return *this; };
 	
 	Vector operator+(const Vector a) { Vector temp; temp.X = X + a.X, temp.Y = Y + a.Y, temp.Z = Z + a.Z; return temp;};
-	Vector operator-(const Vector a) { Vector temp; temp.X = X - a.X, temp.Y = Y - a.Y, temp.Z = Z - a.Z; return temp;
-	Vector operator*(const Vector a) { Vector temp; temp.X = X * a.X, temp.Y = Y * a.Y, temp.Z = Z * a.Z; return temp;
-	Vector operator/(const Vector a) { Vector temp; temp.X = X / a.X, temp.Y = Y / a.Y, temp.Z = Z / a.Z; return temp;
+	Vector operator-(const Vector a) { Vector temp; temp.X = X - a.X, temp.Y = Y - a.Y, temp.Z = Z - a.Z; return temp; };
+	Vector operator*(const Vector a) { Vector temp; temp.X = X * a.X, temp.Y = Y * a.Y, temp.Z = Z * a.Z; return temp; };
+	Vector operator/(const Vector a) { Vector temp; temp.X = X / a.X, temp.Y = Y / a.Y, temp.Z = Z / a.Z; return temp; };
 
 	//float
 	Vector operator=(float a) { X = a, Y = a, Z = a; return *this; };
 
-	Vector operator+=(float a) { X += a, Y += a, Z += a; return *this;
-	Vector operator-=(float a) { X -= a, Y -= a, Z -= a; return *this;
-	Vector operator*=(float a){ X*=a, Y*=a, Z*=a; return *this;
-	Vector operator/=(float a){ X/=a, Y/=a, Z/=a; return *this;
+	Vector operator+=(float a) { X += a, Y += a, Z += a; return *this; };
+	Vector operator-=(float a) { X -= a, Y -= a, Z -= a; return *this; };
+	Vector operator*=(float a){ X*=a, Y*=a, Z*=a; return *this; };
+	Vector operator/=(float a){ X/=a, Y/=a, Z/=a; return *this; };
 
 	Vector operator+(float a){ Vector temp;  temp.X = X + a, temp.Y = Y + a, temp.Z = Z + a; return temp; };
-	Vector operator-(float a) { Vector temp;  temp.X = X - a, temp.Y = Y - a, temp.Z = Z - a; return temp;
-	Vector operator*(float a) { Vector temp;  temp.X = X * a, temp.Y = Y * a, temp.Z = Z * a; return temp;
-	Vector operator/(float a) { Vector temp;  temp.X = X / a, temp.Y = Y / a, temp.Z = Z / a; return temp;
+	Vector operator-(float a) { Vector temp;  temp.X = X - a, temp.Y = Y - a, temp.Z = Z - a; return temp; };
+	Vector operator*(float a) { Vector temp;  temp.X = X * a, temp.Y = Y * a, temp.Z = Z * a; return temp; };
+	Vector operator/(float a) { Vector temp;  temp.X = X / a, temp.Y = Y / a, temp.Z = Z / a; return temp; };
 
 	//bool
 	bool operator==(Vector a){ if( Y == a.Y && Z == a.Z && X == a.X ) return true; return false; }
