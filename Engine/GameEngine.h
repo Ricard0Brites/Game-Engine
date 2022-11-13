@@ -7,6 +7,7 @@
 //systems
 #include "Systems/Input/InputSystem.h"
 #include "Systems/EventSystem/EventSystem.h"
+#include "Logger/Logger.h"
 
 
 class Actor;

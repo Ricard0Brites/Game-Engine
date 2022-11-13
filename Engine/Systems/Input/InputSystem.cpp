@@ -1,4 +1,3 @@
-#include "../../Logger/Logger.h"
 #include "InputSystem.h"
 
 InputSystem::InputSystem()

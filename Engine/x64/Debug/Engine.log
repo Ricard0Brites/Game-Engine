@@ -1,4 +1,8 @@
-﻿  GameEngine.cpp
+﻿  DataTypes.cpp
+  GameEngine.cpp
 F:\Year 3\Programming\Engine Project\Game Engine\Engine\SDLWrapper.h(8,12): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
-F:\Year 3\Programming\Engine Project\Game Engine\Engine\GameEngine.cpp(53,36): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  Engine.vcxproj -> F:\Year 3\Programming\Engine Project\Game Engine\x64\Debug\Engine.lib
+F:\Year 3\Programming\Engine Project\Game Engine\Engine\GameEngine.cpp(52,36): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+F:\Year 3\Programming\Engine Project\Game Engine\Engine\Data\DataTypes.cpp(29): error C4716: 'Vector::RighVector': must return a value
+F:\Year 3\Programming\Engine Project\Game Engine\Engine\Data\DataTypes.cpp(34): error C4716: 'Vector::Zero': must return a value
+F:\Year 3\Programming\Engine Project\Game Engine\Engine\Data\DataTypes.cpp(24): error C4716: 'Vector::ForwardVector': must return a value

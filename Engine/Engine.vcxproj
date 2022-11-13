@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Data\DataTypes.cpp" />
     <ClCompile Include="Object\Actor.cpp" />
     <ClCompile Include="Systems\EventSystem\EventSystem.cpp" />
     <ClCompile Include="Systems\Input\InputSystem.cpp" />

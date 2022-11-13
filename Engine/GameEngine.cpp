@@ -1,7 +1,6 @@
 #include "GameEngine.h"
 #include "SDLWrapper.h"
 #include "Window.h"
-#include "Logger/Logger.h"
 
 GameEngine::~GameEngine()
 {
