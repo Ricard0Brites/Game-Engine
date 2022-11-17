@@ -19,32 +19,35 @@ void GameEngine::start()
 	bool isRunning = true;
 	SDL_Event ev;
 
+	//Delta Time
+	Uint64 now = SDL_GetPerformanceCounter();
+	Uint64 last = 0;
+
 	//------- Game Loop -------------------------------------------------------------------------------
 	while (isRunning)
 	{
-		// Delta Time - frame Start
-		_FrameStart = clock(); 
+#pragma region Delta Time
+		last = now;
+		now = SDL_GetPerformanceCounter();
+		DeltaTime = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency());
+#pragma endregion
 
 		// Stops execution
 		SDL_PollEvent(&ev);
-		if (ev.type == SDL_QUIT)isRunning = false;
+		if (ev.type == SDL_QUIT) isRunning = false;
 
 	
-		//Call listem for input function here (&ev)
+		//listen for input
 		_InputSystem.ListenForInput(&ev);
 
+		// Render
 		window->updateSurface();
-		
-		// DeltaTime Frame end
-		_FrameEnd = clock(); 
-		DeltaTime = double(_FrameEnd - _FrameStart) / double(CLOCKS_PER_SEC);
-		
-		_TimeOfExecution = clock(); // Updates time of execution
 		
 #pragma region Event System
 
 		for (Actor* actor : _Actors)
 		{
+			//triggers all beginplays evey tick in case any new object is added.
 			_EventSystem.TriggerBeginPlay(actor);
 		}
 		for (Actor* actor : _Actors)

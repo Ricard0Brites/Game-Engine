@@ -26,17 +26,9 @@ private:
 	bool _HasRun = false;
 
 #pragma region Time Management
-public:
-	// Returns the time, in seconds, since the program has started running
-	inline double GetTimeOfExecution() { return _TimeOfExecution; }
 
 protected:
 	double DeltaTime = 0;
-
-private:
-	/* Variables to calculate DeltaTime */
-	clock_t _FrameStart, _FrameEnd;
-	clock_t _TimeOfExecution;
 
 #pragma endregion
 	InputSystem _InputSystem;
