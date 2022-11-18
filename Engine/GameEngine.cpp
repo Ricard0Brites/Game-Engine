@@ -57,7 +57,7 @@ void GameEngine::start()
 		}
 		for (Actor* actor : _Actors)
 		{
-			_EventSystem.TriggerTick(actor, DeltaTime);
+			_EventSystem.TriggerTick(actor, (float)DeltaTime);
 		}
 #pragma endregion
 	}

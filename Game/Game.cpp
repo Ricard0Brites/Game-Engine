@@ -10,9 +10,8 @@ int main(int argc, char ** argv)
 {
     GameEngine engine;
          
-    engine.init("Engine", 1280, 720);
+    engine.init("Engine", 1920, 1080);
     engine.start();
-
 
     return 0;
 }

@@ -8,8 +8,8 @@
 #include "Systems/Input/InputSystem.h"
 #include "Systems/EventSystem/EventSystem.h"
 #include "Logger/Logger.h"
-#include "Window.h"
 
+#include "Window.h"
 
 class Actor;
 
