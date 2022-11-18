@@ -1,17 +1,17 @@
 #pragma once
-#include <SDL.h>
 #include <string>
 class Window
 {
 public:
 	Window(std::string title, int windowWidth, int windowHeight);
 
-	SDL_Surface* getSurface();
+	class SDL_Surface* getSurface();
+	class SDL_Window* GetWindow() { return window; }
 
 	void updateSurface();
 
 	~Window();
 private:
-	SDL_Window* window;
+	class SDL_Window* window;
 };
 

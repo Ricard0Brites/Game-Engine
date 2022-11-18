@@ -8,6 +8,11 @@ GameEngine::~GameEngine()
 	delete sdl;
 }
 
+GameEngine::GameEngine()
+{
+	GameplayStatics::GameEngineRef = this;
+}
+
 void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight)
 {
 	sdl = new SDLWrapper(SDL_INIT_VIDEO | SDL_INIT_TIMER);
@@ -67,4 +72,17 @@ T* GameEngine::CreateActor()
 	if(!actor) return nullptr; //Any object has to be a child of the Actor class
 	_Actors.push_back(actor);
 	return &NewActor;
+}
+
+
+// GameplayStatics -------------------------------
+
+GameEngine* GameplayStatics::GameEngineRef; // static variable definition
+
+GameplayStatics::GameplayStatics()
+{
+}
+
+GameplayStatics::~GameplayStatics()
+{
 }

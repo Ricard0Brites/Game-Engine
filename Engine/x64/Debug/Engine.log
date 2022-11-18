@@ -1,4 +1,1 @@
-﻿  GameEngine.cpp
-F:\Year 3\Programming\Engine Project\Game Engine\Engine\SDLWrapper.h(8,12): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
-F:\Year 3\Programming\Engine Project\Game Engine\Engine\GameEngine.cpp(50,36): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  Engine.vcxproj -> F:\Year 3\Programming\Engine Project\Game Engine\x64\Debug\Engine.lib
+﻿  Engine.vcxproj -> F:\Year 3\Programming\Engine Project\Game Engine\x64\Debug\Engine.lib
