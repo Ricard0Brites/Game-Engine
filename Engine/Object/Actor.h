@@ -1,8 +1,10 @@
 #pragma once
 #include "object.h"
 #include "..\Data\DataTypes.h"
+#include "ActorComponents\SpriteComponent.h"
 
 class Transform;
+class SpriteComponent;
 
 class Actor : Object
 {
@@ -22,5 +24,6 @@ public:
 
 protected:
 	Transform* MyTransform;
+	SpriteComponent* MySprite;
 
 };

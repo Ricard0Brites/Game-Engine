@@ -4,19 +4,19 @@
 
 GameEngine::~GameEngine()
 {
-	delete window;
+	delete _Window;
 	delete sdl;
 }
 
 GameEngine::GameEngine()
 {
-	GameplayStatics::GameEngineRef = this;
+	GameplayStatics::SetGameEngineRef(this);
 }
 
 void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight)
 {
 	sdl = new SDLWrapper(SDL_INIT_VIDEO | SDL_INIT_TIMER);
-	window = new Window(windowTitle, windowWidth, windowHeight);
+	_Window = new Window(windowTitle, windowWidth, windowHeight);
 }
 
 void GameEngine::start()
@@ -46,16 +46,16 @@ void GameEngine::start()
 		_InputSystem.ListenForInput(&ev);
 
 		// Render
-		window->updateSurface();
+		_Window->updateSurface();
 		
 #pragma region Event System
 
-		for (Actor* actor : _Actors)
+		for (auto const &actor : _Actors)
 		{
 			//triggers all beginplays evey tick in case any new object is added.
 			_EventSystem.TriggerBeginPlay(actor);
 		}
-		for (Actor* actor : _Actors)
+		for (auto const& actor : _Actors)
 		{
 			_EventSystem.TriggerTick(actor, (float)DeltaTime);
 		}
@@ -64,20 +64,9 @@ void GameEngine::start()
 	//-------------------------------------------------------------------------------------------------
 }
 
-template <typename T>
-T* GameEngine::CreateActor()
-{
-	T NewActor = new T;
-	Actor* actor = dynamic_cast<Actor*>(&NewActor);
-	if(!actor) return nullptr; //Any object has to be a child of the Actor class
-	_Actors.push_back(actor);
-	return &NewActor;
-}
-
-
 // GameplayStatics -------------------------------
 
-GameEngine* GameplayStatics::GameEngineRef; // static variable definition
+GameEngine* GameplayStatics::_GameEngineRef; // static variable definition
 
 GameplayStatics::GameplayStatics()
 {

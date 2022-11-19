@@ -12,6 +12,7 @@
 #include "Window.h"
 
 class Actor;
+class SpriteComponent;
 
 class GameEngine
 {
@@ -24,8 +25,7 @@ public:
 
 private:
 	class SDLWrapper* sdl;
-	 Window* window;
-	bool _HasRun = false;
+	 Window* _Window;
 
 
 #pragma region Time Management
@@ -39,12 +39,23 @@ protected:
 	std::list<Actor*> _Actors;
 public:
 // Creates an Actor of type T and returns a reference to said object
-	template <typename T>
+	template <class T>
 	T* CreateActor();
 
-	SDL_Window* GetWindow() { return window->GetWindow(); }
+	SDL_Window* GetWindow() { return _Window->GetWindow(); }
+	SDL_Renderer* GetRenderer() { return _Window->GetRenderer(); }
 
 };
+
+template <class T>
+T* GameEngine::CreateActor()
+{
+	T* NewActor = new T;
+	Actor* actor = dynamic_cast<Actor*>(NewActor);
+	if (!actor) return nullptr; //Any object has to be a child of the Actor class
+	_Actors.insert(_Actors.end(), actor);
+	return NewActor;
+}
 
 class GameplayStatics
 {
@@ -52,5 +63,11 @@ public:
 	GameplayStatics();
 	~GameplayStatics();
 
-	static GameEngine* GameEngineRef;
+	// Game Engine Ref
+	static GameEngine* GetGameEngine() { return _GameEngineRef; }
+	static void SetGameEngineRef(GameEngine* NewReference) { _GameEngineRef = NewReference; }
+
+
+private:
+	static GameEngine* _GameEngineRef;
 };

@@ -1,8 +1,4 @@
-// Game.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
-
-
+#pragma once
 #include <iostream>
 #include "GameEngine.h"
 
@@ -10,8 +6,9 @@ int main(int argc, char ** argv)
 {
     GameEngine engine;
          
-    engine.init("Engine", 1920, 1080);
-    engine.start();
-
+    engine.init("Engine", 1280, 720);
+    Actor* TestActor = engine.CreateActor<Actor>();
+    engine.start(); 
+    
     return 0;
 }

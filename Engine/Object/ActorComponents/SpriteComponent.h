@@ -1,7 +1,10 @@
 #pragma once
 #include "..\..\Data\DataTypes.h"
 #include <list>
-#include "SDL.h"
+#include <string>
+
+struct SDL_Texture;
+class Transform;
 
 class SpriteComponent
 {
@@ -10,15 +13,20 @@ public:
 	~SpriteComponent();
 
 protected:
-	Transform* MyTransform = new Transform;
-	std::list<SDL_Texture*> Sprites;
+	Transform* MyTransform;
 	SDL_Texture* DisplaySprite;
 
-	virtual SDL_Texture* GetSprite(std::string Path);
-	virtual std::list<SDL_Texture*> DivideSprite(SDL_Texture* UndividedSprite, Uint8 HorizontalTileAmount, Uint8 VerticalTileAmount);
-	virtual void PlayAnimation(bool Loop, float AnimationTotalTime);
+	bool IsPlayingAnimation = false;
+
+	//Loads a surface, makes a texture from it and returns a reference to the texture
+	//Don't forget to SDL_DestroyTexture(TextureReference); after you dont need this texture anymore
+	virtual SDL_Texture* GetSpriteInLocation(std::string Path);
+	virtual void PlayAnimation(bool Loop, float AnimationTotalTime, void (&OnCompleted)());
 	virtual void PlayAnimationReverse(bool Loop, float AnimationTotalTime);
 	virtual void StopAnimation();
+	virtual void OnAnimationComplete();
 
+public:
+	virtual void Tick(float DelataSeconds);
 };
 
