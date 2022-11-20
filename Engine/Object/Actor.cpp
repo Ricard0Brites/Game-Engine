@@ -35,8 +35,3 @@ Transform* Actor::GetTransform()
 {
 	return MyTransform;
 }
-
-void Actor::TestFunction()
-{
-	LOG("TESTING PURPOSES ONLY ---------------------------------------------", 4);
-}
