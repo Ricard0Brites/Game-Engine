@@ -31,43 +31,53 @@ SpriteComponent::~SpriteComponent()
 
 void SpriteComponent::Tick(float DeltaSeconds)
 {
-	SDL_Rect DisplayQuad;
-	
-	//TEXTURE POSITION -----------------------------------------------------------
-	DisplayQuad.x = (int)MyTransform->GetRelativeLocation().X;
-	DisplayQuad.y = (int)MyTransform->GetRelativeLocation().Y;
-	
-
-
-	//TEXTURE SCALE --------------------------------------------------------------
-	// Quad Scale X = (Texture width / Texture Amount horizontally) * X Scale
-	DisplayQuad.w = (int)((float)(tw/TextureAmountH) * MyTransform->GetRelativeScale().Y);
-	// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
-	DisplayQuad.h = (int)((float)(th/TextureAmountV) * MyTransform->GetRelativeScale().X);
-
-
-	if (true)//IsPlayingAnimation)
+	if (IsPlayingAnimation)
 	{
+	//update animations each frame
+#pragma region Dimentions
+		SDL_Rect DisplayQuad;
+
+		//TEXTURE POSITION -----------------------------------------------------------
+		DisplayQuad.x = (int)MyTransform->GetRelativeLocation().X;
+		DisplayQuad.y = (int)MyTransform->GetRelativeLocation().Y;
+
+
+
+		//TEXTURE SCALE --------------------------------------------------------------
+		// Quad Scale X = (Texture width / Texture Amount horizontally) * X Scale
+		DisplayQuad.w = (int)((float)(tw / TextureAmountH) * MyTransform->GetRelativeScale().Y);
+		// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
+		DisplayQuad.h = (int)((float)(th / TextureAmountV) * MyTransform->GetRelativeScale().X);
+
+
+#pragma endregion
+
+		ElapsedTime += DeltaSeconds;
+
 		if (_IsAnimationReverse)
 		{
 			//play anim reverse
+			if (ElapsedTime >= AnimationTimeInMS / (TextureAmountV * TextureAmountH))
+			{
+				ElapsedTime = 0;
+				Quad.x -= fw;
+				if (Quad.x < 0)
+				{
+					Quad.x = tw - fw;
+					
+					Quad.y -= fh;
+					if (Quad.y <= 0) 
+					{
+						Quad.y = th - fh;
+						if (!LoopAnimation) StopAnimation();
+					}
+
+				}
+			}
 		}
 		else
 		{
-			//not reversed animation
-
-			/*frameCounter++;
-
-			if (frameCounter >= 60)
-			{
-				EXECUTIONLOG;
-				frameCounter = 0;
-				Quad.x += fw;
-				if (Quad.x >= tw) Quad.x = 0;
-				if (Quad.y >= th) Quad.y = 0;
-			}*/
-			ElapsedTime += DeltaSeconds;
-
+			//Animation->Forward
 			if (ElapsedTime >= AnimationTimeInMS / (TextureAmountV * TextureAmountH))
 			{
 				ElapsedTime = 0;
@@ -76,10 +86,15 @@ void SpriteComponent::Tick(float DeltaSeconds)
 				{
 					Quad.x = 0;
 					Quad.y += fh;
-					if (Quad.y >= th) Quad.y = 0;
+					if (Quad.y >= th) 
+					{
+						Quad.y = 0;
+						if (!LoopAnimation) StopAnimation();
+					}
 				}
 			}
 		}
+
 		SDL_RenderClear(GameplayStatics::GetGameEngine()->GetRenderer());
 		SDL_RenderCopy(GameplayStatics::GetGameEngine()->GetRenderer(), DisplaySprite, &Quad, &DisplayQuad);
 		SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer());
@@ -137,13 +152,17 @@ SDL_Texture* SpriteComponent::GetSpriteInLocation(std::string Path)
 
 void SpriteComponent::PlayAnimation(bool Loop)
 {
+	
 	_IsAnimationReverse = false;
 	IsPlayingAnimation = true;
+	LoopAnimation = Loop;
 	
 }
 
 void SpriteComponent::PlayAnimationReverse(bool Loop, float AnimationTotalTime)
 {
+	Quad.x = tw - fw;
+	Quad.y = th - fh;
 	IsPlayingAnimation = true;
 	_IsAnimationReverse = true;
 }
@@ -151,10 +170,4 @@ void SpriteComponent::PlayAnimationReverse(bool Loop, float AnimationTotalTime)
 void SpriteComponent::StopAnimation()
 {
 	IsPlayingAnimation = false;
-	OnAnimationComplete();
-}
-
-void SpriteComponent::OnAnimationComplete()
-{
-
 }

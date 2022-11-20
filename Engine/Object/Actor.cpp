@@ -5,8 +5,9 @@ Actor::Actor(Actor* Parent)
 	Owner = Parent;
 	MyTransform = new Transform();
 	
-	MySprite = new SpriteComponent("F:/Year3/Game-Engine/Engine/Temp/graphics/drone.bmp", 8, 2, 2);
-	LOG("WARNING: Remove the instance of the sprite component after testing is complete. \nThis can be located at:", 2);EXECUTIONLOG;
+	//example of the sprite component
+	//MySprite = new SpriteComponent("F:/Year3/Game-Engine/Engine/Temp/graphics/drone.bmp", 8, 2, 2);
+	//MySprite->PlayAnimation(false);
 }
 
 Actor::~Actor()
@@ -33,4 +34,9 @@ void Actor::OnKeyPressed(SDL_KeyCode KeyCode)
 Transform* Actor::GetTransform()
 {
 	return MyTransform;
+}
+
+void Actor::TestFunction()
+{
+	LOG("TESTING PURPOSES ONLY ---------------------------------------------", 4);
 }

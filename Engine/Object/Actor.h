@@ -23,6 +23,7 @@ public:
 	Actor* GetOwner() { return Owner; }
 
 	bool HasInit = false;
+	void TestFunction();
 
 protected:
 	Transform* MyTransform;
