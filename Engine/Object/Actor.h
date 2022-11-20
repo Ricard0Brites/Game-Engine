@@ -20,6 +20,8 @@ public:
 
 	virtual Transform* GetTransform();
 
+	Actor* GetOwner() { return Owner; }
+
 	bool HasInit = false;
 
 protected:

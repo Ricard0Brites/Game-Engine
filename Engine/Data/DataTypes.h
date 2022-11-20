@@ -69,16 +69,18 @@ public:
 
 	// whether this transform is relative to a parent or not
 	bool IsRelative = false;
+
+	void SetLocation(Vector NewLocation) {_Location = NewLocation; }
 	void SetRotation(Vector NewRotation) { _Rotation = NewRotation; }
 	void SetScale(Vector NewScale) { _Scale = NewScale; }
 
 // World --------------------------
 	// Returns a copy of World location
-	Vector GetWorldLocation(Actor* Owner);
+	Vector GetLocation();
 	// Returns a copy of World rotation
-	Vector GetWorldRotation(Actor* Owner);
+	Vector GetRotation();
 	// Returns a copy of World Scale
-	Vector GetWorldScale(Actor* Owner);
+	Vector GetScale();
 
 // Relative --------------------------
 	// Returns a copy of Relativelocation

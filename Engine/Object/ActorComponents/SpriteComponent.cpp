@@ -3,7 +3,7 @@
 #include "..\..\GameEngine.h"
 
 
-SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY)
+SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY, float AnimationTimeInSeconds)
 {
 	MyTransform = new Transform;
 	MyTransform->IsRelative = true;
@@ -19,6 +19,9 @@ SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY
 
 	Quad.x = 0; Quad.y = 0;
 	Quad.w = fw; Quad.h = fh;
+
+	AnimationTimeInMS = AnimationTimeInSeconds * 1000;
+	ElapsedTime = 0;
 }
 
 SpriteComponent::~SpriteComponent()
@@ -26,13 +29,13 @@ SpriteComponent::~SpriteComponent()
 	delete MyTransform;
 }
 
-void SpriteComponent::Tick(float DelataSeconds)
+void SpriteComponent::Tick(float DeltaSeconds)
 {
 	SDL_Rect DisplayQuad;
 	
 	//TEXTURE POSITION -----------------------------------------------------------
-	DisplayQuad.x = 0;
-	DisplayQuad.y = 0;
+	DisplayQuad.x = (int)MyTransform->GetRelativeLocation().X;
+	DisplayQuad.y = (int)MyTransform->GetRelativeLocation().Y;
 	
 
 
@@ -53,21 +56,78 @@ void SpriteComponent::Tick(float DelataSeconds)
 		{
 			//not reversed animation
 
-			frameCounter++;
+			/*frameCounter++;
 
 			if (frameCounter >= 60)
 			{
+				EXECUTIONLOG;
 				frameCounter = 0;
-
 				Quad.x += fw;
 				if (Quad.x >= tw) Quad.x = 0;
 				if (Quad.y >= th) Quad.y = 0;
+			}*/
+			ElapsedTime += DeltaSeconds;
+
+			if (ElapsedTime >= AnimationTimeInMS / (TextureAmountV * TextureAmountH))
+			{
+				ElapsedTime = 0;
+				Quad.x += fw;
+				if (Quad.x >= tw) 
+				{
+					Quad.x = 0;
+					Quad.y += fh;
+					if (Quad.y >= th) Quad.y = 0;
+				}
 			}
 		}
 		SDL_RenderClear(GameplayStatics::GetGameEngine()->GetRenderer());
 		SDL_RenderCopy(GameplayStatics::GetGameEngine()->GetRenderer(), DisplaySprite, &Quad, &DisplayQuad);
 		SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer());
 	}
+}
+
+void SpriteComponent::SetLocation(Vector NewLocation, Actor* Owner)
+{
+	if (!Owner) 
+	{
+		MyTransform->SetLocation(NewLocation);
+	}
+	else
+	{
+		Vector* FinalVector = new Vector;
+		FinalVector->Zero(true);
+
+		// gets the absolute owner
+		while (Owner->GetOwner())
+		{
+			*FinalVector += Owner->GetTransform()->GetLocation();
+			Owner = Owner->GetOwner();
+		}
+		//adds all of the parent locations
+		MyTransform->SetLocation(NewLocation + Owner->GetTransform()->GetLocation() + *FinalVector);
+	}
+}
+
+void SpriteComponent::SetScale(Vector NewScale, Actor* Owner)
+{
+	if (!Owner)
+	{
+		MyTransform->SetScale(NewScale);
+	}
+	else
+	{
+		Vector* TempScale = new Vector;
+		TempScale->Zero(true);
+
+		while (Owner->GetOwner())
+		{
+			*TempScale *= Owner->GetTransform()->GetScale();
+			Owner = Owner->GetOwner();
+		}
+
+		MyTransform->SetScale(NewScale * (*TempScale) * Owner->GetTransform()->GetScale());
+	}
+	
 }
 
 SDL_Texture* SpriteComponent::GetSpriteInLocation(std::string Path)

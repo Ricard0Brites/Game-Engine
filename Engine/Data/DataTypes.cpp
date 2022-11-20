@@ -66,26 +66,19 @@ Transform::~Transform()
 	delete &_Scale;
 }
 
-Vector Transform::GetWorldLocation(Actor* Owner)
-{
-	if(!IsRelative) return _Location;
-
-	//return reinterpret_cast<Actor*>(Owner)->GetTransform()->Location + this->Location;
-	return Owner->GetTransform()->_Location + this->_Location;
+Vector Transform::GetLocation()
+{	
+	return _Location;
 }
 
-Vector Transform::GetWorldRotation(Actor* Owner)
+Vector Transform::GetRotation()
 {
-	if (!IsRelative) return _Rotation;
-
-	return Owner->GetTransform()->_Rotation + this->_Rotation;
+	 return _Rotation;
 }
 
-Vector Transform::GetWorldScale(Actor* Owner)
+Vector Transform::GetScale()
 {
-	if (!IsRelative) return _Scale;
-
-	return Owner->GetTransform()->_Scale + this->_Scale;
+	return _Scale;
 }
 
 Vector Transform::GetRelativeLocation()
