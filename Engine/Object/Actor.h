@@ -9,7 +9,7 @@ class SpriteComponent;
 class Actor : Object
 {
 public:
-	Actor();
+	Actor(Actor* Owner);
 	~Actor();
 
 	virtual void BeginPlay() override;
@@ -25,5 +25,8 @@ public:
 protected:
 	Transform* MyTransform;
 	SpriteComponent* MySprite;
+	
+	//nullptr id this object is independent
+	Actor* Owner = nullptr;
 
 };

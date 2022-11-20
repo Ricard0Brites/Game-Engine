@@ -11,8 +11,11 @@
 
 #include "Window.h"
 
+
+// FWD declarations
 class Actor;
 class SpriteComponent;
+
 
 class GameEngine
 {
@@ -39,18 +42,18 @@ protected:
 	std::list<Actor*> _Actors;
 public:
 // Creates an Actor of type T and returns a reference to said object
-	template <class T>
-	T* CreateActor();
+	template <typename T>
+	T* CreateActor(T* Owner);
 
 	SDL_Window* GetWindow() { return _Window->GetWindow(); }
-	SDL_Renderer* GetRenderer() { return _Window->GetRenderer(); }
+	struct SDL_Renderer* GetRenderer() { return _Window->GetRenderer(); }
 
 };
 
-template <class T>
-T* GameEngine::CreateActor()
+template <typename T>
+T* GameEngine::CreateActor(T* Owner)
 {
-	T* NewActor = new T;
+	T* NewActor = new T(Owner);
 	Actor* actor = dynamic_cast<Actor*>(NewActor);
 	if (!actor) return nullptr; //Any object has to be a child of the Actor class
 	_Actors.insert(_Actors.end(), actor);
@@ -66,7 +69,7 @@ public:
 	// Game Engine Ref
 	static GameEngine* GetGameEngine() { return _GameEngineRef; }
 	static void SetGameEngineRef(GameEngine* NewReference) { _GameEngineRef = NewReference; }
-
+	static SDL_Texture* LoadTexture(std::string filePath, SDL_Renderer* renderTarget);
 
 private:
 	static GameEngine* _GameEngineRef;

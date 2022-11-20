@@ -69,18 +69,16 @@ public:
 
 	// whether this transform is relative to a parent or not
 	bool IsRelative = false;
-	// Set this transforms' owner reference
-	void SetOwner(Actor* NewOwner);
-	// Returns a reference to the owner
-	Actor* GetOwner() { return Owner; };
+	void SetRotation(Vector NewRotation) { _Rotation = NewRotation; }
+	void SetScale(Vector NewScale) { _Scale = NewScale; }
 
 // World --------------------------
 	// Returns a copy of World location
-	Vector GetWorldLocation();
+	Vector GetWorldLocation(Actor* Owner);
 	// Returns a copy of World rotation
-	Vector GetWorldRotation();
+	Vector GetWorldRotation(Actor* Owner);
 	// Returns a copy of World Scale
-	Vector GetWorldScale();
+	Vector GetWorldScale(Actor* Owner);
 
 // Relative --------------------------
 	// Returns a copy of Relativelocation
@@ -90,9 +88,18 @@ public:
 	// Returns a copy of Relative Scale
 	Vector GetRelativeScale();
 
-private:
-	Vector Location, Rotation, Scale;
-	Actor* Owner = nullptr;
+	//Dirtyness
+	bool GetIsLocationMarkedDirty() { return _IsLocationDirty; }
+	bool GetIsRotationMarkedDirty() { return _IsRotationDirty; }
+	bool GetIsScaleMarkedDirty() { return _IsScaleDirty; }
 
-	Transform operator=(const Transform a) { Location = a.Location, Rotation = a.Rotation, Scale = a.Scale, IsRelative = a.IsRelative; return *this; };
+	void MarkLocationDirty(bool isDirty) { _IsLocationDirty = isDirty; }
+	void MarkRotationDirty(bool isDirty) { _IsRotationDirty = isDirty; }
+	void MarkScaleDirty(bool isDirty) { _IsScaleDirty = isDirty; }
+
+private:
+	Vector _Location, _Rotation, _Scale;
+	bool _IsLocationDirty, _IsRotationDirty, _IsScaleDirty;
+
+	Transform operator=(const Transform a) { _Location = a._Location, _Rotation = a._Rotation, _Scale = a._Scale, IsRelative = a.IsRelative; return *this; };
 };

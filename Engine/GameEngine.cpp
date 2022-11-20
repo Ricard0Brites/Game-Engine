@@ -75,3 +75,25 @@ GameplayStatics::GameplayStatics()
 GameplayStatics::~GameplayStatics()
 {
 }
+
+SDL_Texture* GameplayStatics::LoadTexture(std::string filePath, SDL_Renderer* renderTarget)
+{
+	SDL_Texture* texture = nullptr;
+	SDL_Surface* surface = SDL_LoadBMP(filePath.c_str());
+	if (!surface) 
+	{
+		LOG("Null Surface", 3);
+	}
+	else
+	{
+		texture = SDL_CreateTextureFromSurface(renderTarget, surface);
+		if (!texture)
+		{
+			LOG("Null Texture", 3);
+		}
+	}
+
+	SDL_FreeSurface(surface);
+
+	return texture;
+}

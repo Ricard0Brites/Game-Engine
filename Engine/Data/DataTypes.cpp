@@ -51,60 +51,56 @@ void Vector::Fill(float Payload)
 
 Transform::Transform()
 {
+	_Location = 0;
+	_Rotation = 0;
+	_Scale = 1;
+	_IsLocationDirty = false;
+	_IsRotationDirty = false;
+	_IsScaleDirty = false;
 }
 
 Transform::~Transform()
 {
-	delete &Location;
-	delete &Rotation;
-	delete &Scale;
-	if(Owner) delete &Owner; // the owner cannot exist without its transform
+	delete &_Location;
+	delete &_Rotation;
+	delete &_Scale;
 }
 
-void Transform::SetOwner(Actor* NewOwner)
+Vector Transform::GetWorldLocation(Actor* Owner)
 {
-	if (Owner)	Owner = NewOwner;
-	else
-	{
-		LOG("Trying to set a new owner but the given reference is null..." FUNCTIONNAME " " FILENAME, 3);
-	}
-}
-
-Vector Transform::GetWorldLocation()
-{
-	if(!IsRelative) return Location;
+	if(!IsRelative) return _Location;
 
 	//return reinterpret_cast<Actor*>(Owner)->GetTransform()->Location + this->Location;
-	return Owner->GetTransform()->Location + this->Location;
+	return Owner->GetTransform()->_Location + this->_Location;
 }
 
-Vector Transform::GetWorldRotation()
+Vector Transform::GetWorldRotation(Actor* Owner)
 {
-	if (!IsRelative) return Rotation;
+	if (!IsRelative) return _Rotation;
 
-	return Owner->GetTransform()->Rotation+ this->Rotation;
+	return Owner->GetTransform()->_Rotation + this->_Rotation;
 }
 
-Vector Transform::GetWorldScale()
+Vector Transform::GetWorldScale(Actor* Owner)
 {
-	if (!IsRelative) return Scale;
+	if (!IsRelative) return _Scale;
 
-	return Owner->GetTransform()->Scale+ this->Scale;
+	return Owner->GetTransform()->_Scale + this->_Scale;
 }
 
 Vector Transform::GetRelativeLocation()
 {
 	//if its relative the value is location
 	//if its not relative the value is still the same (relative to the world AKA world location)
-	return Location;
+	return _Location;
 }
 
 Vector Transform::GetRelativeRotation()
 {
-	return Rotation;
+	return _Rotation;
 }
 
 Vector Transform::GetRelativeScale()
 {
-	return Scale;
+	return _Scale;
 }
