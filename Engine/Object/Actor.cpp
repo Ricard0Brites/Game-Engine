@@ -6,8 +6,10 @@ Actor::Actor(Actor* Parent)
 	MyTransform = new Transform();
 	
 	//example of the sprite component
-	//MySprite = new SpriteComponent("F:/Year3/Game-Engine/Engine/Temp/graphics/drone.bmp", 8, 2, 2);
-	//MySprite->PlayAnimation(false);
+	MySprite = new SpriteComponent("C:/Users/Ricardo/Desktop/drone.bmp", 8, 2, 2);
+	MySprite->SetScale(Vector::CreateVector(5,5,0), Owner);
+	MySprite->SetLocation(Vector::CreateVector(100,100,0), Owner);
+	MySprite->PlayAnimation(true);
 }
 
 Actor::~Actor()
@@ -23,7 +25,7 @@ void Actor::BeginPlay()
 
 void Actor::Tick(float DeltaSeconds)
 {
-	MySprite->Tick(DeltaSeconds);
+	if(MySprite) MySprite->Tick(DeltaSeconds);
 }
 
 void Actor::OnKeyPressed(SDL_KeyCode KeyCode)

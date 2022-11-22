@@ -69,7 +69,7 @@ public:
 	// Game Engine Ref
 	static GameEngine* GetGameEngine() { return _GameEngineRef; }
 	static void SetGameEngineRef(GameEngine* NewReference) { _GameEngineRef = NewReference; }
-	static SDL_Texture* LoadTexture(std::string filePath, SDL_Renderer* renderTarget);
+	static SDL_Surface* LoadSurface(std::string filePath, SDL_Renderer* renderTarget);
 
 private:
 	static GameEngine* _GameEngineRef;

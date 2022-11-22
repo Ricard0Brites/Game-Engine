@@ -80,20 +80,3 @@ Vector Transform::GetScale()
 {
 	return _Scale;
 }
-
-Vector Transform::GetRelativeLocation()
-{
-	//if its relative the value is location
-	//if its not relative the value is still the same (relative to the world AKA world location)
-	return _Location;
-}
-
-Vector Transform::GetRelativeRotation()
-{
-	return _Rotation;
-}
-
-Vector Transform::GetRelativeScale()
-{
-	return _Scale;
-}

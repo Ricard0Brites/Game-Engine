@@ -1,7 +1,8 @@
 #pragma once
-#include "..\..\Data\DataTypes.h"
+
 #include <list>
 #include <string>
+#include "..\..\Data\DataTypes.h"
 
 struct SDL_Texture;
 class Transform;
@@ -22,9 +23,12 @@ public:
 	//SDL Rect doesn't support Rotation
 
 	//
+	Transform* Gettransform() { return MyTransform; }
+
+	//
 	virtual void PlayAnimation(bool Loop);
 	//plays animation in reverse (X reverse, Y Keeps the order)
-	virtual void PlayAnimationReverse(bool Loop, float AnimationTotalTime);
+	virtual void PlayAnimationReverse(bool Loop);
 	//stops animation from playing
 	virtual void StopAnimation();
 
@@ -44,10 +48,6 @@ protected:
 	
 	//Animation Timer
 	float AnimationTimeInMS, ElapsedTime;
-
-	//Loads a surface, makes a texture from it and returns a reference to the texture
-	//Don't forget to SDL_DestroyTexture(TextureReference); after you dont need this texture anymore
-	virtual SDL_Texture* GetSpriteInLocation(std::string Path);
 
 private:
 	bool _IsAnimationReverse = false;

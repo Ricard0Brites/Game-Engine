@@ -74,21 +74,13 @@ public:
 	void SetRotation(Vector NewRotation) { _Rotation = NewRotation; }
 	void SetScale(Vector NewScale) { _Scale = NewScale; }
 
-// World --------------------------
+
 	// Returns a copy of World location
 	Vector GetLocation();
 	// Returns a copy of World rotation
 	Vector GetRotation();
 	// Returns a copy of World Scale
 	Vector GetScale();
-
-// Relative --------------------------
-	// Returns a copy of Relativelocation
-	Vector GetRelativeLocation();
-	// Returns a copy of Relative rotation
-	Vector GetRelativeRotation();
-	// Returns a copy of Relative Scale
-	Vector GetRelativeScale();
 
 	//Dirtyness
 	bool GetIsLocationMarkedDirty() { return _IsLocationDirty; }

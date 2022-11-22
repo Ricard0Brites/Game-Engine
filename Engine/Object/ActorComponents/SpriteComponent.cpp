@@ -8,7 +8,13 @@ SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY
 	MyTransform = new Transform;
 	MyTransform->IsRelative = true;
 
-	DisplaySprite = GameplayStatics::LoadTexture(TexturePath, GameplayStatics::GetGameEngine()->GetRenderer());
+	SDL_Surface* surface = GameplayStatics::LoadSurface(TexturePath, GameplayStatics::GetGameEngine()->GetRenderer());
+	SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0xFF, 0, 0xFF));
+	
+	DisplaySprite = SDL_CreateTextureFromSurface(GameplayStatics::GetGameEngine()->GetRenderer(), surface);
+	
+	SDL_FreeSurface(surface);
+
 	SDL_QueryTexture(DisplaySprite, NULL, NULL, &tw, &th);
 
 	TextureAmountH = TilesX;
@@ -38,16 +44,16 @@ void SpriteComponent::Tick(float DeltaSeconds)
 		SDL_Rect DisplayQuad;
 
 		//TEXTURE POSITION -----------------------------------------------------------
-		DisplayQuad.x = (int)MyTransform->GetRelativeLocation().X;
-		DisplayQuad.y = (int)MyTransform->GetRelativeLocation().Y;
+		DisplayQuad.x = (int)MyTransform->GetLocation().X;
+		DisplayQuad.y = (int)MyTransform->GetLocation().Y;
 
 
 
 		//TEXTURE SCALE --------------------------------------------------------------
 		// Quad Scale X = (Texture width / Texture Amount horizontally) * X Scale
-		DisplayQuad.w = (int)((float)(tw / TextureAmountH) * MyTransform->GetRelativeScale().Y);
+		DisplayQuad.w = (int)((float)(tw / TextureAmountH) * MyTransform->GetScale().Y);
 		// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
-		DisplayQuad.h = (int)((float)(th / TextureAmountV) * MyTransform->GetRelativeScale().X);
+		DisplayQuad.h = (int)((float)(th / TextureAmountV) * MyTransform->GetScale().X);
 
 
 #pragma endregion
@@ -66,7 +72,7 @@ void SpriteComponent::Tick(float DeltaSeconds)
 					Quad.x = tw - fw;
 					
 					Quad.y -= fh;
-					if (Quad.y <= 0) 
+					if (Quad.y > 0) 
 					{
 						Quad.y = th - fh;
 						if (!LoopAnimation) StopAnimation();
@@ -145,11 +151,6 @@ void SpriteComponent::SetScale(Vector NewScale, Actor* Owner)
 	
 }
 
-SDL_Texture* SpriteComponent::GetSpriteInLocation(std::string Path)
-{	
-	return SDL_CreateTextureFromSurface(GameplayStatics::GetGameEngine()->GetRenderer(), SDL_LoadBMP(&(Path)[0]));	
-}
-
 void SpriteComponent::PlayAnimation(bool Loop)
 {
 	
@@ -159,10 +160,11 @@ void SpriteComponent::PlayAnimation(bool Loop)
 	
 }
 
-void SpriteComponent::PlayAnimationReverse(bool Loop, float AnimationTotalTime)
+void SpriteComponent::PlayAnimationReverse(bool Loop)
 {
 	Quad.x = tw - fw;
 	Quad.y = th - fh;
+	LoopAnimation = Loop;
 	IsPlayingAnimation = true;
 	_IsAnimationReverse = true;
 }
