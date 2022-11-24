@@ -14,7 +14,7 @@ int main(int argc, char ** argv)
     
     
     Actor* TestActor = engine.CreateActor<Actor>(nullptr);
-    TestActor->AssignTexture("F:/Year3/Game-Engine/Engine/Temp/graphics/drone.bmp", 8, 2, 2);
+    TestActor->AssignTexture("../Engine/Temp/graphics/drone.bmp", 8, 2, 2);
     TestActor->GetSpriteComponent()->PlayAnimation(true);
 
 
