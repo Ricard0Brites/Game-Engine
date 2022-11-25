@@ -28,7 +28,6 @@ int main(int argc, char ** argv)
     TestActor3->GetSpriteComponent()->PlayAnimation(true);
 
 
-
     engine.start();// no code after this function will be called. from this point on to do anything it has to be inside the gameloop... this means only spawned and active actors can spawn other actors.
     
     return 0;

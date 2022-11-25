@@ -16,6 +16,7 @@ GameEngine::GameEngine()
 void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight)
 {
 	sdl = new SDLWrapper(SDL_INIT_VIDEO | SDL_INIT_TIMER);
+	SDL_Joystick* joystick = SDL_JoystickOpen(0);
 	_Window = new Window(windowTitle, windowWidth, windowHeight);
 }
 
