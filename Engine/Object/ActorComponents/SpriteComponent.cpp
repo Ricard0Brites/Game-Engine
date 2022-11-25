@@ -101,9 +101,7 @@ void SpriteComponent::Tick(float DeltaSeconds)
 			}
 		}
 
-		SDL_RenderClear(GameplayStatics::GetGameEngine()->GetRenderer());
 		SDL_RenderCopy(GameplayStatics::GetGameEngine()->GetRenderer(), DisplaySprite, &Quad, &DisplayQuad);
-		SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer());
 	}
 }
 

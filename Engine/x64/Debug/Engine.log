@@ -1,1 +1,3 @@
-﻿  Engine.vcxproj -> F:\Year3\Game-Engine\x64\Debug\Engine.lib
+﻿  GameEngine.cpp
+F:\Year3\Game-Engine\Engine\SDLWrapper.h(8,12): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+  Engine.vcxproj -> F:\Year3\Game-Engine\x64\Debug\Engine.lib

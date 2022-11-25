@@ -50,15 +50,17 @@ void GameEngine::start()
 		
 #pragma region Event System
 
-		for (auto const &actor : _Actors)
-		{
-			//triggers all beginplays evey tick in case any new object is added.
-			_EventSystem.TriggerBeginPlay(actor);
-		}
-		for (auto const& actor : _Actors)
-		{
-			_EventSystem.TriggerTick(actor, (float)DeltaTime);
-		}
+		SDL_RenderClear(GameplayStatics::GetGameEngine()->GetRenderer()); // clear screen
+			for (auto const &actor : _Actors)
+			{
+				//triggers all beginplays evey tick in case any new object is added.
+				_EventSystem.TriggerBeginPlay(actor);
+			}
+			for (auto const& actor : _Actors)
+			{
+				_EventSystem.TriggerTick(actor, (float)DeltaTime);// render present
+			}
+		SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer()); // render
 #pragma endregion
 	}
 	//-------------------------------------------------------------------------------------------------
