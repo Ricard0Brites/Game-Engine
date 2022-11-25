@@ -15,8 +15,13 @@ GameEngine::GameEngine()
 
 void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight)
 {
+<<<<<<< HEAD
 	sdl = new SDLWrapper(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_JOYSTICK);
 	SDL_Joystick* joystick = SDL_JoystickOpen(0);//Funcional mas sem certeza se é pra inicializar aqui
+=======
+	sdl = new SDLWrapper(SDL_INIT_VIDEO | SDL_INIT_TIMER);
+	SDL_Joystick* joystick = SDL_JoystickOpen(0);
+>>>>>>> Object
 	_Window = new Window(windowTitle, windowWidth, windowHeight);
 }
 
@@ -51,15 +56,17 @@ void GameEngine::start()
 		
 #pragma region Event System
 
-		for (auto const &actor : _Actors)
-		{
-			//triggers all beginplays evey tick in case any new object is added.
-			_EventSystem.TriggerBeginPlay(actor);
-		}
-		for (auto const& actor : _Actors)
-		{
-			_EventSystem.TriggerTick(actor, (float)DeltaTime);
-		}
+		SDL_RenderClear(GameplayStatics::GetGameEngine()->GetRenderer()); // clear screen
+			for (auto const &actor : _Actors)
+			{
+				//triggers all beginplays evey tick in case any new object is added.
+				_EventSystem.TriggerBeginPlay(actor);
+			}
+			for (auto const& actor : _Actors)
+			{
+				_EventSystem.TriggerTick(actor, (float)DeltaTime);// render present
+			}
+		SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer()); // render
 #pragma endregion
 	}
 	//-------------------------------------------------------------------------------------------------
