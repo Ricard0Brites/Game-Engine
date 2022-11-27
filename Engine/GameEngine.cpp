@@ -11,18 +11,14 @@ GameEngine::~GameEngine()
 GameEngine::GameEngine()
 {
 	GameplayStatics::SetGameEngineRef(this);
+	//GameplayStatics::SetEventSystemRef(_EventSystem);
 }
 
 void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight)
 {
-<<<<<<< HEAD
-	sdl = new SDLWrapper(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_JOYSTICK);
-	SDL_Joystick* joystick = SDL_JoystickOpen(0);//Funcional mas sem certeza se é pra inicializar aqui
-=======
-	sdl = new SDLWrapper(SDL_INIT_VIDEO | SDL_INIT_TIMER);
+	sdl = new SDLWrapper(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
 	SDL_Joystick* joystick = SDL_JoystickOpen(0);
->>>>>>> Object
-	_Window = new Window(windowTitle, windowWidth, windowHeight);
+
 }
 
 void GameEngine::start()
@@ -75,6 +71,7 @@ void GameEngine::start()
 // GameplayStatics -------------------------------
 
 GameEngine* GameplayStatics::_GameEngineRef; // static variable definition
+EventSystem* GameplayStatics::_EventSystem;	// static variable definition
 
 GameplayStatics::GameplayStatics()
 {

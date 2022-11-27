@@ -5,6 +5,7 @@
 
 class Transform;
 class SpriteComponent;
+class Vector;
 
 class Actor : Object
 {
@@ -16,7 +17,12 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 
-	virtual void OnKeyPressed(SDL_KeyCode KeyCode) override;
+	virtual void OnKeyPressed(InputKeyCodes KeyCode) override;
+
+	virtual void OnKeyReleased(InputKeyCodes KeyCode) override;
+
+	virtual void OnInputAxis(InputKeyCodes KeyCode, Vector AxisValue) override;
+
 
 	virtual Transform* GetTransform();
 
@@ -27,7 +33,6 @@ public:
 	void AssignTexture(std::string TexturePath, int TileAmountX, int TileAmountY, float AnimationTimeInSeconds);
 	
 	SpriteComponent* GetSpriteComponent() { return MySprite; }
-
 
 protected:
 	Transform* MyTransform;

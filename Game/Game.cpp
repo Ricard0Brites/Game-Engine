@@ -12,18 +12,22 @@ int main(int argc, char ** argv)
     //this actor should be the one whom controls the game itself... the equivilent of unreal game instance or unity game manager
     
     
-    
+    //this is how the character is created and defined
+    Actor* Player = engine.CreateActor<Actor>(nullptr);
+    engine.SetPlayerReference(Player);
+    // ----------------------------------------------
+
     Actor* TestActor = engine.CreateActor<Actor>(nullptr);
-    TestActor->AssignTexture("../Engine/Temp/graphics/drone.bmp", 8, 2, 2);
+    TestActor->AssignTexture("src/Sprites/drone.bmp", 8, 2, 2);
     TestActor->GetSpriteComponent()->PlayAnimation(true);
 
     Actor* TestActor2 = engine.CreateActor<Actor>(nullptr);
-    TestActor2->AssignTexture("F:/Year3/Game-Engine/Engine/Temp/graphics/drone.bmp", 8, 2, 2);
+    TestActor2->AssignTexture("src/Sprites/drone.bmp", 8, 2, 2);
     TestActor2->GetSpriteComponent()->SetLocation(Vector::CreateVector(100, 100, 0), nullptr);
     TestActor2->GetSpriteComponent()->PlayAnimation(true);
 
     Actor* TestActor3 = engine.CreateActor<Actor>(nullptr);
-    TestActor3->AssignTexture("F:/Year3/Game-Engine/Engine/Temp/graphics/drone.bmp", 8, 2, 2);
+    TestActor3->AssignTexture("src/Sprites/drone.bmp", 8, 2, 2);
     TestActor3->GetSpriteComponent()->SetLocation(Vector::CreateVector(200, 100, 0), nullptr);
     TestActor3->GetSpriteComponent()->PlayAnimation(true);
 

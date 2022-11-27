@@ -1,4 +1,10 @@
 #include "InputSystem.h"
+#include "..\..\Data\DataTypes.h"
+#include "..\..\GameEngine.h"
+#include <thread>
+#include <iostream>
+
+class thread;
 
 InputSystem::InputSystem()
 {
@@ -12,313 +18,107 @@ void InputSystem::ListenForInput(SDL_Event* key)
 {
 	if ((*key).type == SDL_KEYDOWN)
 	{
-		if (_KeyState.GetKeyState((SDL_KeyCode)(*key).key.keysym.sym) == 0 || _KeyState.GetKeyState((SDL_KeyCode)(*key).key.keysym.sym) == -1) // If the key is not pressed already
+		if (_KeyState.GetKeyState((*key).key.keysym.sym) != 1) // If the key is not pressed already
 		{
-			switch ((*key).key.keysym.sym)
-			{
-			case SDLK_a:
-			{
-				LOG("A is Pressed - Move Left", 0);
-				_KeyState.SetKeyState((SDL_KeyCode)(*key).key.keysym.sym, true);
-				break;
-			}
-			case SDLK_d:
-			{
-				LOG("D is Pressed - Move Right", 0);
-				_KeyState.SetKeyState((SDL_KeyCode)(*key).key.keysym.sym, true);
-				break;
-			}
-			case SDLK_w:
-			{
-				LOG("W is Pressed - Move Up", 0);
-				_KeyState.SetKeyState((SDL_KeyCode)(*key).key.keysym.sym, true);
-				break;
-			}
-			case SDLK_s:
-			{
-				LOG("S is Pressed - Move Down", 0);
-				_KeyState.SetKeyState((SDL_KeyCode)(*key).key.keysym.sym, true);
-				break;
-			}
-			case SDLK_SPACE:
-			{
-				LOG("SPACEBAR is Pressed - Shoot", 0);
-				_KeyState.SetKeyState((SDL_KeyCode)(*key).key.keysym.sym, true);
-				break;
-			}
-			default:
-				break;
-			}
+			_KeyState.SetKeyState((*key).key.keysym.sym, true);
+			GameplayStatics::GetEventSystem()->TriggerOnInputPress(_KeyState.GetKeyCode(key, false));
 		}
 	}
 
 	if ((*key).type == SDL_KEYUP)
 	{
-		if (_KeyState.GetKeyState((SDL_KeyCode)(*key).key.keysym.sym) == 1) //if the key is pressed already
+		if (_KeyState.GetKeyState((*key).key.keysym.sym) == 1) //if the key is pressed already
+		{
+			_KeyState.SetKeyState((*key).key.keysym.sym, false);
+			GameplayStatics::GetEventSystem()->TriggerOnInputRelease(_KeyState.GetKeyCode(key, false));
+		}
+	}
+
+	if ((*key).type == SDL_JOYAXISMOTION)
+	{
+		Vector* vec = new Vector;  
+		vec->Zero(true);
+
+		bool canTriggerInput = false;
+
+		if ((*key).jaxis.which == 0) //Controller id
+		{
+			if ((*key).jaxis.axis == 0) //Horizontal axis
+			{
+				if ((*key).jaxis.value < -_ControllerDeadzone || (*key).jaxis.value > _ControllerDeadzone)
+				{
+					*vec = Vector::CreateVector((*key).jaxis.value / 32767.f, vec->Y, vec->Z);
+					canTriggerInput = true;
+				}
+			}
+
+			if ((*key).jaxis.axis == 1) //Vertical axis
+			{
+				if ((*key).jaxis.value < -_ControllerDeadzone || (*key).jaxis.value > _ControllerDeadzone)
+				{
+					*vec = Vector::CreateVector(vec->X, (- 1.f * (*key).jaxis.value) / 32767.f, vec->Z); //here we invert Y because SDL's value is inverted
+					canTriggerInput = true;
+				}
+			}
+		}
+		if(canTriggerInput) GameplayStatics::GetEventSystem()->TriggerOnInputAxis(InputKeyCodes::GamepadStickLeft, *vec);
+	}
+
+	if ((*key).type == SDL_JOYBUTTONDOWN)
+	{
+		if (_KeyState.GetKeyState((*key).jbutton.button + 1) != 1 ) // If the key is not pressed already
+		{
+			if ((*key).jbutton.which == 0)
+			{
+				_KeyState.SetKeyState((*key).jbutton.button + 1, true);
+				
+				GameplayStatics::GetEventSystem()->TriggerOnInputPress(_KeyState.GetKeyCode(key, true));
+			}
+		}
+	}
+
+	if ((*key).type == SDL_JOYBUTTONUP)
+	{
+		if (_KeyState.GetKeyState((*key).jbutton.button + 1) == 1) //if the key is pressed already
 		{
 
+			if ((*key).jbutton.which == 0)
+			{
+				_KeyState.SetKeyState((*key).jbutton.button + 1, false);
 
-			switch ((*key).key.keysym.sym)
-			{
-			case SDLK_a:
-			{
-				LOG("A is Released - Move Left", 0);
-				_KeyState.SetKeyState((SDL_KeyCode)(*key).key.keysym.sym, false);
-				break;
+				GameplayStatics::GetEventSystem()->TriggerOnInputRelease(_KeyState.GetKeyCode(key, true));
 			}
-			case SDLK_d:
-			{
-				LOG("D is Released - Move Right", 0);
-				_KeyState.SetKeyState((SDL_KeyCode)(*key).key.keysym.sym, false);
+		}
+	}
+
+	if ((*key).type == SDL_JOYHATMOTION)
+	{
+		switch ((*key).jhat.value)
+		{
+			case 0:
+				if (_KeyState.GetKeyState(lastKey) == 1)
+				{
+					_KeyState.SetKeyState(lastKey, false);
+					GameplayStatics::GetEventSystem()->TriggerOnInputRelease(_KeyState.GetKeyCode(&lastKeyCopy, true, true));
+				}
 				break;
-			}
-			case SDLK_w:
-			{
-				LOG("W is Released - Move Up", 0);
-				_KeyState.SetKeyState((SDL_KeyCode)(*key).key.keysym.sym, false);
-				break;
-			}
-			case SDLK_s:
-			{
-				LOG("S is Released - Move Down", 0);
-				_KeyState.SetKeyState((SDL_KeyCode)(*key).key.keysym.sym, false);
-				break;
-			}
-			case SDLK_SPACE:
-			{
-				LOG("SPACEBAR is Released - Shoot", 0);
-				_KeyState.SetKeyState((SDL_KeyCode)(*key).key.keysym.sym, false);
-				break;
-			}
 			default:
+				if (_KeyState.GetKeyState((*key).jhat.value * 1000) != 1)
+				{
+					_KeyState.SetKeyState((*key).jhat.value * 1000, true);
+					lastKey = (*key).jhat.value * 1000;\
+					lastKeyCopy = *key;
+
+					GameplayStatics::GetEventSystem()->TriggerOnInputPress(_KeyState.GetKeyCode(key, true, true));
+				}
 				break;
-			}
 		}
-	}
-
-	if ((*key).type == SDL_JOYAXISMOTION)
-	{
-
-
-		if ((*key).jaxis.which == 0) //Controller id
-		{
-
-			if ((*key).jaxis.axis == 0) //Horizontal axis
-			{
-				if ((*key).jaxis.value < -8000)
-					LOG("Left Stick moved left", 0);
-
-				else if ((*key).jaxis.value > 8000)
-					LOG("Left Stick moved right", 0);
-			}
-
-			if ((*key).jaxis.axis == 1) //Vertical axis
-			{
-				if ((*key).jaxis.value < -8000)
-					LOG("Left Stick moved up", 0);
-
-				else if ((*key).jaxis.value > 8000)
-					LOG("Left Stick moved down", 0);
-			}
-		}
-
-	}
-
-	if ((*key).type == SDL_JOYBUTTONDOWN)
-	{
-
-		if (_KeyState.GetKeyState((SDL_KeyCode)(*key).jbutton.button) == 0 || _KeyState.GetKeyState((SDL_KeyCode)(*key).jbutton.button) == -1) // If the key is not pressed already
-		{
-
-			if ((*key).jbutton.which == 0)
-			{
-
-				switch ((*key).jbutton.button)
-				{
-				case 0://Button Cross (PS Controller)
-					LOG("Pressed X button", 0);
-					std::cout << "Pressed X button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, true);
-
-					break;
-
-				case 1: //Button Circle (PS Controller)
-					std::cout << "Pressed Circle button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, true);
-					break;
-
-				case 2: //Button Square (PS Controller)
-					std::cout << "Pressed Square button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, true);
-					break;
-
-				case 3: //Button Triangle (PS Controller)
-					std::cout << "Pressed Triangle button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, true);
-					break;
-
-				}
-
-			}
-
-		}
-	}
-
-	if ((*key).type == SDL_JOYBUTTONUP)
-	{
-
-		if (_KeyState.GetKeyState((SDL_KeyCode)(*key).jbutton.button) == 1) //if the key is pressed already
-		{
-
-			if ((*key).jbutton.which == 0)
-			{
-
-				switch ((*key).jbutton.button)
-				{
-				case 0://Button Cross (PS Controller)
-
-					std::cout << "Released X button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, false);
-
-					break;
-
-				case 1: //Button Circle (PS Controller)
-					std::cout << "Released Circle button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, false);
-					break;
-
-				case 2: //Button Square (PS Controller)
-					std::cout << "Released Square button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, false);
-					break;
-
-				case 3: //Button Triangle (PS Controller)
-					std::cout << "Released Triangle button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, false);
-					break;
-
-				}
-
-			}
-		}
-
-	}
-
-
-	if ((*key).type == SDL_JOYAXISMOTION)
-	{
-
-
-		if ((*key).jaxis.which == 0) //Controller id
-		{
-
-			if ((*key).jaxis.axis == 0) //Horizontal axis
-			{
-				if ((*key).jaxis.value < -8000)
-					LOG("Left Stick moved left", 0);
-
-				else if ((*key).jaxis.value > 8000)
-					LOG("Left Stick moved right", 0);
-			}
-
-			if ((*key).jaxis.axis == 1) //Vertical axis
-			{
-				if ((*key).jaxis.value < -8000)
-					LOG("Left Stick moved up", 0);
-
-				else if ((*key).jaxis.value > 8000)
-					LOG("Left Stick moved down", 0);
-			}
-		}
-
-	}
-
-	if ((*key).type == SDL_JOYBUTTONDOWN)
-	{
-
-		if (_KeyState.GetKeyState((SDL_KeyCode)(*key).jbutton.button) == 0 || _KeyState.GetKeyState((SDL_KeyCode)(*key).jbutton.button) == -1) // If the key is not pressed already
-		{
-
-			if ((*key).jbutton.which == 0)
-			{
-
-				switch ((*key).jbutton.button)
-				{
-				case 0://Button Cross (PS Controller)
-					LOG("Pressed X button", 0);
-					std::cout << "Pressed X button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, true);
-
-					break;
-
-				case 1: //Button Circle (PS Controller)
-					std::cout << "Pressed Circle button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, true);
-					break;
-
-				case 2: //Button Square (PS Controller)
-					std::cout << "Pressed Square button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, true);
-					break;
-
-				case 3: //Button Triangle (PS Controller)
-					std::cout << "Pressed Triangle button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, true);
-					break;
-
-				}
-
-			}
-
-		}
-	}
-
-
-	if ((*key).type == SDL_JOYBUTTONUP)
-	{
-
-		if (_KeyState.GetKeyState((SDL_KeyCode)(*key).jbutton.button) == 1) //if the key is pressed already
-		{
-
-			if ((*key).jbutton.which == 0)
-			{
-
-				switch ((*key).jbutton.button)
-				{
-				case 0://Button Cross (PS Controller)
-
-					std::cout << "Released X button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, false);
-
-					break;
-
-				case 1: //Button Circle (PS Controller)
-					std::cout << "Released Circle button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, false);
-					break;
-
-				case 2: //Button Square (PS Controller)
-					std::cout << "Released Square button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, false);
-					break;
-
-				case 3: //Button Triangle (PS Controller)
-					std::cout << "Released Triangle button" << std::endl;
-					_KeyState.SetKeyState((SDL_KeyCode)(*key).jbutton.button, false);
-					break;
-
-				}
-
-			}
-		}
-
-	}
-
+	}	
 }
 
 // KeyPress -------------------------------------------------------
 
-bool KeyPress::SetKeyState(SDL_KeyCode key, bool NewState)
+bool KeyPress::SetKeyState(int key, bool NewState)
 {
 	if (!key && NewState == NULL) return false;
 	
@@ -335,8 +135,391 @@ bool KeyPress::SetKeyState(SDL_KeyCode key, bool NewState)
 	return true;
 }
 
-int KeyPress::GetKeyState(SDL_KeyCode key)
+int KeyPress::GetKeyState(int key)
 {
 	if (_keyState.find(key) == _keyState.end()) return -1;
 	return _keyState[key];
+}
+
+InputKeyCodes KeyPress::GetKeyCode(SDL_Event* Key, bool IsControllerInput, bool IsJHat)
+{
+	if (IsControllerInput)
+	{
+		#pragma region Gamepad Input
+		if (IsJHat)
+		{
+			switch ((*Key).jhat.value)
+			{
+			case 1:
+				return GamepadArrowTop;
+				break;
+
+			case 2:
+				return GamepadArrowRight;
+				break;
+
+			case 4:
+				return GamepadArrowBottom;
+				break;
+
+			case 8:
+				return GamepadArrowLeft;
+				break;
+			}
+		}
+		else
+		{
+			switch ((*Key).jbutton.button + 1)
+			{
+				case 1:
+					return GamepadFaceBottom;
+					break;
+				case 2: 
+					return GamepadFaceRight;
+					break;
+				case 3: 
+					return GamepadFaceLeft;
+					break;
+				case 4: 
+					return GamepadFaceTop;
+					break;
+				case 5:
+					return GamepadLeftButton;
+					break;
+				case 6: 
+					return GamepadRightButton;
+					break;
+				case 7: 
+					return GamepadSpecialLeft;
+					break;
+				case 8: 
+					return GamepadSpecialRight;
+					break;
+				case 9: 
+					return GamepadLeftStickPress;
+					break;
+				case 10: 
+					return GamepadRightStickPress;
+					break;
+			}	
+		}
+		
+		#pragma endregion
+	}
+	else
+	{
+		#pragma region Keyboard Input
+		switch ((*Key).key.keysym.sym)
+		{
+			case SDLK_a:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_A;
+				return InputKeyCodes::K_a;
+				break;
+
+			case SDLK_b:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_B;
+				return InputKeyCodes::K_b;
+				break;
+
+			case SDLK_c:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_C;
+				return InputKeyCodes::K_c;
+				break;
+
+			case SDLK_d:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_D;
+				return InputKeyCodes::K_d;
+				break;
+
+			case SDLK_e:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_E;
+				return InputKeyCodes::K_e;
+				break;
+
+			case SDLK_f:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_F;
+				return InputKeyCodes::K_f;
+				break;
+
+			case SDLK_g:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_G;
+				return InputKeyCodes::K_g;
+				break;
+
+			case SDLK_h:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_H;
+				return InputKeyCodes::K_h;
+				break;
+
+			case SDLK_i:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_I;
+				return InputKeyCodes::K_i;
+				break;
+
+			case SDLK_j:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_J;
+				return InputKeyCodes::K_j;
+				break;
+
+			case SDLK_k:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_K;
+				return InputKeyCodes::K_k;
+				break;
+
+			case SDLK_l:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_L;
+				return InputKeyCodes::K_l;
+				break;
+
+			case SDLK_m:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_M;
+				return InputKeyCodes::K_m;
+				break;
+
+			case SDLK_n:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_N;
+				return InputKeyCodes::K_n;
+				break;
+
+			case SDLK_o:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_O;
+				return InputKeyCodes::K_o;
+				break;
+
+			case SDLK_p:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_P;
+				return InputKeyCodes::K_p;
+				break;
+
+			case SDLK_q:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_Q;
+				return InputKeyCodes::K_q;
+				break;
+
+			case SDLK_r:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_R;
+				return InputKeyCodes::K_r;
+				break;
+
+			case SDLK_s:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_S;
+				return InputKeyCodes::K_s;
+				break;
+
+			case SDLK_t:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_T;
+				return InputKeyCodes::K_t;
+				break;
+
+			case SDLK_u:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_U;
+				return InputKeyCodes::K_u;
+				break;
+
+			case SDLK_v:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_V;
+				return InputKeyCodes::K_v;
+				break;
+
+			case SDLK_w:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_W;
+				return InputKeyCodes::K_w;
+				break;
+
+			case SDLK_x:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_X;
+				return InputKeyCodes::K_x;
+				break;
+
+			case SDLK_y:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_Y;
+				return InputKeyCodes::K_y;
+				break;
+
+			case SDLK_z:
+				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_Z;
+				return InputKeyCodes::K_z;
+				break;
+			}
+		#pragma endregion
+	}
+	return InputKeyCodes::Null; 
+}
+
+InputKeyCodes KeyPress::GetKeyCode(SDL_Event* Key, bool IsControllerInput)
+{
+	if (IsControllerInput)
+	{
+		switch ((*Key).jbutton.button + 1)
+		{
+		case 1:
+			return GamepadFaceBottom;
+			break;
+		case 2:
+			return GamepadFaceRight;
+			break;
+		case 3:
+			return GamepadFaceLeft;
+			break;
+		case 4:
+			return GamepadFaceTop;
+			break;
+		case 5:
+			return GamepadLeftButton;
+			break;
+		case 6:
+			return GamepadRightButton;
+			break;
+		case 7:
+			return GamepadSpecialLeft;
+			break;
+		case 8:
+			return GamepadSpecialRight;
+			break;
+		case 9:
+			return GamepadLeftStickPress;
+			break;
+		case 10:
+			return GamepadRightStickPress;
+			break;
+		}
+	}
+	else
+	{
+		#pragma region Keyboard Input
+		switch ((*Key).key.keysym.sym)
+		{
+		case SDLK_a:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_A;
+			return InputKeyCodes::K_a;
+			break;
+
+		case SDLK_b:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_B;
+			return InputKeyCodes::K_b;
+			break;
+
+		case SDLK_c:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_C;
+			return InputKeyCodes::K_c;
+			break;
+
+		case SDLK_d:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_D;
+			return InputKeyCodes::K_d;
+			break;
+
+		case SDLK_e:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_E;
+			return InputKeyCodes::K_e;
+			break;
+
+		case SDLK_f:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_F;
+			return InputKeyCodes::K_f;
+			break;
+
+		case SDLK_g:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_G;
+			return InputKeyCodes::K_g;
+			break;
+
+		case SDLK_h:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_H;
+			return InputKeyCodes::K_h;
+			break;
+
+		case SDLK_i:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_I;
+			return InputKeyCodes::K_i;
+			break;
+
+		case SDLK_j:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_J;
+			return InputKeyCodes::K_j;
+			break;
+
+		case SDLK_k:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_K;
+			return InputKeyCodes::K_k;
+			break;
+
+		case SDLK_l:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_L;
+			return InputKeyCodes::K_l;
+			break;
+
+		case SDLK_m:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_M;
+			return InputKeyCodes::K_m;
+			break;
+
+		case SDLK_n:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_N;
+			return InputKeyCodes::K_n;
+			break;
+
+		case SDLK_o:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_O;
+			return InputKeyCodes::K_o;
+			break;
+
+		case SDLK_p:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_P;
+			return InputKeyCodes::K_p;
+			break;
+
+		case SDLK_q:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_Q;
+			return InputKeyCodes::K_q;
+			break;
+
+		case SDLK_r:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_R;
+			return InputKeyCodes::K_r;
+			break;
+
+		case SDLK_s:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_S;
+			return InputKeyCodes::K_s;
+			break;
+
+		case SDLK_t:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_T;
+			return InputKeyCodes::K_t;
+			break;
+
+		case SDLK_u:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_U;
+			return InputKeyCodes::K_u;
+			break;
+
+		case SDLK_v:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_V;
+			return InputKeyCodes::K_v;
+			break;
+
+		case SDLK_w:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_W;
+			return InputKeyCodes::K_w;
+			break;
+
+		case SDLK_x:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_X;
+			return InputKeyCodes::K_x;
+			break;
+
+		case SDLK_y:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_Y;
+			return InputKeyCodes::K_y;
+			break;
+
+		case SDLK_z:
+			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_Z;
+			return InputKeyCodes::K_z;
+			break;
+		}
+#pragma endregion
+	}
+	return InputKeyCodes::Null;
 }

@@ -29,6 +29,7 @@ public:
 private:
 	class SDLWrapper* sdl;
 	 Window* _Window;
+	 Actor* _PlayerReference = nullptr;
 
 
 #pragma region Time Management
@@ -47,6 +48,9 @@ public:
 
 	SDL_Window* GetWindow() { return _Window->GetWindow(); }
 	struct SDL_Renderer* GetRenderer() { return _Window->GetRenderer(); }
+
+	Actor* GetPlayer() { return _PlayerReference; }
+	void SetPlayerReference(Actor* NewReference) { if(!_PlayerReference) _PlayerReference = NewReference; }
 
 };
 
@@ -69,8 +73,13 @@ public:
 	// Game Engine Ref
 	static GameEngine* GetGameEngine() { return _GameEngineRef; }
 	static void SetGameEngineRef(GameEngine* NewReference) { _GameEngineRef = NewReference; }
+	
+	static EventSystem* GetEventSystem() { return _EventSystem; }
+	static void SetEventSystem(EventSystem* EventSystemRef) { _EventSystem = EventSystemRef; }
+
 	static SDL_Surface* LoadSurface(std::string filePath, SDL_Renderer* renderTarget);
 
 private:
 	static GameEngine* _GameEngineRef;
+	static EventSystem* _EventSystem;
 };
