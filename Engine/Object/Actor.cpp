@@ -23,9 +23,19 @@ void Actor::Tick(float DeltaSeconds)
 	if(MySprite) MySprite->Tick(DeltaSeconds);
 }
 
-void Actor::OnKeyPressed(SDL_KeyCode KeyCode)
+void Actor::OnKeyPressed(InputKeyCodes KeyCode)
 {
-	
+
+}
+
+void Actor::OnKeyReleased(InputKeyCodes KeyCode)
+{
+
+}
+
+void Actor::OnInputAxis(InputKeyCodes KeyCode, Vector AxisValue)
+{
+
 }
 
 Transform* Actor::GetTransform()
