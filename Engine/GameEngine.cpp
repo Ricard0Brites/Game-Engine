@@ -11,7 +11,6 @@ GameEngine::~GameEngine()
 GameEngine::GameEngine()
 {
 	GameplayStatics::SetGameEngineRef(this);
-	//GameplayStatics::SetEventSystemRef(_EventSystem);
 }
 
 void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight)
@@ -50,6 +49,12 @@ void GameEngine::start()
 		// Render
 		_Window->updateSurface();
 		
+
+		if(GameplayStatics::GetEventSystem()) 
+		{
+		LOG("tjdncklsndflkjsdn", 3);
+		}
+
 #pragma region Event System
 
 		SDL_RenderClear(GameplayStatics::GetGameEngine()->GetRenderer()); // clear screen
@@ -89,4 +94,9 @@ SDL_Surface* GameplayStatics::LoadSurface(std::string filePath, SDL_Renderer* re
 		LOG("Null Surface", 3);
 	}
 	return surface;
+}
+
+Vector GameplayStatics::NormalizeVector(Vector VectorToNormalize)
+{
+	return ( VectorToNormalize / (float)sqrt((VectorToNormalize.X * VectorToNormalize.X) + (VectorToNormalize.Y * VectorToNormalize.Y) + (VectorToNormalize.Z * VectorToNormalize.Z)));
 }
