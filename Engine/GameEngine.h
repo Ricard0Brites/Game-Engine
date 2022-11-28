@@ -79,6 +79,8 @@ public:
 
 	static SDL_Surface* LoadSurface(std::string filePath, SDL_Renderer* renderTarget);
 
+	static Vector NormalizeVector(Vector VectorToNormalize);
+
 private:
 	static GameEngine* _GameEngineRef;
 	static EventSystem* _EventSystem;
