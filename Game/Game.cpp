@@ -1,30 +1,51 @@
-// Game.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
-
-
+#pragma once
 #include <iostream>
 #include "GameEngine.h"
+#include "Player.h"
+#include "Enemy.h"
 
 int main(int argc, char ** argv)
 {
     GameEngine engine;
+	const int TotalEnemies = 10;
          
-    engine.init("Engenho", 640, 480);
+    engine.init("Engine", 1280, 720);
+  
 
-    engine.start();
+    //this is a good place to create a game mode/ game instance whatever you wanna call it.
+    //this actor should be the one whom controls the game itself... the equivalent of unreal game instance or unity game manager
+    
+    //World(Background)
+	Actor* BgActor = engine.CreateActor<Actor>(nullptr);
+	BgActor->AssignTexture("src/Sprites/galaxy2.bmp", 1, 1, 1, BgActor);
+    BgActor->GetTransform()->SetScale(Vector::CreateVector(2, 2, 0));
+	BgActor->GetSpriteComponent()->PlayAnimation(true);
+
+    //Player
+    //this is how the character is created and defined
+    Player* Player1 = engine.CreateActor<Player>(nullptr);
+	Player1->GetTransform()->SetLocation(Vector::CreateVector(500, 600, 0));
+    Player1->GetCustomSpriteComponent()->PlayAnimation(true);
+    engine.SetPlayerReference(Player1);
+
+    //Enemies
+    Enemy* enemy[TotalEnemies]{};
+
+    for (int i = 0; i < 10; i++) 
+    {
+        enemy[i] = engine.CreateActor<Enemy>(nullptr);
+		enemy[i]->AssignTexture("src/Sprites/LonerB.bmp", 4, 4, 2, enemy[i]);
+		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector((- 100 * (float)i) - 100, 0, 0));
+		enemy[i]->GetSpriteComponent()->PlayAnimation(true);
+    }
+
+  
+    
 
 
+    engine.start();// no code after this function will be called. from this point on to do anything it has to be inside the gameloop... this means only spawned and active actors can spawn other actors.
+    
     return 0;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

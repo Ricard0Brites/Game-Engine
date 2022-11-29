@@ -18,6 +18,96 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Components\XennonSpriteComponent.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GameRules.h" />
+    <ClInclude Include="Manager\RocketManager.h" />
+    <ClInclude Include="Missile.h" />
+    <ClInclude Include="Player.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Components\XennonSpriteComponent.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameRules.cpp" />
+    <ClCompile Include="Manager\RocketManager.cpp" />
+    <ClCompile Include="Missile.cpp" />
+    <ClCompile Include="Player.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\Sprites\bblogo.bmp" />
+    <Image Include="src\Sprites\Blocks.bmp" />
+    <Image Include="src\Sprites\bosseyes2.bmp" />
+    <Image Include="src\Sprites\Burner1.bmp" />
+    <Image Include="src\Sprites\Burner2.bmp" />
+    <Image Include="src\Sprites\Burner3.bmp" />
+    <Image Include="src\Sprites\Burner4.bmp" />
+    <Image Include="src\Sprites\Burner5.bmp" />
+    <Image Include="src\Sprites\Burner6.bmp" />
+    <Image Include="src\Sprites\clone.bmp" />
+    <Image Include="src\Sprites\clonejet.bmp" />
+    <Image Include="src\Sprites\destroyable.bmp" />
+    <Image Include="src\Sprites\drone.bmp" />
+    <Image Include="src\Sprites\EnWeap6.bmp" />
+    <Image Include="src\Sprites\explode16.bmp" />
+    <Image Include="src\Sprites\explode32.bmp" />
+    <Image Include="src\Sprites\explode64.bmp" />
+    <Image Include="src\Sprites\font16x16.bmp" />
+    <Image Include="src\Sprites\Font8x8.bmp" />
+    <Image Include="src\Sprites\galaxy2.bmp" />
+    <Image Include="src\Sprites\GAster32.bmp" />
+    <Image Include="src\Sprites\GAster64.bmp" />
+    <Image Include="src\Sprites\GAster96.bmp" />
+    <Image Include="src\Sprites\GDust.bmp" />
+    <Image Include="src\Sprites\GShoot.bmp" />
+    <Image Include="src\Sprites\hmissile.bmp" />
+    <Image Include="src\Sprites\Homing.bmp" />
+    <Image Include="src\Sprites\HomProjc.bmp" />
+    <Image Include="src\Sprites\logo.bmp" />
+    <Image Include="src\Sprites\LonerA.bmp" />
+    <Image Include="src\Sprites\LonerB.bmp" />
+    <Image Include="src\Sprites\LonerC.bmp" />
+    <Image Include="src\Sprites\MAster32.bmp" />
+    <Image Include="src\Sprites\MAster64.bmp" />
+    <Image Include="src\Sprites\MAster96.bmp" />
+    <Image Include="src\Sprites\MDust.bmp" />
+    <Image Include="src\Sprites\missile.bmp" />
+    <Image Include="src\Sprites\pcflogo.bmp" />
+    <Image Include="src\Sprites\PCFlogo1.bmp" />
+    <Image Include="src\Sprites\PCFlogo2.bmp" />
+    <Image Include="src\Sprites\playerjet.bmp" />
+    <Image Include="src\Sprites\pod.bmp" />
+    <Image Include="src\Sprites\PUDive.bmp" />
+    <Image Include="src\Sprites\PUInvuln.bmp" />
+    <Image Include="src\Sprites\PULaser.bmp" />
+    <Image Include="src\Sprites\PULife.bmp" />
+    <Image Include="src\Sprites\PUMissil.bmp" />
+    <Image Include="src\Sprites\PUScore.bmp" />
+    <Image Include="src\Sprites\PUShield.bmp" />
+    <Image Include="src\Sprites\PUSpeed.bmp" />
+    <Image Include="src\Sprites\PUWeapon.bmp" />
+    <Image Include="src\Sprites\retros.bmp" />
+    <Image Include="src\Sprites\rusher.bmp" />
+    <Image Include="src\Sprites\SAster32.bmp" />
+    <Image Include="src\Sprites\SAster64.bmp" />
+    <Image Include="src\Sprites\SAster96.bmp" />
+    <Image Include="src\Sprites\SDust.bmp" />
+    <Image Include="src\Sprites\Ship1.bmp" />
+    <Image Include="src\Sprites\Ship2.bmp" />
+    <Image Include="src\Sprites\smoke.bmp" />
+    <Image Include="src\Sprites\spinners.bmp" />
+    <Image Include="src\Sprites\SporesA.bmp" />
+    <Image Include="src\Sprites\SporesB.bmp" />
+    <Image Include="src\Sprites\SporesC.bmp" />
+    <Image Include="src\Sprites\SporesD.bmp" />
+    <Image Include="src\Sprites\wallhugger.bmp" />
+    <Image Include="src\Sprites\Wingtip.bmp" />
+    <Image Include="src\Sprites\Xlogo.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Sprites\Thumbs.db" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{F862C4D5-15B9-4DD4-BF23-53991C785E75}</ProjectGuid>
@@ -152,9 +242,6 @@
       <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Game.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -15,8 +15,255 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Missile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameRules.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\RocketManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\XennonSpriteComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Missile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameRules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\RocketManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\XennonSpriteComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\Sprites\bblogo.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\Blocks.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\bosseyes2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\Burner1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\Burner2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\Burner3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\Burner4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\Burner5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\Burner6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\clone.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\clonejet.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\destroyable.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\drone.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\EnWeap6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\explode16.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\explode32.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\explode64.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\Font8x8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\font16x16.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\galaxy2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\GAster32.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\GAster64.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\GAster96.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\GDust.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\GShoot.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\hmissile.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\Homing.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\HomProjc.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\logo.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\LonerA.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\LonerB.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\LonerC.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\MAster32.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\MAster64.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\MAster96.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\MDust.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\missile.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\pcflogo.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\PCFlogo1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\PCFlogo2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\playerjet.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\pod.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\PUDive.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\PUInvuln.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\PULaser.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\PULife.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\PUMissil.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\PUScore.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\PUShield.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\PUSpeed.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\PUWeapon.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\retros.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\rusher.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\SAster32.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\SAster64.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\SAster96.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\SDust.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\Ship1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\Ship2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\smoke.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\spinners.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\SporesA.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\SporesB.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\SporesC.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\SporesD.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\wallhugger.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\Wingtip.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="src\Sprites\Xlogo.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Sprites\Thumbs.db" />
   </ItemGroup>
 </Project>

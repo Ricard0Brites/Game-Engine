@@ -19,21 +19,55 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Systems\Input\InputSystem.cpp" />
-    <ClCompile Include="GameEngine.cpp" />
-    <ClCompile Include="InitError.cpp" />
-    <ClCompile Include="SDLWrapper.cpp" />
-    <ClCompile Include="Window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Events\ApplicationEvents.h" />
-    <ClInclude Include="Events\Event.h" />
-    <ClInclude Include="Systems\Input\InputSystem.h" />
+    <ClInclude Include="Data\DataTypes.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="InitError.h" />
     <ClInclude Include="Logger\Logger.h" />
+    <ClInclude Include="Object\Actor.h" />
+    <ClInclude Include="Object\ActorComponents\SpriteComponent.h" />
+    <ClInclude Include="Object\object.h" />
     <ClInclude Include="SDLWrapper.h" />
+    <ClInclude Include="Systems\EventSystem\EventSystem.h" />
+    <ClInclude Include="Systems\Input\InputSystem.h" />
     <ClInclude Include="Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Data\DataTypes.cpp" />
+    <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="InitError.cpp" />
+    <ClCompile Include="Object\Actor.cpp" />
+    <ClCompile Include="Object\ActorComponents\SpriteComponent.cpp" />
+    <ClCompile Include="SDLWrapper.cpp" />
+    <ClCompile Include="Systems\EventSystem\EventSystem.cpp" />
+    <ClCompile Include="Systems\Input\InputSystem.cpp" />
+    <ClCompile Include="Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="x64\Debug\Actor.obj" />
+    <Object Include="x64\Debug\DataTypes.obj" />
+    <Object Include="x64\Debug\EventSystem.obj" />
+    <Object Include="x64\Debug\GameEngine.obj" />
+    <Object Include="x64\Debug\InitError.obj" />
+    <Object Include="x64\Debug\InputSystem.obj" />
+    <Object Include="x64\Debug\SDLWrapper.obj" />
+    <Object Include="x64\Debug\SpriteComponent.obj" />
+    <Object Include="x64\Debug\Window.obj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="x64\Debug\Engine.Build.CppClean.log" />
+    <Text Include="x64\Debug\Engine.log" />
+    <Text Include="x64\Debug\Engine.vcxproj.FileListAbsolute.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="x64\Debug\Engine.lib.recipe" />
+    <None Include="x64\Debug\Engine.tlog\CL.command.1.tlog" />
+    <None Include="x64\Debug\Engine.tlog\CL.read.1.tlog" />
+    <None Include="x64\Debug\Engine.tlog\CL.write.1.tlog" />
+    <None Include="x64\Debug\Engine.tlog\Engine.lastbuildstate" />
+    <None Include="x64\Debug\Engine.tlog\Lib-link.read.1.tlog" />
+    <None Include="x64\Debug\Engine.tlog\Lib-link.write.1.tlog" />
+    <None Include="x64\Debug\Engine.tlog\Lib.command.1.tlog" />
+    <None Include="x64\Debug\Engine.tlog\unsuccessfulbuild" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

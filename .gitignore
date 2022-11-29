@@ -1,2 +1,16 @@
 
 .vs/
+
+Engine/x64/
+
+Game/x64/
+
+x64/Debug/Engine.idb
+
+x64/Debug/Engine.lib
+
+x64/Debug/Engine.pdb
+
+x64/Debug/Game.exe
+
+x64/Debug/Game.pdb
