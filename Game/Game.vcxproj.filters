@@ -27,9 +27,6 @@
     <ClInclude Include="GameRules.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Manager\RocketManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Components\XennonSpriteComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -48,9 +45,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameRules.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager\RocketManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Components\XennonSpriteComponent.cpp">

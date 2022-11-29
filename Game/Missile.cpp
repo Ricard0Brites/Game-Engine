@@ -1,7 +1,6 @@
 #include "Missile.h"
 #include "GameEngine.h"
 #include "GameRules.h"
-#include "Manager\RocketManager.h"
 #include "..\include\SDL2\SDL_timer.h"
 
 #include <thread>
