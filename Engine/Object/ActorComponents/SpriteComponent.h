@@ -12,7 +12,8 @@ class Actor;
 class SpriteComponent
 {
 public:
-	SpriteComponent(std::string TexturePath, int TilesX, int TilesY, float AnimationTimeInSeconds);
+	SpriteComponent(std::string TexturePath, int TilesX, int TilesY, float AnimationTimeInSeconds, Actor* ComponentOwner);
+	SpriteComponent();
 	~SpriteComponent();
 
 	virtual void Tick(float DelataSeconds);
@@ -51,6 +52,6 @@ protected:
 
 private:
 	bool _IsAnimationReverse = false;
-
+	Actor* _Owner;
 };
 

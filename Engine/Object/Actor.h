@@ -31,7 +31,7 @@ public:
 
 	bool HasInit = false;
 
-	virtual void AssignTexture(std::string TexturePath, int TileAmountX, int TileAmountY, float AnimationTimeInSeconds);
+	virtual void AssignTexture(std::string TexturePath, int TileAmountX, int TileAmountY, float AnimationTimeInSeconds, Actor* ComponentOwner);
 	
 	SpriteComponent* GetSpriteComponent() { return MySprite; }
 

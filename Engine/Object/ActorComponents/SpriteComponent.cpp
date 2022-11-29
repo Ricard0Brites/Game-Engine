@@ -3,8 +3,10 @@
 #include "..\..\GameEngine.h"
 
 
-SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY, float AnimationTimeInSeconds)
+SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY, float AnimationTimeInSeconds, Actor* ComponentOwner)
 {
+	_Owner = ComponentOwner;
+
 	MyTransform = new Transform;
 	MyTransform->IsRelative = true;
 
@@ -30,6 +32,12 @@ SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY
 	ElapsedTime = 0;
 }
 
+
+SpriteComponent::SpriteComponent()
+{
+	//for ease of child classes
+}
+
 SpriteComponent::~SpriteComponent()
 {
 	delete MyTransform;
@@ -44,16 +52,16 @@ void SpriteComponent::Tick(float DeltaSeconds)
 		SDL_Rect DisplayQuad;
 
 		//TEXTURE POSITION -----------------------------------------------------------
-		DisplayQuad.x = (int)MyTransform->GetLocation().X;
-		DisplayQuad.y = (int)MyTransform->GetLocation().Y;
+		DisplayQuad.x = (int)MyTransform->GetLocation().X + (int)_Owner->GetTransform()->GetLocation().X;
+		DisplayQuad.y = (int)MyTransform->GetLocation().Y + (int)_Owner->GetTransform()->GetLocation().Y;
 
 
 
 		//TEXTURE SCALE --------------------------------------------------------------
 		// Quad Scale X = (Texture width / Texture Amount horizontally) * X Scale
-		DisplayQuad.w = (int)((float)(tw / TextureAmountH) * MyTransform->GetScale().Y);
+		DisplayQuad.w = (int)((float)(tw / TextureAmountH) * (MyTransform->GetScale().X * _Owner->GetTransform()->GetScale().X));
 		// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
-		DisplayQuad.h = (int)((float)(th / TextureAmountV) * MyTransform->GetScale().X);
+		DisplayQuad.h = (int)((float)(th / TextureAmountV) * (MyTransform->GetScale().Y * _Owner->GetTransform()->GetScale().Y));
 
 
 #pragma endregion

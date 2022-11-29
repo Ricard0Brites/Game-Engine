@@ -1,11 +1,1 @@
-﻿  InputSystem.cpp
-x64\Debug\Actor.obj : warning LNK4042: object specified more than once; extras ignored
-x64\Debug\DataTypes.obj : warning LNK4042: object specified more than once; extras ignored
-x64\Debug\EventSystem.obj : warning LNK4042: object specified more than once; extras ignored
-x64\Debug\GameEngine.obj : warning LNK4042: object specified more than once; extras ignored
-x64\Debug\InitError.obj : warning LNK4042: object specified more than once; extras ignored
-x64\Debug\InputSystem.obj : warning LNK4042: object specified more than once; extras ignored
-x64\Debug\SDLWrapper.obj : warning LNK4042: object specified more than once; extras ignored
-x64\Debug\SpriteComponent.obj : warning LNK4042: object specified more than once; extras ignored
-x64\Debug\Window.obj : warning LNK4042: object specified more than once; extras ignored
-  Engine.vcxproj -> F:\Year3\Game-Engine\x64\Debug\Engine.lib
+﻿  Engine.vcxproj -> F:\Year3\Game-Engine\x64\Debug\Engine.lib
