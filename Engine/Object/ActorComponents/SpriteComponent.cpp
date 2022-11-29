@@ -5,7 +5,7 @@
 
 SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY, float AnimationTimeInSeconds, Actor* ComponentOwner)
 {
-	_Owner = ComponentOwner;
+	Owner = ComponentOwner;
 
 	MyTransform = new Transform;
 	MyTransform->IsRelative = true;
@@ -34,11 +34,6 @@ SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY
 }
 
 
-SpriteComponent::SpriteComponent()
-{
-	//for ease of child classes
-}
-
 SpriteComponent::~SpriteComponent()
 {
 	delete MyTransform;
@@ -49,14 +44,12 @@ void SpriteComponent::Tick(float DeltaSeconds)
 	if (IsPlayingAnimation)
 	{
 	//update animations each frame
-#pragma region Dimentions
-		SDL_Rect DisplayQuad;
-
+	#pragma region Dimentions
 		//TEXTURE POSITION -----------------------------------------------------------
-		if (_Owner != nullptr)
+		if (Owner != nullptr)
 		{
-			DisplayQuad.x = (int)MyTransform->GetLocation().X + (int)_Owner->GetTransform()->GetLocation().X;
-			DisplayQuad.y = (int)MyTransform->GetLocation().Y + (int)_Owner->GetTransform()->GetLocation().Y;
+			DisplayQuad.x = (int)MyTransform->GetLocation().X + (int)Owner->GetTransform()->GetLocation().X;
+			DisplayQuad.y = (int)MyTransform->GetLocation().Y + (int)Owner->GetTransform()->GetLocation().Y;
 		}
 		else
 		{
@@ -68,11 +61,11 @@ void SpriteComponent::Tick(float DeltaSeconds)
 
 		//TEXTURE SCALE --------------------------------------------------------------
 		// Quad Scale X = (Texture width / Texture Amount horizontally) * X Scale
-		if (_Owner != nullptr)
+		if (Owner != nullptr)
 		{
-			DisplayQuad.w = (int)((float)(tw / TextureAmountH) * (MyTransform->GetScale().X * _Owner->GetTransform()->GetScale().X));
+			DisplayQuad.w = (int)((float)(tw / TextureAmountH) * (MyTransform->GetScale().X * Owner->GetTransform()->GetScale().X));
 			// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
-			DisplayQuad.h = (int)((float)(th / TextureAmountV) * (MyTransform->GetScale().Y * _Owner->GetTransform()->GetScale().Y));
+			DisplayQuad.h = (int)((float)(th / TextureAmountV) * (MyTransform->GetScale().Y * Owner->GetTransform()->GetScale().Y));
 		}
 		else
 		{
@@ -83,7 +76,7 @@ void SpriteComponent::Tick(float DeltaSeconds)
 		
 
 
-#pragma endregion
+	#pragma endregion
 
 		ElapsedTime += DeltaSeconds;
 

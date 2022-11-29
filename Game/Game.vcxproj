@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Components\XennonSpriteComponent.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameRules.h" />
     <ClInclude Include="Manager\RocketManager.h" />
@@ -26,6 +27,7 @@
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Components\XennonSpriteComponent.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameRules.cpp" />

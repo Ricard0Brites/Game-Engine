@@ -9,6 +9,7 @@
 Missile::Missile(Actor* Parent) :Actor(Parent)
 {
 	RocketSpeed = GameRules::GetRocketMovementSpeed();
+	RocketDamage = GameRules::GetRocketDamage();
 }
 
 Missile::~Missile()

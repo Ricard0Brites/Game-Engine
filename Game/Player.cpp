@@ -5,11 +5,14 @@
 #include "Missile.h"
 #include "GameRules.h"
 
+#include "Components\XennonSpriteComponent.h"
+
 
 
 
 Player::Player(Actor* Parent) : Actor(Parent)
 {
+	MySprite = (SpriteComponent*) new XennonStaticSpriteComponent("src/Sprites/Ship1.bmp", 7, 1, this, 4); // starting state = 4
 }
 
 Player::~Player()
@@ -25,23 +28,30 @@ void Player::Tick(float DeltaSeconds)
 	if (MySprite) MySprite->Tick(DeltaSeconds);
 	
 	if (bMoveDirection[0])//up
+	{
 		GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0, -0.2f, 0)) * DeltaSeconds);
-	
+	}
+
 	if (bMoveDirection[1])//left
+	{
 		GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(-0.2f, 0, 0)) * DeltaSeconds);
-	
+	}
+
 	if (bMoveDirection[2])//down
+	{
 		GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0, 0.2f, 0)) * DeltaSeconds);
-	
+	}
+
 	if (bMoveDirection[3])//right
+	{
 		GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0.2f, 0, 0)) * DeltaSeconds);
+	}
+		
 
 }
 
 void Player::OnKeyPressed(InputKeyCodes KeyCode)
 {
-	
-
 	switch (KeyCode)
 	{
 		case InputKeyCodes::K_w:
@@ -56,6 +66,8 @@ void Player::OnKeyPressed(InputKeyCodes KeyCode)
 		case InputKeyCodes::GamepadArrowLeft:
 		{
 			bMoveDirection[1] = true;
+
+			if(!_AnimStateManager) GetCustomSpriteComponent()->AnimTansitionToIndex(0, 0.1f, &_AnimStateManager);
 			break;
 		}
 		case InputKeyCodes::K_s:
@@ -70,6 +82,7 @@ void Player::OnKeyPressed(InputKeyCodes KeyCode)
 		case InputKeyCodes::GamepadArrowRight:
 		{
 			bMoveDirection[3] = true;
+			if(!_AnimStateManager) GetCustomSpriteComponent()->AnimTansitionToIndex(7, 0.1f, &_AnimStateManager);
 			break;
 		}
 		case InputKeyCodes::K_Space:
@@ -83,11 +96,7 @@ void Player::OnKeyPressed(InputKeyCodes KeyCode)
 			Rocket->StartMovement();
 			break;
 		}
-
-
 	}
-
-	
 }
 
 void Player::OnKeyReleased(InputKeyCodes KeyCode)
@@ -106,6 +115,7 @@ void Player::OnKeyReleased(InputKeyCodes KeyCode)
 		case InputKeyCodes::GamepadArrowLeft:
 		{
 			bMoveDirection[1] = false;
+			if(_AnimStateManager) GetCustomSpriteComponent()->AnimTansitionToIndex(4, 0.1f, &_AnimStateManager);
 			break;
 		}
 		case InputKeyCodes::K_s:
@@ -120,6 +130,7 @@ void Player::OnKeyReleased(InputKeyCodes KeyCode)
 		case InputKeyCodes::GamepadArrowRight:
 		{
 			bMoveDirection[3] = false;
+			if(_AnimStateManager) GetCustomSpriteComponent()->AnimTansitionToIndex(4, 0.1f, &_AnimStateManager);
 			break;
 		}
 

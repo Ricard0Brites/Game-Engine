@@ -13,10 +13,9 @@ class SpriteComponent
 {
 public:
 	SpriteComponent(std::string TexturePath, int TilesX, int TilesY, float AnimationTimeInSeconds, Actor* ComponentOwner);
-	SpriteComponent();
 	~SpriteComponent();
 
-	virtual void Tick(float DelataSeconds);
+	virtual void Tick(float DeltaSeconds);
 
 	// sets the Sprite Relative location to its parent
 	void SetLocation(Vector NewLocation, Actor* Owner);
@@ -52,9 +51,9 @@ protected:
 	
 	//Animation Timer
 	float AnimationTimeInMS, ElapsedTime;
-
+	Actor* Owner;
+	SDL_Rect DisplayQuad;
 private:
 	bool _IsAnimationReverse = false;
-	Actor* _Owner;
 };
 

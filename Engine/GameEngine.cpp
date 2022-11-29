@@ -10,10 +10,10 @@ GameEngine::~GameEngine()
 
 void GameEngine::RemoveActor(Actor* ActorToRemove)
 {
-	SDL_Delay(DeltaTime / 2); // waits roughly half a frame
+	SDL_Delay((int)DeltaTime / 2); // waits roughly half a frame
 	ActorToRemove->~Actor();
 	_Actors.remove(ActorToRemove);
-	LOGALL("Deleting Actor", 1);
+	LOG("Deleting Actor", 1);
 }
 
 GameEngine::GameEngine()
@@ -80,6 +80,7 @@ void GameEngine::start()
 // GameplayStatics -------------------------------
 
 GameEngine* GameplayStatics::_GameEngineRef; // static variable definition
+
 EventSystem* GameplayStatics::_EventSystem;	// static variable definition
 
 GameplayStatics::GameplayStatics()
@@ -109,4 +110,25 @@ Vector GameplayStatics::NormalizeVector(Vector VectorToNormalize)
 
 	return NewVec;
 
+}
+
+SDL_Texture* GameplayStatics::CreateTextureFromSurface(std::string TexturePath)
+{
+	SDL_Surface* surface = GameplayStatics::LoadSurface(TexturePath, GameplayStatics::GetGameEngine()->GetRenderer());
+	if (surface) SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0xFF, 0, 0xFF));
+
+	SDL_Texture* DisplaySprite = SDL_CreateTextureFromSurface(GameplayStatics::GetGameEngine()->GetRenderer(), surface);
+	SDL_FreeSurface(surface);
+
+	return DisplaySprite;
+}
+
+void GameplayStatics::QueryTexture(SDL_Texture* TextureToQuery, int& OutTextureWidth, int& OutTextureHeight)
+{
+	SDL_QueryTexture(TextureToQuery, NULL, NULL, &OutTextureWidth, &OutTextureHeight);
+}
+
+void GameplayStatics::RenderTexture(SDL_Texture* TextureToRender, SDL_Rect* TexturePortion, SDL_Rect* DisplayQuad)
+{
+	SDL_RenderCopy(GameplayStatics::GetGameEngine()->GetRenderer(), TextureToRender, TexturePortion, DisplayQuad);
 }

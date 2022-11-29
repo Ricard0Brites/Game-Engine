@@ -11,6 +11,8 @@
 
 #include "Window.h"
 
+#include "../include/SDL2/SDL_timer.h"
+
 
 // FWD declarations
 class Actor;
@@ -85,6 +87,13 @@ public:
 
 	static Vector NormalizeVector(Vector VectorToNormalize);
 
+	//to create child components of the sprite renderer
+	static SDL_Texture* CreateTextureFromSurface(std::string TexturePath);
+	static void QueryTexture(SDL_Texture* TextureToQuery, int &OutTextureWidth, int &OutTextureHeight);
+	static void RenderTexture(SDL_Texture* TextureToRender, SDL_Rect* TexturePortion, SDL_Rect* DisplayQuad);
+
+	//Delay
+	static void Delay(float Sec) { SDL_Delay(Uint32(Sec * 1000)); }
 private:
 	static GameEngine* _GameEngineRef;
 	static EventSystem* _EventSystem;
