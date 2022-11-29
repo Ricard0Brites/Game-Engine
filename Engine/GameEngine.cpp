@@ -27,6 +27,7 @@ void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight
 	sdl = new SDLWrapper(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
 	SDL_Joystick* joystick = SDL_JoystickOpen(0);
 	_Window = new Window(windowTitle, windowWidth, windowHeight);
+	GameplayStatics::SetScreenDimentions(windowWidth, windowHeight);
 }
 
 void GameEngine::start()
@@ -82,6 +83,10 @@ void GameEngine::start()
 GameEngine* GameplayStatics::_GameEngineRef; // static variable definition
 
 EventSystem* GameplayStatics::_EventSystem;	// static variable definition
+
+int GameplayStatics::_ScreenWidth = 0;
+
+int GameplayStatics::_ScreenHeight = 0;
 
 GameplayStatics::GameplayStatics()
 {

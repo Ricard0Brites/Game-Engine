@@ -17,5 +17,6 @@ public:
 protected:
 
 private:
+bool _HasBeenTriggered = false;
 
 };

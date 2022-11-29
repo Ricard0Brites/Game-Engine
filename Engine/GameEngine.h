@@ -94,7 +94,13 @@ public:
 
 	//Delay
 	static void Delay(float Sec) { SDL_Delay(Uint32(Sec * 1000)); }
+
+	//screen data
+	static void SetScreenDimentions(int Width, int Height) { _ScreenWidth = Width; _ScreenHeight = Height; }
+	static int GetScreenWidth() { return _ScreenWidth; }
+	static int GetScreenHeight() { return _ScreenHeight; }
 private:
 	static GameEngine* _GameEngineRef;
 	static EventSystem* _EventSystem;
+	static int _ScreenWidth, _ScreenHeight;
 };
