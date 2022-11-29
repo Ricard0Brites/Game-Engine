@@ -3,6 +3,7 @@
 #include "..\Data\DataTypes.h"
 #include "ActorComponents\SpriteComponent.h"
 
+
 class Transform;
 class SpriteComponent;
 class Vector;
@@ -37,6 +38,7 @@ public:
 protected:
 	Transform* MyTransform;
 	SpriteComponent* MySprite;
+
 	
 	//nullptr id this object is independent
 	Actor* Owner = nullptr;

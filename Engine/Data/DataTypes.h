@@ -178,6 +178,12 @@ enum InputKeyCodes
 	K_Num8,
 	K_Num9,
 
+	K_Up,
+	K_Left,
+	K_Down,
+	K_Right,
+	K_Space,
+
 	// gamepad buttons
 	GamepadFaceRight,
 	GamepadFaceLeft,

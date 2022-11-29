@@ -17,7 +17,7 @@ void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight
 {
 	sdl = new SDLWrapper(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
 	SDL_Joystick* joystick = SDL_JoystickOpen(0);
-
+	_Window = new Window(windowTitle, windowWidth, windowHeight);
 }
 
 void GameEngine::start()
@@ -98,5 +98,11 @@ SDL_Surface* GameplayStatics::LoadSurface(std::string filePath, SDL_Renderer* re
 
 Vector GameplayStatics::NormalizeVector(Vector VectorToNormalize)
 {
-	return ( VectorToNormalize / (float)sqrt((VectorToNormalize.X * VectorToNormalize.X) + (VectorToNormalize.Y * VectorToNormalize.Y) + (VectorToNormalize.Z * VectorToNormalize.Z)));
+	
+	float VectorNorm = (float)sqrt((VectorToNormalize.X * VectorToNormalize.X) + (VectorToNormalize.Y * VectorToNormalize.Y) + (VectorToNormalize.Z * VectorToNormalize.Z));
+
+	Vector NewVec = Vector::CreateVector(VectorToNormalize.X / VectorNorm, VectorToNormalize.Y / VectorNorm, VectorToNormalize.Z / VectorNorm);
+
+	return NewVec;
+
 }

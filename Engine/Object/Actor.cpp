@@ -1,4 +1,5 @@
 #include "Actor.h"
+#include "../GameEngine.h"
 #include "ActorComponents\SpriteComponent.h"
 
 Actor::Actor(Actor* Parent)
@@ -21,11 +22,13 @@ void Actor::BeginPlay()
 void Actor::Tick(float DeltaSeconds)
 {
 	if(MySprite) MySprite->Tick(DeltaSeconds);
+
+
 }
 
 void Actor::OnKeyPressed(InputKeyCodes KeyCode)
 {
-
+	
 }
 
 void Actor::OnKeyReleased(InputKeyCodes KeyCode)

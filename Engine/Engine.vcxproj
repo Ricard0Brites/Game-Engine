@@ -22,6 +22,8 @@
     <ClCompile Include="Data\DataTypes.cpp" />
     <ClCompile Include="Object\Actor.cpp" />
     <ClCompile Include="Object\ActorComponents\SpriteComponent.cpp" />
+    <ClCompile Include="Object\Enemy.cpp" />
+    <ClCompile Include="Object\Player.cpp" />
     <ClCompile Include="Systems\EventSystem\EventSystem.cpp" />
     <ClCompile Include="Systems\Input\InputSystem.cpp" />
     <ClCompile Include="GameEngine.cpp" />
@@ -35,7 +37,9 @@
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Object\Actor.h" />
     <ClInclude Include="Object\ActorComponents\SpriteComponent.h" />
+    <ClInclude Include="Object\Enemy.h" />
     <ClInclude Include="Object\object.h" />
+    <ClInclude Include="Object\Player.h" />
     <ClInclude Include="Systems\EventSystem\EventSystem.h" />
     <ClInclude Include="Systems\Input\InputSystem.h" />
     <ClInclude Include="GameEngine.h" />

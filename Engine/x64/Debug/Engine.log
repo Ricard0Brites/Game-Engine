@@ -1,14 +1,2 @@
-﻿  DataTypes.cpp
-  Actor.cpp
-  SpriteComponent.cpp
-  EventSystem.cpp
-  InputSystem.cpp
-  GameEngine.cpp
-C:\Users\Alex\Documents\Github\Game-Engine\Engine\SDLWrapper.h(8,12): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
-  InitError.cpp
-  SDLWrapper.cpp
-C:\Users\Alex\Documents\Github\Game-Engine\Engine\SDLWrapper.h(8,12): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
-C:\Users\Alex\Documents\Github\Game-Engine\Engine\SDLWrapper.cpp(3,61): warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
-  Window.cpp
-  Generating Code...
+﻿  Player.cpp
   Engine.vcxproj -> C:\Users\Alex\Documents\Github\Game-Engine\x64\Debug\Engine.lib

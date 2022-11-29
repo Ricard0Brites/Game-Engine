@@ -340,6 +340,21 @@ InputKeyCodes KeyPress::GetKeyCode(SDL_Event* Key, bool IsControllerInput, bool 
 				if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_Z;
 				return InputKeyCodes::K_z;
 				break;
+			case SDLK_SPACE:
+				return InputKeyCodes::K_Space;
+				break;
+			case SDLK_UP:
+				return InputKeyCodes::K_Up;
+				break;
+			case SDLK_LEFT:
+				return InputKeyCodes::K_Left;
+				break;
+			case SDLK_DOWN:
+				return InputKeyCodes::K_Down;
+				break;
+			case SDLK_RIGHT:
+				return InputKeyCodes::K_Right;
+				break;
 			}
 		#pragma endregion
 	}
@@ -517,6 +532,21 @@ InputKeyCodes KeyPress::GetKeyCode(SDL_Event* Key, bool IsControllerInput)
 		case SDLK_z:
 			if (GetKeyState(SDLK_LSHIFT) == 1 || GetKeyState(SDLK_RSHIFT) == 1) return K_Z;
 			return InputKeyCodes::K_z;
+			break;
+		case SDLK_SPACE:
+			return InputKeyCodes::K_Space;
+			break;
+		case SDLK_UP:
+			return InputKeyCodes::K_Up;
+			break;
+		case SDLK_LEFT:
+			return InputKeyCodes::K_Left;
+			break;
+		case SDLK_DOWN:
+			return InputKeyCodes::K_Down;
+			break;
+		case SDLK_RIGHT:
+			return InputKeyCodes::K_Right;
 			break;
 		}
 #pragma endregion
