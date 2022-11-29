@@ -29,30 +29,46 @@ void Player::Tick(float DeltaSeconds)
 	
 	if (bMoveDirection[0])//up
 	{
-		GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0, -0.2f, 0)) * DeltaSeconds);
+		if (GetTransform()->GetLocation().Y >= 0 - (GetCustomSpriteComponent()->GetTextureHeight() / 2))
+		{
+			GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0, -0.2f, 0)) * DeltaSeconds);
+		}
 	}
 
 	if (bMoveDirection[1])//left
 	{
-		GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(-0.2f, 0, 0)) * DeltaSeconds);
+		if (GetTransform()->GetLocation().X >= 0 - (GetCustomSpriteComponent()->GetTextureWidth() / 2))
+		{
+			GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(-0.2f, 0, 0)) * DeltaSeconds);
+		}
 	}
 
 	if (bMoveDirection[2])//down
 	{
-		GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0, 0.2f, 0)) * DeltaSeconds);
+		if (GetTransform()->GetLocation().Y <= GameplayStatics::GetScreenHeight() - (GetCustomSpriteComponent()->GetTextureHeight() / 2))
+		{
+			GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0, 0.2f, 0)) * DeltaSeconds);
+		}
 	}
 
 	if (bMoveDirection[3])//right
 	{
-		GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0.2f, 0, 0)) * DeltaSeconds);
+		if(GetTransform()->GetLocation().X <= GameplayStatics::GetScreenWidth() - (GetCustomSpriteComponent()->GetTextureWidth() / 2))
+		{
+			GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0.2f, 0, 0)) * DeltaSeconds);
+		}
 	}
 		
 	// the players falling speed (makes it look liek the level is going up)
-	GetTransform()->SetLocation(Vector::CreateVector(
-	/*X*/ GetTransform()->GetLocation().X,
-	/*Y*/ GetTransform()->GetLocation().Y + GameRules::GetLevelMovementSpeed(),
-	/*Z*/ 0
+	if (GetTransform()->GetLocation().Y <= GameplayStatics::GetScreenHeight() - (GetCustomSpriteComponent()->GetTextureHeight() / 2))
+	{
+		GetTransform()->SetLocation(Vector::CreateVector(
+		/*X*/ GetTransform()->GetLocation().X,
+		/*Y*/ GetTransform()->GetLocation().Y + GameRules::GetLevelMovementSpeed(),
+		/*Z*/ 0
 	));
+	}
+	
 }
 
 void Player::OnKeyPressed(InputKeyCodes KeyCode)

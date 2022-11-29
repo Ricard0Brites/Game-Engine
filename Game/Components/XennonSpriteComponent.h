@@ -19,6 +19,9 @@ public:
 	void SetTextureIndexToDisplay(int NewIndex);
 
 	void AnimTansitionToIndex( int Index, float TotalSeconds, bool *StateReset);
+
+	int GetTextureHeight() { return fh; }
+	int GetTextureWidth() { return fw; }
 private:
  int _CurrentIndex=0;
 };
