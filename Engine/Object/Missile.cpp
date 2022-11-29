@@ -2,7 +2,7 @@
 #include "../GameEngine.h"
 
 
-Missile::Missile (Missile* Owner)
+Missile::Missile(Actor* Parent) :Actor(Parent)
 {
 	Owner = Parent;
 	MyTransform = new Transform();

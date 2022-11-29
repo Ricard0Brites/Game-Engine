@@ -23,6 +23,7 @@
     <ClCompile Include="Object\Actor.cpp" />
     <ClCompile Include="Object\ActorComponents\SpriteComponent.cpp" />
     <ClCompile Include="Object\Enemy.cpp" />
+    <ClCompile Include="Object\Missile.cpp" />
     <ClCompile Include="Object\Player.cpp" />
     <ClCompile Include="Systems\EventSystem\EventSystem.cpp" />
     <ClCompile Include="Systems\Input\InputSystem.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="Object\Actor.h" />
     <ClInclude Include="Object\ActorComponents\SpriteComponent.h" />
     <ClInclude Include="Object\Enemy.h" />
+    <ClInclude Include="Object\Missile.h" />
     <ClInclude Include="Object\object.h" />
     <ClInclude Include="Object\Player.h" />
     <ClInclude Include="Systems\EventSystem\EventSystem.h" />

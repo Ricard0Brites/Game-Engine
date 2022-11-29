@@ -25,7 +25,7 @@ int main(int argc, char ** argv)
     //Player
     //this is how the character is created and defined
     Player* Player1 = engine.CreateActor<Player>(nullptr);
-	Player1->AssignTexture("src/Sprites/ship1.bmp", 1, 1, 1);
+	Player1->AssignTexture("src/Sprites/ship1.bmp", 7, 1, 1);
 	Player1->GetSpriteComponent()->SetLocation(Vector::CreateVector(500, 600, 0), nullptr);
 	Player1->GetSpriteComponent()->PlayAnimation(true);
     engine.SetPlayerReference(Player1);
