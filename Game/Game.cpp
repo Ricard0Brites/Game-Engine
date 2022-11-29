@@ -8,7 +8,6 @@ int main(int argc, char ** argv)
 {
     GameEngine engine;
 	const int TotalEnemies = 10;
-	float posX = 0;
          
     engine.init("Engine", 1280, 720);
   
@@ -36,7 +35,7 @@ int main(int argc, char ** argv)
     {
         enemy[i] = engine.CreateActor<Enemy>(nullptr);
 		enemy[i]->AssignTexture("src/Sprites/LonerB.bmp", 4, 4, 2, enemy[i]);
-		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector(posX += 100, 0, 0));
+		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector((- 100 * (float)i) - 100, 0, 0));
 		enemy[i]->GetSpriteComponent()->PlayAnimation(true);
     }
 
