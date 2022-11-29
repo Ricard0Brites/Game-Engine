@@ -47,7 +47,12 @@ void Player::Tick(float DeltaSeconds)
 		GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0.2f, 0, 0)) * DeltaSeconds);
 	}
 		
-
+	// the players falling speed (makes it look liek the level is going up)
+	GetTransform()->SetLocation(Vector::CreateVector(
+	/*X*/ GetTransform()->GetLocation().X,
+	/*Y*/ GetTransform()->GetLocation().Y + GameRules::GetLevelMovementSpeed(),
+	/*Z*/ 0
+	));
 }
 
 void Player::OnKeyPressed(InputKeyCodes KeyCode)
