@@ -1,1 +1,2 @@
-﻿  Game.vcxproj -> C:\Users\alexa\Documents\GitHub\Game-Engine\x64\Debug\Game.exe
+﻿  Player.cpp
+LINK : fatal error LNK1104: cannot open file 'Engine.lib'

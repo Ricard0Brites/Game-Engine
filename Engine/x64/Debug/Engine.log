@@ -1,2 +1,9 @@
-﻿  Missile.cpp
-  Engine.vcxproj -> C:\Users\alexa\Documents\GitHub\Game-Engine\x64\Debug\Engine.lib
+﻿  Enemy.cpp
+c1xx : fatal  error C1083: Cannot open source file: 'Object\Enemy.cpp': No such file or directory
+  Missile.cpp
+c1xx : fatal  error C1083: Cannot open source file: 'Object\Missile.cpp': No such file or directory
+  Player.cpp
+c1xx : fatal  error C1083: Cannot open source file: 'Object\Player.cpp': No such file or directory
+  EventSystem.cpp
+  Window.cpp
+  Generating Code...

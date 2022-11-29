@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 #include "GameEngine.h"
-#include "Object/Player.h"
-#include "Object/Enemy.h"
+#include "Player.h"
+#include "Enemy.h"
 
 int main(int argc, char ** argv)
 {
@@ -14,7 +14,7 @@ int main(int argc, char ** argv)
   
 
     //this is a good place to create a game mode/ game instance whatever you wanna call it.
-    //this actor should be the one whom controls the game itself... the equivilent of unreal game instance or unity game manager
+    //this actor should be the one whom controls the game itself... the equivalent of unreal game instance or unity game manager
     
     //World(Background)
 	Actor* BgActor = engine.CreateActor<Actor>(nullptr);
