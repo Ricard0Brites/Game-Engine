@@ -14,6 +14,7 @@ InputSystem::~InputSystem()
 {
 }
 
+Vector* StickAxisVector = new Vector;
 void InputSystem::ListenForInput(SDL_Event* key)
 {
 	if ((*key).type == SDL_KEYDOWN)
@@ -36,9 +37,6 @@ void InputSystem::ListenForInput(SDL_Event* key)
 
 	if ((*key).type == SDL_JOYAXISMOTION)
 	{
-		Vector* vec = new Vector;  
-		vec->Zero(true);
-
 		bool canTriggerInput = false;
 
 		if ((*key).jaxis.which == 0) //Controller id
@@ -47,7 +45,7 @@ void InputSystem::ListenForInput(SDL_Event* key)
 			{
 				if ((*key).jaxis.value < -_ControllerDeadzone || (*key).jaxis.value > _ControllerDeadzone)
 				{
-					*vec = Vector::CreateVector((*key).jaxis.value / 32767.f, vec->Y, vec->Z);
+					*StickAxisVector = Vector::CreateVector((*key).jaxis.value / 32768.f, StickAxisVector->Y, StickAxisVector->Z);
 					canTriggerInput = true;
 				}
 			}
@@ -56,12 +54,12 @@ void InputSystem::ListenForInput(SDL_Event* key)
 			{
 				if ((*key).jaxis.value < -_ControllerDeadzone || (*key).jaxis.value > _ControllerDeadzone)
 				{
-					*vec = Vector::CreateVector(vec->X, (- 1.f * (*key).jaxis.value) / 32767.f, vec->Z); //here we invert Y because SDL's value is inverted
+					*StickAxisVector = Vector::CreateVector(StickAxisVector->X, (*key).jaxis.value / 32768.f, StickAxisVector->Z);
 					canTriggerInput = true;
 				}
 			}
 		}
-		if(canTriggerInput) GameplayStatics::GetEventSystem()->TriggerOnInputAxis(InputKeyCodes::GamepadStickLeft, *vec);
+		if(canTriggerInput) GameplayStatics::GetEventSystem()->TriggerOnInputAxis(InputKeyCodes::GamepadStickLeft, *StickAxisVector);
 	}
 
 	if ((*key).type == SDL_JOYBUTTONDOWN)

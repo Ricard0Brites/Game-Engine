@@ -52,6 +52,8 @@ public:
 	Actor* GetPlayer() { return _PlayerReference; }
 	void SetPlayerReference(Actor* NewReference) { if(!_PlayerReference) _PlayerReference = NewReference; }
 
+	float GetDeltaSeconds() { return (float)DeltaTime; }
+
 };
 
 template <typename T>
