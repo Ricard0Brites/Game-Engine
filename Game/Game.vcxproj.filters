@@ -24,6 +24,12 @@
     <ClInclude Include="Missile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameRules.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\RocketManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Enemy.cpp">
@@ -36,6 +42,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameRules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\RocketManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

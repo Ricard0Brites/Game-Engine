@@ -19,14 +19,14 @@ int main(int argc, char ** argv)
     //World(Background)
 	Actor* BgActor = engine.CreateActor<Actor>(nullptr);
 	BgActor->AssignTexture("src/Sprites/galaxy2.bmp", 1, 1, 1, BgActor);
-    BgActor->GetSpriteComponent()->SetScale(Vector::CreateVector(2, 2, 0), nullptr);
+    BgActor->GetTransform()->SetScale(Vector::CreateVector(2, 2, 0));
 	BgActor->GetSpriteComponent()->PlayAnimation(true);
 
     //Player
     //this is how the character is created and defined
     Player* Player1 = engine.CreateActor<Player>(nullptr);
 	Player1->AssignTexture("src/Sprites/ship1.bmp", 7, 1, 1, Player1);
-	Player1->GetSpriteComponent()->SetLocation(Vector::CreateVector(500, 600, 0), nullptr);
+	Player1->GetTransform()->SetLocation(Vector::CreateVector(500, 600, 0));
 	Player1->GetSpriteComponent()->PlayAnimation(true);
     engine.SetPlayerReference(Player1);
 
@@ -37,11 +37,10 @@ int main(int argc, char ** argv)
     {
         enemy[i] = engine.CreateActor<Enemy>(nullptr);
 		enemy[i]->AssignTexture("src/Sprites/LonerB.bmp", 4, 4, 2, enemy[i]);
-		enemy[i]->GetSpriteComponent()->SetLocation(Vector::CreateVector(posX += 100, 0, 0), nullptr);
+		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector(posX += 100, 0, 0));
 		enemy[i]->GetSpriteComponent()->PlayAnimation(true);
     }
 
-   
   
     
 

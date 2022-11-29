@@ -46,6 +46,8 @@ public:
 	template <typename T>
 	T* CreateActor(T* Owner);
 
+	void RemoveActor(Actor* ActorToRemove);
+
 	SDL_Window* GetWindow() { return _Window->GetWindow(); }
 	struct SDL_Renderer* GetRenderer() { return _Window->GetRenderer(); }
 

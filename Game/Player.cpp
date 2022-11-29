@@ -2,24 +2,22 @@
 #include "GameEngine.h"
 #include <list>
 
+#include "Missile.h"
+#include "GameRules.h"
+
 
 
 
 Player::Player(Actor* Parent) : Actor(Parent)
 {
-	Owner = Parent;
-	MyTransform = new Transform();
 }
 
 Player::~Player()
 {
-	if (MyTransform) delete MyTransform;
-	if (MySprite) delete MySprite;
 }
 
 void Player::BeginPlay()
 {
-	playerActor = GameplayStatics::GetGameEngine()->GetPlayer();
 }
 
 void Player::Tick(float DeltaSeconds)
@@ -27,16 +25,16 @@ void Player::Tick(float DeltaSeconds)
 	if (MySprite) MySprite->Tick(DeltaSeconds);
 	
 	if (bMoveDirection[0])//up
-		playerActor->GetTransform()->SetLocation(playerActor->GetTransform()->GetLocation() += (Vector::CreateVector(0, -0.2f, 0)) * DeltaSeconds);
+		GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0, -0.2f, 0)) * DeltaSeconds);
 	
 	if (bMoveDirection[1])//left
-		playerActor->GetTransform()->SetLocation(playerActor->GetTransform()->GetLocation() += (Vector::CreateVector(-0.2f, 0, 0)) * DeltaSeconds);
+		GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(-0.2f, 0, 0)) * DeltaSeconds);
 	
 	if (bMoveDirection[2])//down
-		playerActor->GetTransform()->SetLocation(playerActor->GetTransform()->GetLocation() += (Vector::CreateVector(0, 0.2f, 0)) * DeltaSeconds);
+		GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0, 0.2f, 0)) * DeltaSeconds);
 	
 	if (bMoveDirection[3])//right
-		playerActor->GetTransform()->SetLocation(playerActor->GetTransform()->GetLocation() += (Vector::CreateVector(0.2f, 0, 0)) * DeltaSeconds);
+		GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0.2f, 0, 0)) * DeltaSeconds);
 
 }
 
@@ -77,7 +75,12 @@ void Player::OnKeyPressed(InputKeyCodes KeyCode)
 		case InputKeyCodes::K_Space:
 		case InputKeyCodes::GamepadFaceBottom:
 		{
-			LOG("Missile Shot", 1);
+			Missile* Rocket = GameplayStatics::GetGameEngine()->CreateActor<Missile>(nullptr);
+			Rocket->GetTransform()->SetLocation(Vector::CreateVector(MyTransform->GetLocation().X + (MySprite->GetSpriteWidth() / 2) - 10, MyTransform->GetLocation().Y - (MySprite->GetSpriteHeight() / 2), MyTransform->GetLocation().Z));
+			Rocket->AssignTexture("src/Sprites/missile1.bmp", 2, 1, 0.5f, Rocket);
+			Rocket->GetSpriteComponent()->SetScale(Vector::CreateVector(1,1,1), nullptr);
+			Rocket->GetSpriteComponent()->PlayAnimation(true);
+			Rocket->StartMovement();
 			break;
 		}
 
@@ -125,7 +128,7 @@ void Player::OnKeyReleased(InputKeyCodes KeyCode)
 
 void Player::OnInputAxis(InputKeyCodes KeyCode, Vector AxisValue)
 {
-	playerActor->GetTransform()->SetLocation(playerActor->GetTransform()->GetLocation() += (AxisValue * 0.2f) * GameplayStatics::GetGameEngine()->GetDeltaSeconds());
+	GetTransform()->SetLocation(GetTransform()->GetLocation() += (AxisValue * 0.2f) * GameplayStatics::GetGameEngine()->GetDeltaSeconds());
 }
 
 

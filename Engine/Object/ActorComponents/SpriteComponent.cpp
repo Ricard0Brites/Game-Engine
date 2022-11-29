@@ -10,6 +10,7 @@ SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY
 	MyTransform = new Transform;
 	MyTransform->IsRelative = true;
 
+
 	SDL_Surface* surface = GameplayStatics::LoadSurface(TexturePath, GameplayStatics::GetGameEngine()->GetRenderer());
 	if(surface) SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0xFF, 0, 0xFF));
 	
@@ -52,16 +53,34 @@ void SpriteComponent::Tick(float DeltaSeconds)
 		SDL_Rect DisplayQuad;
 
 		//TEXTURE POSITION -----------------------------------------------------------
-		DisplayQuad.x = (int)MyTransform->GetLocation().X + (int)_Owner->GetTransform()->GetLocation().X;
-		DisplayQuad.y = (int)MyTransform->GetLocation().Y + (int)_Owner->GetTransform()->GetLocation().Y;
+		if (_Owner != nullptr)
+		{
+			DisplayQuad.x = (int)MyTransform->GetLocation().X + (int)_Owner->GetTransform()->GetLocation().X;
+			DisplayQuad.y = (int)MyTransform->GetLocation().Y + (int)_Owner->GetTransform()->GetLocation().Y;
+		}
+		else
+		{
+			DisplayQuad.x = (int)MyTransform->GetLocation().X;
+			DisplayQuad.y = (int)MyTransform->GetLocation().Y;
+		}
 
 
 
 		//TEXTURE SCALE --------------------------------------------------------------
 		// Quad Scale X = (Texture width / Texture Amount horizontally) * X Scale
-		DisplayQuad.w = (int)((float)(tw / TextureAmountH) * (MyTransform->GetScale().X * _Owner->GetTransform()->GetScale().X));
-		// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
-		DisplayQuad.h = (int)((float)(th / TextureAmountV) * (MyTransform->GetScale().Y * _Owner->GetTransform()->GetScale().Y));
+		if (_Owner != nullptr)
+		{
+			DisplayQuad.w = (int)((float)(tw / TextureAmountH) * (MyTransform->GetScale().X * _Owner->GetTransform()->GetScale().X));
+			// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
+			DisplayQuad.h = (int)((float)(th / TextureAmountV) * (MyTransform->GetScale().Y * _Owner->GetTransform()->GetScale().Y));
+		}
+		else
+		{
+			DisplayQuad.w = (int)((float)(tw / TextureAmountH) * MyTransform->GetScale().X);
+			// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
+			DisplayQuad.h = (int)((float)(th / TextureAmountV) * MyTransform->GetScale().Y);
+		}
+		
 
 
 #pragma endregion

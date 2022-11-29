@@ -10,16 +10,12 @@ public:
 	Enemy(Actor* Owner);
 	~Enemy();
 
-
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
 
-	
-
-
 protected:
 
-
+private:
 
 };

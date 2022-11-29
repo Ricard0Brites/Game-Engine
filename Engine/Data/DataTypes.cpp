@@ -61,9 +61,6 @@ Transform::Transform()
 
 Transform::~Transform()
 {
-	delete &_Location;
-	delete &_Rotation;
-	delete &_Scale;
 }
 
 Vector Transform::GetLocation()

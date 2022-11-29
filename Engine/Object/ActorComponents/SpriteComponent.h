@@ -33,6 +33,9 @@ public:
 	//stops animation from playing
 	virtual void StopAnimation();
 
+	int GetSpriteWidth() { return fw; }
+	int GetSpriteHeight() { return fh; }
+
 protected:
 	//
 	Transform* MyTransform = nullptr;

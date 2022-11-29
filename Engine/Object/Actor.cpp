@@ -21,7 +21,10 @@ void Actor::BeginPlay()
 
 void Actor::Tick(float DeltaSeconds)
 {
-	if(MySprite) MySprite->Tick(DeltaSeconds);
+	if(MySprite)
+	{
+ 		MySprite->Tick(DeltaSeconds);
+	}
 
 
 }

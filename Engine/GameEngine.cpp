@@ -8,9 +8,18 @@ GameEngine::~GameEngine()
 	delete sdl;
 }
 
+void GameEngine::RemoveActor(Actor* ActorToRemove)
+{
+	SDL_Delay(DeltaTime / 2); // waits roughly half a frame
+	ActorToRemove->~Actor();
+	_Actors.remove(ActorToRemove);
+	LOGALL("Deleting Actor", 1);
+}
+
 GameEngine::GameEngine()
 {
 	GameplayStatics::SetGameEngineRef(this);
+	GameplayStatics::SetEventSystem(&_EventSystem);
 }
 
 void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight)
@@ -48,12 +57,6 @@ void GameEngine::start()
 
 		// Render
 		_Window->updateSurface();
-		
-
-		if(GameplayStatics::GetEventSystem()) 
-		{
-		LOG("tjdncklsndflkjsdn", 3);
-		}
 
 #pragma region Event System
 
@@ -62,10 +65,11 @@ void GameEngine::start()
 			{
 				//triggers all beginplays evey tick in case any new object is added.
 				_EventSystem.TriggerBeginPlay(actor);
+
 			}
 			for (auto const& actor : _Actors)
 			{
-				_EventSystem.TriggerTick(actor, (float)DeltaTime);// render present
+				_EventSystem.TriggerTick(actor, (float)DeltaTime);				
 			}
 		SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer()); // render
 #pragma endregion

@@ -26,9 +26,5 @@ public:
 
 
 protected:
-
-	//MoveShipX _moveShipX;
-	//MoveShipY _moveShipY;
-	Actor* playerActor;
 	bool bMoveDirection[4];//0-> up 1->left 2->down 3->right
 };
