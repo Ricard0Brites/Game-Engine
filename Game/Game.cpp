@@ -2,7 +2,7 @@
 #include <iostream>
 #include "GameEngine.h"
 #include "Player.h"
-#include "Enemy.h"
+#include "Enemies/Loner.h"
 
 int main(int argc, char ** argv)
 {
@@ -29,19 +29,15 @@ int main(int argc, char ** argv)
     engine.SetPlayerReference(Player1);
 
     //Enemies
-    Enemy* enemy[TotalEnemies]{};
+    Loner* enemy[TotalEnemies]{};
 
     for (int i = 0; i < 10; i++) 
     {
-        enemy[i] = engine.CreateActor<Enemy>(nullptr);
-		enemy[i]->AssignTexture("src/Sprites/LonerB.bmp", 4, 4, 2, enemy[i]);
+        enemy[i] = engine.CreateActor<Loner>(nullptr);
+		enemy[i]->AssignTexture("src/Sprites/LonerB.bmp", 4, 4, 2, (Actor*)enemy[i]);
 		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector((- 100 * (float)i) - 100, 0, 0));
 		enemy[i]->GetSpriteComponent()->PlayAnimation(true);
     }
-
-  
-    
-
 
     engine.start();// no code after this function will be called. from this point on to do anything it has to be inside the gameloop... this means only spawned and active actors can spawn other actors.
     

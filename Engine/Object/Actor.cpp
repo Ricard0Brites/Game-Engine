@@ -21,12 +21,7 @@ void Actor::BeginPlay()
 
 void Actor::Tick(float DeltaSeconds)
 {
-	if(MySprite)
-	{
- 		MySprite->Tick(DeltaSeconds);
-	}
-
-
+	if(MySprite != nullptr)MySprite->Tick(DeltaSeconds);
 }
 
 void Actor::OnKeyPressed(InputKeyCodes KeyCode)

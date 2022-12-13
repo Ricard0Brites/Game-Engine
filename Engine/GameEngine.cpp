@@ -10,7 +10,6 @@ GameEngine::~GameEngine()
 
 void GameEngine::RemoveActor(Actor* ActorToRemove)
 {
-	SDL_Delay((int)DeltaTime / 2); // waits roughly half a frame
 	ActorToRemove->~Actor();
 	_Actors.remove(ActorToRemove);
 	LOG("Deleting Actor", 1);
@@ -65,12 +64,12 @@ void GameEngine::start()
 			for (auto const &actor : _Actors)
 			{
 				//triggers all beginplays evey tick in case any new object is added.
-				_EventSystem.TriggerBeginPlay(actor);
+				if(actor)_EventSystem.TriggerBeginPlay(actor);
 
 			}
 			for (auto const& actor : _Actors)
 			{
-				_EventSystem.TriggerTick(actor, (float)DeltaTime);				
+				if(actor)_EventSystem.TriggerTick(actor, (float)DeltaTime);				
 			}
 		SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer()); // render
 #pragma endregion

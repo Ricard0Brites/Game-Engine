@@ -109,13 +109,15 @@ void XennonStaticSpriteComponent::SetTextureIndexToDisplay(int NewIndex)
 void XennonStaticSpriteComponent::AnimTansitionToIndex(int Index, float TotalSeconds, bool *StateReset)
 {
 	_CurrentIndex;
+	int maxNumberOfLoops = abs(Index - _CurrentIndex);
 	std::thread t1([=]() 
 	{
+		*StateReset = true;
 		int loopCounter = 0;
 		if (Index > _CurrentIndex)
 		{
 			//++
-			while (_CurrentIndex < Index)
+			while (_CurrentIndex < Index && loopCounter <= maxNumberOfLoops)
 			{
 				GameplayStatics::Delay(fabs(TotalSeconds / (Index - _CurrentIndex)));
 				SetTextureIndexToDisplay(_CurrentIndex + 1);
@@ -125,12 +127,12 @@ void XennonStaticSpriteComponent::AnimTansitionToIndex(int Index, float TotalSec
 		else
 		{
 			//--
-			loopCounter = Index;
-			while (_CurrentIndex > Index)
+			loopCounter = 0;
+			while (_CurrentIndex > Index && loopCounter <= maxNumberOfLoops)
 			{	
 				GameplayStatics::Delay(fabs(TotalSeconds / (_CurrentIndex - Index)));
 				SetTextureIndexToDisplay(_CurrentIndex - 1);
-				loopCounter--;
+				loopCounter++;
 			}
 		}
 		*StateReset = false;

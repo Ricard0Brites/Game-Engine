@@ -28,5 +28,8 @@ protected:
 
 private:
 	bool _AnimStateManager;
-
+	int _IdleShipAnimIndex = 4;
+	
+	bool _CanKeepShooting = false; 
+	float _ShootingTimer = 0;
 };

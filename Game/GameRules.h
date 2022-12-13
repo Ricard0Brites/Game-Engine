@@ -7,6 +7,7 @@ public:
 	//Rocket
 	static float GetRocketMovementSpeed() { return _RocketSpeed; }
 	static int GetRocketDamage() { return _RocketDamage; }
+	static int GetTimeBetweenShots() { return _TimeBetweenRocketSpawn; }
 
 	//Enemy
 	static float GetEnemyMovementSpeed() { return _EnemySpeed; }
@@ -21,6 +22,7 @@ private:
 	//Rockets/Missiles
 	static float _RocketSpeed;
 	static int _RocketDamage;
+	static int _TimeBetweenRocketSpawn;
 
 	//enemy
 	static float _EnemySpeed;

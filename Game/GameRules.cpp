@@ -7,6 +7,7 @@ float GameRules::_PlayerMovementSpeed = 0.2f;
 //Rocket
 float GameRules::_RocketSpeed = 0.7f;
 int GameRules::_RocketDamage = 1;
+int GameRules::_TimeBetweenRocketSpawn = 200;
 
 //Enemy
 float GameRules::_EnemySpeed = 0.1f;

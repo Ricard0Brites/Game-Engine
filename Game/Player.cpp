@@ -7,12 +7,12 @@
 
 #include "Components\XennonSpriteComponent.h"
 
-
+#include <thread>
 
 
 Player::Player(Actor* Parent) : Actor(Parent)
 {
-	MySprite = (SpriteComponent*) new XennonStaticSpriteComponent("src/Sprites/Ship1.bmp", 7, 1, this, 4); // starting state = 4
+	MySprite = (SpriteComponent*) new XennonStaticSpriteComponent("src/Sprites/Ship1.bmp", 7, 1, this, _IdleShipAnimIndex); // starting state = 4
 }
 
 Player::~Player()
@@ -25,7 +25,7 @@ void Player::BeginPlay()
 
 void Player::Tick(float DeltaSeconds)
 {
-	if (MySprite) MySprite->Tick(DeltaSeconds);
+	if (MySprite)MySprite->Tick(DeltaSeconds);
 	
 	if (bMoveDirection[0])//up
 	{
@@ -59,7 +59,22 @@ void Player::Tick(float DeltaSeconds)
 		}
 	}
 		
-	// the players falling speed (makes it look liek the level is going up)
+	if (_CanKeepShooting)
+	{	
+		if( _ShootingTimer >= GameRules::GetTimeBetweenShots())
+		{
+			Missile* Rocket = GameplayStatics::GetGameEngine()->CreateActor<Missile>(nullptr);
+			Rocket->GetTransform()->SetLocation(Vector::CreateVector(MyTransform->GetLocation().X + (MySprite->GetSpriteWidth() / 2) - 10, MyTransform->GetLocation().Y - (MySprite->GetSpriteHeight() / 2), MyTransform->GetLocation().Z));
+			Rocket->AssignTexture("src/Sprites/missile1.bmp", 2, 1, 0.5f, Rocket);
+			Rocket->GetSpriteComponent()->SetScale(Vector::CreateVector(1, 1, 1), nullptr);
+			Rocket->GetSpriteComponent()->PlayAnimation(true);
+			Rocket->StartMovement();
+			_ShootingTimer = 0;
+		}
+		_ShootingTimer += DeltaSeconds;
+	}
+
+	// the players falling speed (cheaper than physics...?)
 	if (GetTransform()->GetLocation().Y <= GameplayStatics::GetScreenHeight() - (GetCustomSpriteComponent()->GetTextureHeight() / 2))
 	{
 		GetTransform()->SetLocation(Vector::CreateVector(
@@ -108,13 +123,8 @@ void Player::OnKeyPressed(InputKeyCodes KeyCode)
 		}
 		case InputKeyCodes::K_Space:
 		case InputKeyCodes::GamepadFaceBottom:
-		{
-			Missile* Rocket = GameplayStatics::GetGameEngine()->CreateActor<Missile>(nullptr);
-			Rocket->GetTransform()->SetLocation(Vector::CreateVector(MyTransform->GetLocation().X + (MySprite->GetSpriteWidth() / 2) - 10, MyTransform->GetLocation().Y - (MySprite->GetSpriteHeight() / 2), MyTransform->GetLocation().Z));
-			Rocket->AssignTexture("src/Sprites/missile1.bmp", 2, 1, 0.5f, Rocket);
-			Rocket->GetSpriteComponent()->SetScale(Vector::CreateVector(1,1,1), nullptr);
-			Rocket->GetSpriteComponent()->PlayAnimation(true);
-			Rocket->StartMovement();
+		{	
+			_CanKeepShooting = true; 
 			break;
 		}
 	}
@@ -136,7 +146,7 @@ void Player::OnKeyReleased(InputKeyCodes KeyCode)
 		case InputKeyCodes::GamepadArrowLeft:
 		{
 			bMoveDirection[1] = false;
-			if(_AnimStateManager) GetCustomSpriteComponent()->AnimTansitionToIndex(4, 0.1f, &_AnimStateManager);
+			if(!_AnimStateManager) GetCustomSpriteComponent()->AnimTansitionToIndex(_IdleShipAnimIndex, 0.1f, &_AnimStateManager);
 			break;
 		}
 		case InputKeyCodes::K_s:
@@ -151,10 +161,14 @@ void Player::OnKeyReleased(InputKeyCodes KeyCode)
 		case InputKeyCodes::GamepadArrowRight:
 		{
 			bMoveDirection[3] = false;
-			if(_AnimStateManager) GetCustomSpriteComponent()->AnimTansitionToIndex(4, 0.1f, &_AnimStateManager);
+			if(!_AnimStateManager) GetCustomSpriteComponent()->AnimTansitionToIndex(_IdleShipAnimIndex, 0.1f, &_AnimStateManager);
 			break;
 		}
-
+		case InputKeyCodes::K_Space:
+		case InputKeyCodes::GamepadFaceBottom:
+		{
+			_CanKeepShooting = false;
+		}
 	}
 }
 

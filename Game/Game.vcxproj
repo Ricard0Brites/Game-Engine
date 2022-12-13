@@ -20,14 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\XennonSpriteComponent.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Enemies\Loner.h" />
     <ClInclude Include="GameRules.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\XennonSpriteComponent.cpp" />
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Enemies\Loner.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameRules.cpp" />
     <ClCompile Include="Missile.cpp" />
