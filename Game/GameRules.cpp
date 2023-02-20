@@ -13,4 +13,4 @@ int GameRules::_TimeBetweenRocketSpawn = 200;
 float GameRules::_EnemySpeed = 0.1f;
 
 //level 
-float  GameRules::_LevelMovementSpeed = 0.08f;
+float  GameRules::_LevelMovementSpeed = 0.04f;
