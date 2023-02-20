@@ -9,6 +9,8 @@
 
 #include <thread>
 
+#define PLAYERSPEED 0.2f
+
 
 Player::Player(Actor* Parent) : Actor(Parent)
 {
@@ -31,7 +33,7 @@ void Player::Tick(float DeltaSeconds)
 	{
 		if (GetTransform()->GetLocation().Y >= 0 - (GetCustomSpriteComponent()->GetTextureHeight() / 2))
 		{
-			GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0, -0.2f, 0)) * DeltaSeconds);
+			GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0, -PLAYERSPEED, 0)) * DeltaSeconds);
 		}
 	}
 
@@ -39,7 +41,7 @@ void Player::Tick(float DeltaSeconds)
 	{
 		if (GetTransform()->GetLocation().X >= 0 - (GetCustomSpriteComponent()->GetTextureWidth() / 2))
 		{
-			GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(-0.2f, 0, 0)) * DeltaSeconds);
+			GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(-PLAYERSPEED, 0, 0)) * DeltaSeconds);
 		}
 	}
 
@@ -47,15 +49,15 @@ void Player::Tick(float DeltaSeconds)
 	{
 		if (GetTransform()->GetLocation().Y <= GameplayStatics::GetScreenHeight() - (GetCustomSpriteComponent()->GetTextureHeight() / 2))
 		{
-			GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0, 0.2f, 0)) * DeltaSeconds);
+			GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0, PLAYERSPEED, 0)) * DeltaSeconds);
 		}
 	}
 
 	if (bMoveDirection[3])//right
 	{
-		if(GetTransform()->GetLocation().X <= GameplayStatics::GetScreenWidth() - (GetCustomSpriteComponent()->GetTextureWidth() / 2))
+		if (GetTransform()->GetLocation().X <= GameplayStatics::GetScreenWidth() - (GetCustomSpriteComponent()->GetTextureWidth() / 2))
 		{
-			GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(0.2f, 0, 0)) * DeltaSeconds);
+			GetTransform()->SetLocation(GetTransform()->GetLocation() += (Vector::CreateVector(PLAYERSPEED, 0, 0)) * DeltaSeconds);
 		}
 	}
 		
@@ -74,8 +76,8 @@ void Player::Tick(float DeltaSeconds)
 		_ShootingTimer += DeltaSeconds;
 	}
 
-	// the players falling speed (cheaper than physics...?)
-	if (GetTransform()->GetLocation().Y <= GameplayStatics::GetScreenHeight() - (GetCustomSpriteComponent()->GetTextureHeight() / 2))
+	// the players falling speed (AKA Level Movement)
+	if (GetTransform()->GetLocation().Y <= GameplayStatics::GetScreenHeight() - (GetCustomSpriteComponent()->GetTextureHeight() / 2) && !bMoveDirection[0])
 	{
 		GetTransform()->SetLocation(Vector::CreateVector(
 		/*X*/ GetTransform()->GetLocation().X,
