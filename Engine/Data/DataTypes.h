@@ -25,7 +25,7 @@ public:
 	//Fills the vector with the provided float
 	void Fill(float Payload);
 	// Returns a copy of a custom made Vector
-	static Vector CreateVector(float PayloadX, float PayloadY, float PayloadZ) { Vector* temp = new Vector; temp->X = PayloadX; temp->Y = PayloadY; temp->Z = PayloadZ; return *temp; };
+	static Vector CreateVector(float PayloadX, float PayloadY, float PayloadZ) { Vector vec; vec.X = PayloadX; vec.Y = PayloadY; vec.Z = PayloadZ; return vec; };
 
 	//operators ----------------------------
 
