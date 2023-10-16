@@ -5,7 +5,7 @@
 class SDLWrapper
 {
 public:
-	SDLWrapper(Uint32 flags = 0) throw(InitError);
+	SDLWrapper(Uint32 flags = 0);
 
 	virtual ~SDLWrapper();
 };

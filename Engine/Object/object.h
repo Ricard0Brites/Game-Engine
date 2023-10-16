@@ -1,5 +1,5 @@
 #pragma once
-#include "../../include/SDL2/SDL_events.h"
+#include "SDL_events.h"
 #include "../Data/DataTypes.h"
 
 enum InputKeyCodes;
