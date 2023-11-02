@@ -24,9 +24,11 @@
     <ClInclude Include="InitError.h" />
     <ClInclude Include="Logger\Logger.h" />
     <ClInclude Include="Object\Actor.h" />
+    <ClInclude Include="Object\ActorComponents\CollisionComponent.h" />
     <ClInclude Include="Object\ActorComponents\SpriteComponent.h" />
     <ClInclude Include="Object\object.h" />
     <ClInclude Include="SDLWrapper.h" />
+    <ClInclude Include="Systems\Collision\CollisionSystem.h" />
     <ClInclude Include="Systems\EventSystem\EventSystem.h" />
     <ClInclude Include="Systems\Input\InputSystem.h" />
     <ClInclude Include="Window.h" />
@@ -38,6 +40,7 @@
     <ClCompile Include="Object\Actor.cpp" />
     <ClCompile Include="Object\ActorComponents\SpriteComponent.cpp" />
     <ClCompile Include="SDLWrapper.cpp" />
+    <ClCompile Include="Systems\Collision\CollisionSystem.cpp" />
     <ClCompile Include="Systems\EventSystem\EventSystem.cpp" />
     <ClCompile Include="Systems\Input\InputSystem.cpp" />
     <ClCompile Include="Window.cpp" />

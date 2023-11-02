@@ -12,6 +12,7 @@
 #include "Window.h"
 
 #include "../include/SDL2/SDL_timer.h"
+#include "Systems/Collision/CollisionSystem.h"
 
 
 // FWD declarations
@@ -21,6 +22,7 @@ class SpriteComponent;
 
 class GameEngine
 {
+	friend CollisionSystem;
 public:
 	void init(std::string windowTitle, int windowWidth, int windowHeight);
 	void start();
@@ -33,6 +35,10 @@ private:
 	 Window* _Window;
 	 Actor* _PlayerReference = nullptr;
 
+	 InputSystem _InputSystem;
+	 CollisionSystem _CollisionSystem;
+	 EventSystem _EventSystem;
+	 std::list<Actor*> _Actors;
 
 #pragma region Time Management
 
@@ -40,9 +46,6 @@ protected:
 	double DeltaTime = 0;
 
 #pragma endregion
-	InputSystem _InputSystem;
-	EventSystem _EventSystem;
-	std::list<Actor*> _Actors;
 public:
 // Creates an Actor of type T and returns a reference to said object
 	template <typename T>
@@ -86,6 +89,7 @@ public:
 	static SDL_Surface* LoadSurface(std::string filePath, SDL_Renderer* renderTarget);
 
 	static Vector NormalizeVector(Vector VectorToNormalize);
+	static float GetVectorNorm(const Vector* V);
 
 	//to create child components of the sprite renderer
 	static SDL_Texture* CreateTextureFromSurface(std::string TexturePath);

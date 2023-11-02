@@ -47,11 +47,6 @@ void Loner::AssignTexture(std::string TexturePath, int TileAmountX, int TileAmou
 	Actor::AssignTexture(TexturePath, TileAmountX, TileAmountY, AnimationTimeInSeconds, ComponentOwner);
 }
 
-Transform* Loner::GetTransform()
-{
-	return MyTransform;
-}
-
 SpriteComponent* Loner::GetSpriteComponent()
 {
 	return MySprite;

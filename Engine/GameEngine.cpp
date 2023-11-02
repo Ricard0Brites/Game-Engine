@@ -6,6 +6,13 @@ GameEngine::~GameEngine()
 {
 	delete _Window;
 	delete sdl;
+	for(auto Actor : _Actors)
+	{
+		if(Actor)
+		{
+			delete Actor;
+		}
+	}
 }
 
 void GameEngine::RemoveActor(Actor* ActorToRemove)
@@ -57,6 +64,9 @@ void GameEngine::start()
 
 		// Render
 		_Window->updateSurface();
+
+		//Check Collisions
+		_CollisionSystem.CheckCollision();
 
 #pragma region Event System
 
@@ -114,6 +124,11 @@ Vector GameplayStatics::NormalizeVector(Vector VectorToNormalize)
 
 	return NewVec;
 
+}
+
+float GameplayStatics::GetVectorNorm(const Vector* V)
+{
+	return sqrt((V->X * V->X) + (V->Y * V->Y) + (V->Z * V->Z));
 }
 
 SDL_Texture* GameplayStatics::CreateTextureFromSurface(std::string TexturePath)

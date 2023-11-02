@@ -14,8 +14,6 @@ public:
 
 	virtual void AssignTexture(std::string TexturePath, int TileAmountX, int TileAmountY, float AnimationTimeInSeconds, Actor* ComponentOwner) override;
 
-	virtual Transform* GetTransform() override;
-
 	SpriteComponent* GetSpriteComponent();
 
 private:
