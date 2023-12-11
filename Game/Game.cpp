@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "Enemies/Loner.h"
 
-int main(int argc, char ** argv)
+int main(int argc, char** argv)
 {
     GameEngine engine;
 	const int TotalEnemies = 10;
