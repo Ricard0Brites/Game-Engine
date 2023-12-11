@@ -7,7 +7,7 @@
 
 Loner::Loner(Actor* Owner) : Actor(Owner)
 {
-
+	CollisionRadius = 1;
 }
 
 Loner::~Loner()
@@ -30,15 +30,10 @@ void Loner::Tick(float DeltaSeconds)
 	));
 
 	// should only trigger once per Class instance
-	if (GetTransform()->GetLocation().X > (float)(GameplayStatics::GetScreenWidth() + 10) && !_HasBeenTriggered)
+	if (GetTransform()->GetLocation().X > (float)(GameplayStatics::GetScreenWidth() + 10))
 	{
-		// this is in a thread to avoid possible problems by deleting the actor and still try to do something with it right after (fool proof the system if you will)
-		_HasBeenTriggered = true;
-		std::thread t1([&]()
-			{
-				GameplayStatics::GetGameEngine()->RemoveActor(this);
-			});
-		t1.detach();
+		this;
+		GameplayStatics::GetGameEngine()->RemoveActor(this);
 	}
 }
 
@@ -50,4 +45,9 @@ void Loner::AssignTexture(std::string TexturePath, int TileAmountX, int TileAmou
 SpriteComponent* Loner::GetSpriteComponent()
 {
 	return MySprite;
+}
+
+void Loner::OnCollisionStarted(const Actor* OtherActor)
+{
+	GameplayStatics::GetGameEngine()->RemoveActor(this);
 }

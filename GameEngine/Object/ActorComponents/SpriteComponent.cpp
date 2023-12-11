@@ -33,6 +33,10 @@ SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY
 	ElapsedTime = 0;
 }
 
+SpriteComponent::SpriteComponent()
+{
+	
+}
 
 SpriteComponent::~SpriteComponent()
 {

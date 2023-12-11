@@ -7,7 +7,6 @@ public:
 	Loner(Actor* Owner);
 	~Loner();
 
-
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
@@ -16,7 +15,7 @@ public:
 
 	SpriteComponent* GetSpriteComponent();
 
-private:
+	virtual void OnCollisionStarted(const Actor* OtherActor) override;
 	
-	bool _HasBeenTriggered = false;
+
 };

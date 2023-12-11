@@ -1,6 +1,6 @@
 #pragma once
-#include "..\Object\Actor.h"
-#include "..\Logger\Logger.h"
+#include "Object\Actor.h"
+#include "Logger\Logger.h"
 
 class Actor;
 

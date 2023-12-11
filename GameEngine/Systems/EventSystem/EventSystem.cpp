@@ -11,6 +11,8 @@ EventSystem::~EventSystem()
 
 void EventSystem::TriggerTick(Actor* actor, float DeltaSeconds)
 {
+	if(actor->IsPendingKill)
+		return;
 	actor->Tick(DeltaSeconds);
 }
 

@@ -18,6 +18,4 @@ protected:
 	bool CanMove = false;
 	float RocketSpeed;
 	int RocketDamage;
-private:
-	bool _HasBeenTriggered = false;
 };

@@ -28,22 +28,29 @@ void CollisionSystem::CheckCollision()
 			if(Entity->CollisionRadius == -1 || ComparativeEntity->CollisionRadius == -1 ) // skip non collideable objects
 				continue;
 
-			if(Entity->ActorsInRange.size() <= 0) // if there are no actors in range skip
-				continue;
+			Vector RelativeActorLocation = ComparativeEntity->GetTransform()->GetLocation() - Entity->GetTransform()->GetLocation();
+			float DistanceBetweenActors = GameplayStatics::GetVectorNorm(&RelativeActorLocation);
 
 			if(LISTCONTAINS(Entity->ActorsInRange, ComparativeEntity) || LISTCONTAINS(ComparativeEntity->ActorsInRange, Entity)) //skip if either actor is already present in eithers list
-				continue;
-
-			Vector RelativeActorLocation = ComparativeEntity->GetTransform()->GetLocation() - Entity->GetTransform()->GetLocation();
-			float DistanceBetweenActors =  GameplayStatics::GetVectorNorm(&RelativeActorLocation);
-
-			if(DistanceBetweenActors < Entity->CollisionRadius)
 			{
-				Entity->OnCollisionStarted(ComparativeEntity);
-				Entity->ActorsInRange.push_front(ComparativeEntity);
+				if(DistanceBetweenActors < Entity->CollisionRadius + ComparativeEntity->CollisionRadius)
+				{
+					Entity->ActorsInRange.remove(ComparativeEntity);
+					ComparativeEntity->ActorsInRange.remove(Entity);
+				}
+				continue;
+			}
+
+			if(DistanceBetweenActors < Entity->CollisionRadius + ComparativeEntity->CollisionRadius)
+			{					
+				if(!Entity->IsPendingKill && !ComparativeEntity->IsPendingKill)
+				{
+					Entity->OnCollisionStarted(ComparativeEntity);
+					Entity->ActorsInRange.push_front(ComparativeEntity);
 				
-				ComparativeEntity->OnCollisionStarted(Entity);
-				ComparativeEntity->ActorsInRange.push_front(Entity);
+					ComparativeEntity->OnCollisionStarted(Entity);
+					ComparativeEntity->ActorsInRange.push_front(Entity);
+				}
 			}
 		}
 	}

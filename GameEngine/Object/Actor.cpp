@@ -7,19 +7,23 @@ Actor::Actor(Actor* Parent)
 	Owner = Parent;
 	MyTransform = new Transform();
 	CollisionRadius = 0;
+	IsPendingKill = false;	
+}
 
-	
+Actor::Actor(Actor* Parent, const char* DisplayName) : Actor(Parent)
+{
+	ActorDisplayName = DisplayName;
 }
 
 Actor::~Actor()
 {
-	if(MyTransform) delete MyTransform;
-	if(MySprite) delete MySprite;
+	delete MyTransform;
+	delete MySprite;
 }
 
 void Actor::Tick(float DeltaSeconds)
 {
-	if(MySprite != nullptr)MySprite->Tick(DeltaSeconds);
+	if(MySprite)MySprite->Tick(DeltaSeconds);
 }
 
 void Actor::AssignTexture(std::string TexturePath, int TileAmountX, int TileAmountY, float AnimationTimeInSeconds, Actor* ComponentOwner)
@@ -29,6 +33,7 @@ void Actor::AssignTexture(std::string TexturePath, int TileAmountX, int TileAmou
 
 void Actor::OnCollisionStarted(const Actor* OtherActor)
 {
+
 }
 
 void Actor::BeginPlay()
@@ -38,12 +43,15 @@ void Actor::BeginPlay()
 
 void Actor::OnInputAxis(InputKeyCodes KeyCode, Vector AxisValue)
 {
+
 }
 
 void Actor::OnKeyPressed(InputKeyCodes KeyCode)
 {
+
 }
 
 void Actor::OnKeyReleased(InputKeyCodes KeyCode)
 {
+
 }

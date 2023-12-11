@@ -1,9 +1,8 @@
 #pragma once
 #include "object.h"
-#include "..\Data\DataTypes.h"
+#include "Data\DataTypes.h"
 #include "ActorComponents\SpriteComponent.h"
 #include "ActorComponents\CollisionComponent.h"
-
 
 class Transform;
 class SpriteComponent;
@@ -12,7 +11,8 @@ class Vector;
 class Actor : public Object, public CollisionComponent
 {
 public:
-	Actor(Actor* Owner);
+	Actor(Actor* Parent);
+	Actor(Actor* Parent, const char* DisplayName);
 	~Actor();
 
 	virtual void Tick(float DeltaSeconds) override;
@@ -20,14 +20,13 @@ public:
 	Transform* GetTransform() { return MyTransform; }
 
 	Actor* GetOwner() { return Owner; }
-
-	bool HasInit = false;
-
-	virtual void AssignTexture(std::string TexturePath, int TileAmountX, int TileAmountY, float AnimationTimeInSeconds, Actor* ComponentOwner);
 	
 	SpriteComponent* GetSpriteComponent() { return MySprite; }
 
+	bool HasInit = false, IsPendingKill = false;
 	int CollisionRadius = -1;
+
+	virtual void AssignTexture(std::string TexturePath, int TileAmountX, int TileAmountY, float AnimationTimeInSeconds, Actor* ComponentOwner);
 
 	virtual void OnCollisionStarted(const Actor* OtherActor) override;
 
@@ -39,12 +38,13 @@ public:
 
 	virtual void OnKeyReleased(InputKeyCodes KeyCode) override;
 
+	std::string ActorDisplayName = "";
 protected:
 	Transform* MyTransform;
 	SpriteComponent* MySprite;
 
-	
-	//nullptr id this object is independent
+	//nullptr id means this object is independent
 	Actor* Owner = nullptr;
+	int a = 0;
 
 };

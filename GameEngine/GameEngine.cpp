@@ -8,18 +8,14 @@ GameEngine::~GameEngine()
 	delete sdl;
 	for(auto Actor : _Actors)
 	{
-		if(Actor)
-		{
-			delete Actor;
-		}
+		delete Actor;
 	}
 }
 
 void GameEngine::RemoveActor(Actor* ActorToRemove)
 {
-	ActorToRemove->~Actor();
-	_Actors.remove(ActorToRemove);
-	LOG("Deleting Actor", 1);
+	ActorToRemove->IsPendingKill = true;
+	LOG("Adding Actor To Pending Kill List", 0);
 }
 
 GameEngine::GameEngine()
@@ -48,11 +44,11 @@ void GameEngine::start()
 	//------- Game Loop -------------------------------------------------------------------------------
 	while (isRunning)
 	{
-#pragma region Delta Time
+		#pragma region Delta Time
 		last = now;
 		now = SDL_GetPerformanceCounter();
 		DeltaTime = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency());
-#pragma endregion
+		#pragma endregion
 
 		SDL_PollEvent(&ev);
 		// Stops execution
@@ -68,7 +64,7 @@ void GameEngine::start()
 		//Check Collisions
 		_CollisionSystem.CheckCollision();
 
-#pragma region Event System
+		#pragma region Event System
 
 		SDL_RenderClear(GameplayStatics::GetGameEngine()->GetRenderer()); // clear screen
 			for (auto const &actor : _Actors)
@@ -83,6 +79,20 @@ void GameEngine::start()
 			}
 		SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer()); // render
 #pragma endregion
+
+		#pragma region Clean Pending Kill Actors
+		std::list<Actor*> Cache = _Actors;
+		for (Actor* actor : _Actors)
+		{
+			if(actor->IsPendingKill)
+			{
+				Cache.remove(actor);
+				printf("Deleting %s \n", actor->ActorDisplayName.c_str());
+				delete actor;
+			}
+		}
+		_Actors = Cache;
+		#pragma endregion
 	}
 	//-------------------------------------------------------------------------------------------------
 }

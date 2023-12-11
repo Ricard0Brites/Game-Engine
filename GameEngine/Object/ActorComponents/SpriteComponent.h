@@ -13,6 +13,7 @@ class SpriteComponent
 {
 public:
 	SpriteComponent(std::string TexturePath, int TilesX, int TilesY, float AnimationTimeInSeconds, Actor* ComponentOwner);
+	SpriteComponent();
 	~SpriteComponent();
 
 	virtual void Tick(float DeltaSeconds);

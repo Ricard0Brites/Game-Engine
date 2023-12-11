@@ -35,7 +35,7 @@ int main(int argc, char** argv)
     {
         enemy[i] = engine.CreateActor<Loner>(nullptr);
 		enemy[i]->AssignTexture("src/Sprites/LonerB.bmp", 4, 4, 2, (Actor*)enemy[i]);
-		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector((- 100 * (float)i) - 100, 0, 0));
+		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector((- 150 * (float)i) - 100, 0, 0));
 		enemy[i]->GetSpriteComponent()->PlayAnimation(true);
     }
 

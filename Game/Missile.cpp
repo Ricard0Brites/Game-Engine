@@ -5,10 +5,11 @@
 
 #include <thread>
 
-Missile::Missile(Actor* Parent) :Actor(Parent)
+Missile::Missile(Actor* Parent) : Actor(Parent)
 {
 	RocketSpeed = GameRules::GetRocketMovementSpeed();
 	RocketDamage = GameRules::GetRocketDamage();
+	CollisionRadius = 1;
 }
 
 Missile::~Missile()
@@ -27,15 +28,9 @@ void Missile::Tick(float DeltaSeconds)
 	GetTransform()->SetLocation(Vector::CreateVector(GetTransform()->GetLocation().X, GetTransform()->GetLocation().Y + (-RocketSpeed * DeltaSeconds), GetTransform()->GetLocation().Z));
 
 	// should only trigger once per Class instance
-	if(GetTransform()->GetLocation().Y <= -20 && !_HasBeenTriggered) 
+	if(GetTransform()->GetLocation().Y <= -20) 
 	{
-		// this is in a thread to avoid possible problems by deleting the actor and still try to do something with it right after (fool proof the system if you will)
-		_HasBeenTriggered = true;
-		std::thread t1([&]()
-		{
-			GameplayStatics::GetGameEngine()->RemoveActor(this);
-		});
-		t1.detach();
+		GameplayStatics::GetGameEngine()->RemoveActor(this);
 	}
 }
 
