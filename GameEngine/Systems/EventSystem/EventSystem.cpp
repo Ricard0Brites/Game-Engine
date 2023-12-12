@@ -1,5 +1,6 @@
 #include "EventSystem.h"
 #include "..\..\GameEngine.h"
+#include "..\Game\Player.h"
 
 EventSystem::EventSystem()
 {
@@ -31,8 +32,14 @@ void EventSystem::TriggerOnInputPress(InputKeyCodes KeyCode)
 		EXECUTIONLOG;
 		return;
 	}
-
-	GameplayStatics::GetGameEngine()->GetPlayer()->OnKeyPressed(KeyCode);
+	if(GameEngine* engine = GameplayStatics::GetGameEngine())
+	{
+		if(Actor* playerActor = engine->GetPlayer())
+		{
+			if(Player* player = static_cast<Player*>(playerActor))
+				player->OnKeyPressed(KeyCode);
+		}
+	}
 }
 
 void EventSystem::TriggerOnInputRelease(InputKeyCodes KeyCode)
@@ -43,7 +50,14 @@ void EventSystem::TriggerOnInputRelease(InputKeyCodes KeyCode)
 		EXECUTIONLOG;
 		return;
 	}
-	GameplayStatics::GetGameEngine()->GetPlayer()->OnKeyReleased(KeyCode);
+	if(GameEngine* engine = GameplayStatics::GetGameEngine())
+	{
+		if(Actor* playerActor = engine->GetPlayer())
+		{
+			if(Player* player = static_cast<Player*>(playerActor))
+				player->OnKeyReleased(KeyCode);
+		}
+	}
 }
 
 void EventSystem::TriggerOnInputAxis(InputKeyCodes KeyCode, Vector Data)
@@ -54,5 +68,12 @@ void EventSystem::TriggerOnInputAxis(InputKeyCodes KeyCode, Vector Data)
 		EXECUTIONLOG;
 		return;
 	}
-	GameplayStatics::GetGameEngine()->GetPlayer()->OnInputAxis(KeyCode, Data);
+	if(GameEngine* engine = GameplayStatics::GetGameEngine())
+	{
+		if(Actor* playerActor = engine->GetPlayer())
+		{
+			if(Player* player = static_cast<Player*>(playerActor))
+				player->OnInputAxis(KeyCode, Data);
+		}
+	}
 }

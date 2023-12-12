@@ -35,7 +35,6 @@ void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight
 
 void GameEngine::start()
 {
-	bool isRunning = true;
 	SDL_Event ev;
 
 	//Delta Time
@@ -43,8 +42,10 @@ void GameEngine::start()
 	Uint64 last = 0;
 
 	//------- Game Loop -------------------------------------------------------------------------------
-	while (isRunning)
+	while (IsRunning)
 	{
+		if(GetPlayer()->IsPendingKill)
+			QuitGame();
 		#pragma region Delta Time
 		last = now;
 		now = SDL_GetPerformanceCounter();
@@ -53,17 +54,20 @@ void GameEngine::start()
 
 		SDL_PollEvent(&ev);
 		// Stops execution
-		if (ev.type == SDL_QUIT) isRunning = false;
+		if (ev.type == SDL_QUIT)
+		{
+			IsRunning = false;
+			break;
+		}
 
-	
 		//listen for input
 		_InputSystem.ListenForInput(&ev);
 
-		// Render
-		_Window->updateSurface();
-
 		//Check Collisions
 		_CollisionSystem.CheckCollision();
+
+		// Render
+		_Window->updateSurface();
 
 		#pragma region Event System
 
@@ -161,15 +165,4 @@ void GameplayStatics::QueryTexture(SDL_Texture* TextureToQuery, int& OutTextureW
 void GameplayStatics::RenderTexture(SDL_Texture* TextureToRender, SDL_Rect* TexturePortion, SDL_Rect* DisplayQuad)
 {
 	SDL_RenderCopy(GameplayStatics::GetGameEngine()->GetRenderer(), TextureToRender, TexturePortion, DisplayQuad);
-}
-
-void GameplayStatics::Delay(float Sec, void(&FunctionToCall)())
-{
-	thread* t1 = new thread([&](){
-
-		GameplayStatics::Delay(Sec);
-		FunctionToCall();
-	});
-	t1->detach();
-	delete t1;
 }

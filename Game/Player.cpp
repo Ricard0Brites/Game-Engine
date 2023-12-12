@@ -8,8 +8,10 @@
 #include "Components\XennonSpriteComponent.h"
 
 #include <thread>
+#include <chrono>
 
 #define PLAYERSPEED 0.2f
+
 
 
 Player::Player(Actor* Parent) : Actor(Parent)
@@ -21,6 +23,7 @@ Player::Player(Actor* Parent) : Actor(Parent)
 
 Player::~Player()
 {
+	if(MySprite) delete MySprite;
 }
 
 void Player::BeginPlay()
@@ -181,5 +184,31 @@ void Player::OnInputAxis(InputKeyCodes KeyCode, Vector AxisValue)
 	GetTransform()->SetLocation(GetTransform()->GetLocation() += (AxisValue * 0.2f) * GameplayStatics::GetGameEngine()->GetDeltaSeconds());
 }
 
+void Player::OnCollisionStarted(const Actor* OtherActor)
+{
+	// play ship destruct animation
+	if(dynamic_cast<const Missile*>(OtherActor))
+		return;
+	if(IsDead)
+		return;
 
+	IsDead = true;
+	delete MySprite;
+	MySprite = new SpriteComponent("src/Sprites/Ship2.bmp", 7, 3, 2, this);
+	MySprite->PlayAnimation(false);
+
+	// destroy actor
+	thread* t1 = new thread([&]() 
+	{
+		std::this_thread::sleep_for(std::chrono::seconds(3));
+		DestroyPlayer();
+	});
+	t1->detach();
+	delete t1;
+}
+
+void Player::DestroyPlayer()
+{
+	GameplayStatics::GetGameEngine()->RemoveActor(this);
+}
 

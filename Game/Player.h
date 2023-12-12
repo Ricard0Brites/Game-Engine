@@ -5,8 +5,6 @@
 class Player : public Actor
 {
 public:
-
-
 	Player(Actor* Owner);
 	~Player();
 
@@ -23,8 +21,10 @@ public:
 
 	XennonStaticSpriteComponent* GetCustomSpriteComponent() { return (XennonStaticSpriteComponent*)MySprite; }
 
+	virtual void OnCollisionStarted(const Actor* OtherActor) override;
 protected:
 	bool bMoveDirection[4];//0-> up 1->left 2->down 3->right
+	void DestroyPlayer();
 
 private:
 	bool _AnimStateManager;
@@ -32,4 +32,6 @@ private:
 	
 	bool _CanKeepShooting = false; 
 	float _ShootingTimer = 0;
+
+	bool IsDead = false;
 };

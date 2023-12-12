@@ -2,7 +2,9 @@
 
 #include <list>
 #include <string>
-#include "..\..\Data\DataTypes.h"
+#include "Data\DataTypes.h"
+
+using namespace std;
 
 struct SDL_Texture;
 class Transform;
@@ -54,6 +56,7 @@ protected:
 	float AnimationTimeInMS, ElapsedTime;
 	Actor* Owner;
 	SDL_Rect DisplayQuad;
+
 private:
 	bool _IsAnimationReverse = false;
 };

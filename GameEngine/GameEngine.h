@@ -30,27 +30,6 @@ public:
 	GameEngine();
 	~GameEngine();
 
-private:
-	class SDLWrapper* sdl;
-	Window* _Window;
-	Actor* _PlayerReference = nullptr;
-
-	InputSystem _InputSystem;
-	CollisionSystem _CollisionSystem;
-	EventSystem _EventSystem;
-	list<Actor*> _Actors;
-
-	#pragma region DisplayNames
-	map<string, unsigned int> DisplayNames = {};
-	#pragma endregion
-
-	#pragma region Time Management
-
-protected:
-	double DeltaTime = 0;
-
-#pragma endregion
-public:
 // Creates an Actor of type T and returns a reference to said object
 	template <typename T> T* CreateActor(T* Owner);
 
@@ -64,6 +43,29 @@ public:
 
 	float GetDeltaSeconds() { return (float)DeltaTime; }
 
+	void QuitGame() {IsRunning = false;}
+private:
+	class SDLWrapper* sdl;
+	Window* _Window;
+	bool IsRunning = true;
+
+	Actor* _PlayerReference = nullptr;
+
+	InputSystem _InputSystem;
+	CollisionSystem _CollisionSystem;
+	EventSystem _EventSystem;
+	list<Actor*> _Actors;
+
+#pragma region DisplayNames
+	map<string, unsigned int> DisplayNames = {};
+#pragma endregion
+
+#pragma region Time Management
+
+protected:
+	double DeltaTime = 0;
+
+#pragma endregion
 };
 
 template <typename T> T* GameEngine::CreateActor(T* Owner)
@@ -128,13 +130,14 @@ public:
 
 	//Delay in the same thread
 	static void Delay(float Sec) { SDL_Delay(Uint32(Sec * 1000)); }
-	//Delay in a detached thread
-	static void Delay(float Sec, void (&FunctionToCall)());
 
 	//screen data
 	static void SetScreenDimentions(int Width, int Height) { _ScreenWidth = Width; _ScreenHeight = Height; }
 	static int GetScreenWidth() { return _ScreenWidth; }
 	static int GetScreenHeight() { return _ScreenHeight; }
+
+	//Game Loop
+	static void QuitGame() { GetGameEngine()->QuitGame(); }
 private:
 	static GameEngine* _GameEngineRef;
 	static EventSystem* _EventSystem;
