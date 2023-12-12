@@ -7,7 +7,7 @@
 
 Loner::Loner(Actor* Owner) : Actor(Owner)
 {
-	CollisionRadius = 1;
+	CollisionRadius = 100.f;
 }
 
 Loner::~Loner()
@@ -23,16 +23,15 @@ void Loner::BeginPlay()
 void Loner::Tick(float DeltaSeconds)
 {
 	Actor::Tick(DeltaSeconds);
-	GetTransform()->SetLocation(Vector::CreateVector(
-		/*X*/ GetTransform()->GetLocation().X + (GameRules::GetEnemyMovementSpeed() * DeltaSeconds),
-		/*Y*/ GetTransform()->GetLocation().Y, // falling speed
-		/*Z*/ 0
-	));
+// 	GetTransform()->SetLocation(Vector::CreateVector(
+// 		/*X*/ GetTransform()->GetLocation().X + (GameRules::GetEnemyMovementSpeed() * DeltaSeconds),
+// 		/*Y*/ GetTransform()->GetLocation().Y, // falling speed
+// 		/*Z*/ 0
+// 	));
 
 	// should only trigger once per Class instance
 	if (GetTransform()->GetLocation().X > (float)(GameplayStatics::GetScreenWidth() + 10))
 	{
-		this;
 		GameplayStatics::GetGameEngine()->RemoveActor(this);
 	}
 }

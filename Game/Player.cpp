@@ -15,6 +15,7 @@
 Player::Player(Actor* Parent) : Actor(Parent)
 {
 	MySprite = (SpriteComponent*) new XennonStaticSpriteComponent("src/Sprites/Ship1.bmp", 7, 1, this, _IdleShipAnimIndex); // starting state = 4
+	IsLevelActor = false;
 }
 
 Player::~Player()

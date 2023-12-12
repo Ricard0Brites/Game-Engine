@@ -24,7 +24,8 @@ public:
 	SpriteComponent* GetSpriteComponent() { return MySprite; }
 
 	bool HasInit = false, IsPendingKill = false;
-	int CollisionRadius = -1;
+	float CollisionRadius = -1.f;
+	bool IsLevelActor = true;
 
 	virtual void AssignTexture(std::string TexturePath, int TileAmountX, int TileAmountY, float AnimationTimeInSeconds, Actor* ComponentOwner);
 
@@ -45,6 +46,4 @@ protected:
 
 	//nullptr id means this object is independent
 	Actor* Owner = nullptr;
-	int a = 0;
-
 };

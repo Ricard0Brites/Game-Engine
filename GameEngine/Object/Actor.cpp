@@ -6,7 +6,8 @@ Actor::Actor(Actor* Parent)
 {
 	Owner = Parent;
 	MyTransform = new Transform();
-	CollisionRadius = 0;
+	CollisionRadius = -1;
+	IsLevelActor = true;
 	IsPendingKill = false;	
 }
 
@@ -23,12 +24,14 @@ Actor::~Actor()
 
 void Actor::Tick(float DeltaSeconds)
 {
+	if(IsPendingKill) return;
 	if(MySprite)MySprite->Tick(DeltaSeconds);
 }
 
 void Actor::AssignTexture(std::string TexturePath, int TileAmountX, int TileAmountY, float AnimationTimeInSeconds, Actor* ComponentOwner)
 {
 	MySprite = new SpriteComponent(TexturePath, TileAmountX, TileAmountY, AnimationTimeInSeconds, ComponentOwner);
+	CollisionRadius = max((float)MySprite->GetSpriteWidth(), (float)MySprite->GetSpriteHeight()) * 0.5f;
 }
 
 void Actor::OnCollisionStarted(const Actor* OtherActor)

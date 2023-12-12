@@ -25,10 +25,17 @@ void CollisionSystem::CheckCollision()
 			if(ComparativeEntity == Entity) // skip myself
 				continue;
 
-			if(Entity->CollisionRadius == -1 || ComparativeEntity->CollisionRadius == -1 ) // skip non collideable objects
+			if (Entity->CollisionRadius < 0 || ComparativeEntity->CollisionRadius < 0) // skip non collideable objects
 				continue;
 
-			Vector RelativeActorLocation = ComparativeEntity->GetTransform()->GetLocation() - Entity->GetTransform()->GetLocation();
+			if(Entity->IsLevelActor && ComparativeEntity->IsLevelActor) // ignore any level actor -> level actor collisions
+				continue;
+
+
+			Vector Actor2CollisionComponentLocation = ComparativeEntity->GetTransform()->GetLocation() + Vector::CreateVector(ComparativeEntity->GetSpriteComponent()->GetSpriteWidth() / 2, ComparativeEntity->GetSpriteComponent()->GetSpriteHeight() / 2, 0.f),
+			Actor1CollisionComponentLocation = Entity->GetTransform()->GetLocation() + Vector::CreateVector((float)Entity->GetSpriteComponent()->GetSpriteWidth() / 2, (float)Entity->GetSpriteComponent()->GetSpriteHeight() / 2, 0.f);
+
+			Vector RelativeActorLocation = Actor2CollisionComponentLocation - Actor1CollisionComponentLocation;
 			float DistanceBetweenActors = GameplayStatics::GetVectorNorm(&RelativeActorLocation);
 
 			if(LISTCONTAINS(Entity->ActorsInRange, ComparativeEntity) || LISTCONTAINS(ComparativeEntity->ActorsInRange, Entity)) //skip if either actor is already present in eithers list
