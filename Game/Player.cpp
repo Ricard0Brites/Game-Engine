@@ -72,15 +72,10 @@ void Player::Tick(float DeltaSeconds)
 		{
 			Missile* Rocket = GameplayStatics::GetGameEngine()->CreateActor<Missile>(nullptr);
 			Rocket->GetTransform()->SetLocation(Vector::CreateVector(MyTransform->GetLocation().X + (MySprite->GetSpriteWidth() / 2) - 10, MyTransform->GetLocation().Y - (MySprite->GetSpriteHeight() / 2), MyTransform->GetLocation().Z));
-			Rocket->AssignTexture("src/Sprites/missile1.bmp", 2, 1, 0.5f, Rocket);
-			Rocket->GetSpriteComponent()->SetScale(Vector::CreateVector(1, 1, 1), nullptr);
-			Rocket->GetSpriteComponent()->PlayAnimation(true);
-			Rocket->StartMovement();
 			_ShootingTimer = 0;
 		}
-		_ShootingTimer += DeltaSeconds;
 	}
-
+	_ShootingTimer += DeltaSeconds;
 	// the players falling speed (AKA Level Movement)
 	if (GetTransform()->GetLocation().Y <= GameplayStatics::GetScreenHeight() - (GetCustomSpriteComponent()->GetTextureHeight() / 2) && !bMoveDirection[0])
 	{
@@ -189,10 +184,10 @@ void Player::OnCollisionStarted(const Actor* OtherActor)
 	// play ship destruct animation
 	if(dynamic_cast<const Missile*>(OtherActor))
 		return;
-	if(IsDead)
+	if(Exploded)
 		return;
 
-	IsDead = true;
+	Exploded = true;
 	delete MySprite;
 	MySprite = new SpriteComponent("src/Sprites/Ship2.bmp", 7, 3, 2, this);
 	MySprite->PlayAnimation(false);

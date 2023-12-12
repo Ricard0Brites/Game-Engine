@@ -14,8 +14,12 @@ public:
 
 	void StartMovement();
 
+
+	virtual void OnCollisionStarted(const Actor* OtherActor) override;
+
 protected:
 	bool CanMove = false;
 	float RocketSpeed;
 	int RocketDamage;
+	bool Exploded = false;
 };

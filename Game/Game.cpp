@@ -5,6 +5,9 @@
 #include "Enemies/Loner.h"
 #include "Spawner.h"
 
+#if _DEBUG
+    #define CLASSTOTEST Loner
+#endif
 int main(int argc, char** argv)
 {
     GameEngine engine;
@@ -31,19 +34,22 @@ int main(int argc, char** argv)
     engine.SetPlayerReference(Player1);
 
     //Enemies
-    Loner* enemy[TotalEnemies]{};
+#if _DEBUG
+    CLASSTOTEST* enemy[TotalEnemies]{};
 
-    for (int i = 0; i < TotalEnemies; ++i) 
+    for (int i = 0; i < TotalEnemies; ++i)
     {
-        enemy[i] = engine.CreateActor<Loner>(nullptr);
+        enemy[i] = engine.CreateActor<CLASSTOTEST>(nullptr);
 		enemy[i]->AssignTexture("src/Sprites/LonerB.bmp", 4, 4, 2, (Actor*)enemy[i]);
 		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector((150 * (float)i) + 100, 0, 0));
 		enemy[i]->GetSpriteComponent()->PlayAnimation(true);
     }
 
     Spawner spawner;
+#endif
+#if _RELEASE
     spawner.InitSpawner();
-
+#endif
     engine.start();// no code after this function will be called. from this point on to do anything it has to be inside the gameloop... this means only spawned and active actors can spawn other actors.
     
     return 0;

@@ -2,6 +2,8 @@
 #include "GameEngine.h"
 #include "Components\XennonSpriteComponent.h"
 
+#define MAXFLOAT 8589934591.f
+
 class Player : public Actor
 {
 public:
@@ -31,7 +33,7 @@ private:
 	int _IdleShipAnimIndex = 4;
 	
 	bool _CanKeepShooting = false; 
-	float _ShootingTimer = 0;
+	float _ShootingTimer = MAXFLOAT;
 
-	bool IsDead = false;
+	bool Exploded = false;
 };
