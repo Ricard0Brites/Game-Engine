@@ -1,6 +1,7 @@
 #include "GameEngine.h"
 #include "SDLWrapper.h"
 #include "Window.h"
+#include <thread>
 
 GameEngine::~GameEngine()
 {
@@ -160,4 +161,15 @@ void GameplayStatics::QueryTexture(SDL_Texture* TextureToQuery, int& OutTextureW
 void GameplayStatics::RenderTexture(SDL_Texture* TextureToRender, SDL_Rect* TexturePortion, SDL_Rect* DisplayQuad)
 {
 	SDL_RenderCopy(GameplayStatics::GetGameEngine()->GetRenderer(), TextureToRender, TexturePortion, DisplayQuad);
+}
+
+void GameplayStatics::Delay(float Sec, void(&FunctionToCall)())
+{
+	thread* t1 = new thread([&](){
+
+		GameplayStatics::Delay(Sec);
+		FunctionToCall();
+	});
+	t1->detach();
+	delete t1;
 }

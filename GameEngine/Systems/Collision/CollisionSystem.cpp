@@ -32,8 +32,8 @@ void CollisionSystem::CheckCollision()
 				continue;
 
 
-			Vector Actor2CollisionComponentLocation = ComparativeEntity->GetTransform()->GetLocation() + Vector::CreateVector(ComparativeEntity->GetSpriteComponent()->GetSpriteWidth() / 2, ComparativeEntity->GetSpriteComponent()->GetSpriteHeight() / 2, 0.f),
-			Actor1CollisionComponentLocation = Entity->GetTransform()->GetLocation() + Vector::CreateVector((float)Entity->GetSpriteComponent()->GetSpriteWidth() / 2, (float)Entity->GetSpriteComponent()->GetSpriteHeight() / 2, 0.f);
+			Vector Actor2CollisionComponentLocation = ComparativeEntity->GetTransform()->GetLocation() + Vector::CreateVector((float)(ComparativeEntity->GetSpriteComponent()->GetSpriteWidth() / 2), (float)(ComparativeEntity->GetSpriteComponent()->GetSpriteHeight() / 2), 0.f),
+			Actor1CollisionComponentLocation = Entity->GetTransform()->GetLocation() + Vector::CreateVector((float)(Entity->GetSpriteComponent()->GetSpriteWidth() / 2), (float)(Entity->GetSpriteComponent()->GetSpriteHeight() / 2), 0.f);
 
 			Vector RelativeActorLocation = Actor2CollisionComponentLocation - Actor1CollisionComponentLocation;
 			float DistanceBetweenActors = GameplayStatics::GetVectorNorm(&RelativeActorLocation);

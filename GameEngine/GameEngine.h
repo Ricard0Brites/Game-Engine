@@ -126,8 +126,10 @@ public:
 	static void QueryTexture(SDL_Texture* TextureToQuery, int &OutTextureWidth, int &OutTextureHeight);
 	static void RenderTexture(SDL_Texture* TextureToRender, SDL_Rect* TexturePortion, SDL_Rect* DisplayQuad);
 
-	//Delay
+	//Delay in the same thread
 	static void Delay(float Sec) { SDL_Delay(Uint32(Sec * 1000)); }
+	//Delay in a detached thread
+	static void Delay(float Sec, void (&FunctionToCall)());
 
 	//screen data
 	static void SetScreenDimentions(int Width, int Height) { _ScreenWidth = Width; _ScreenHeight = Height; }
