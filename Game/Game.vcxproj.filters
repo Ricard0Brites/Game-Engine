@@ -30,6 +30,9 @@
     <ClInclude Include="Missile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Spawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\XennonSpriteComponent.cpp">
@@ -48,6 +51,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Spawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

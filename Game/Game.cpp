@@ -3,6 +3,7 @@
 #include "GameEngine.h"
 #include "Player.h"
 #include "Enemies/Loner.h"
+#include "Spawner.h"
 
 int main(int argc, char** argv)
 {
@@ -38,6 +39,9 @@ int main(int argc, char** argv)
 		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector((150 * (float)i) + 100, 0, 0));
 		enemy[i]->GetSpriteComponent()->PlayAnimation(true);
     }
+
+    Spawner spawner;
+    spawner.InitSpawner();
 
     engine.start();// no code after this function will be called. from this point on to do anything it has to be inside the gameloop... this means only spawned and active actors can spawn other actors.
     
