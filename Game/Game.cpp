@@ -8,7 +8,7 @@
 int main(int argc, char** argv)
 {
     GameEngine engine;
-	const int TotalEnemies = 10;
+	const int TotalEnemies = 5;
          
     engine.init("Engine", 1280, 720);
   
@@ -21,6 +21,7 @@ int main(int argc, char** argv)
 	BgActor->AssignTexture("src/Sprites/galaxy2.bmp", 1, 1, 1, BgActor);
     BgActor->GetTransform()->SetScale(Vector::CreateVector(2, 2, 0));
 	BgActor->GetSpriteComponent()->PlayAnimation(true);
+    BgActor->CollisionRadius = -1;
 
     //Player
     //this is how the character is created and defined
@@ -32,7 +33,7 @@ int main(int argc, char** argv)
     //Enemies
     Loner* enemy[TotalEnemies]{};
 
-    for (int i = 0; i < 10; i++) 
+    for (int i = 0; i < TotalEnemies; ++i) 
     {
         enemy[i] = engine.CreateActor<Loner>(nullptr);
 		enemy[i]->AssignTexture("src/Sprites/LonerB.bmp", 4, 4, 2, (Actor*)enemy[i]);
