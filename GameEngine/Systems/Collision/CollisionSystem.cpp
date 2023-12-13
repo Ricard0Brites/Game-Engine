@@ -30,6 +30,8 @@ void CollisionSystem::CheckCollision()
 
 			if(Entity->IsLevelActor && ComparativeEntity->IsLevelActor) // ignore any level actor -> level actor collisions
 				continue;
+			if(!Entity->GetSpriteComponent() || !ComparativeEntity->GetSpriteComponent())
+				continue;
 
 
 			Vector Actor2CollisionComponentLocation = ComparativeEntity->GetTransform()->GetLocation() + Vector::CreateVector((float)(ComparativeEntity->GetSpriteComponent()->GetSpriteWidth() / 2), (float)(ComparativeEntity->GetSpriteComponent()->GetSpriteHeight() / 2), 0.f),

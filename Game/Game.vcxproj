@@ -93,21 +93,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enemies\Asteroid.h" />
     <ClInclude Include="Components\XennonSpriteComponent.h" />
     <ClInclude Include="Enemies\Loner.h" />
     <ClInclude Include="GameRules.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Spawner.h" />
+    <ClInclude Include="Systems\Spawner.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Enemies\Asteroid.cpp" />
     <ClCompile Include="Components\XennonSpriteComponent.cpp" />
     <ClCompile Include="Enemies\Loner.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameRules.cpp" />
     <ClCompile Include="Missile.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Spawner.cpp" />
+    <ClCompile Include="Systems\Spawner.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

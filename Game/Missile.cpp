@@ -12,11 +12,6 @@ Missile::Missile(Actor* Parent) : Actor(Parent)
 	IsLevelActor = false;
 }
 
-Missile::~Missile()
-{
-	delete MySprite;
-}
-
 void Missile::BeginPlay()
 {
 	Actor::BeginPlay();
@@ -49,20 +44,24 @@ void Missile::StartMovement()
 
 void Missile::OnCollisionStarted(const Actor* OtherActor)
 {
+	if(Exploded)
+		return;
 	Exploded = true;
+	CollisionRadius = -1;
 	delete MySprite;
+	MySprite = nullptr;
 	MySprite = new SpriteComponent("src/Sprites/explode64.bmp", 5, 2, 1.f, this);
 	MySprite->SetLocation(Vector::CreateVector((float)(-MySprite->GetSpriteWidth() * 0.6f), (float)(-MySprite->GetSpriteHeight() * 0.6f), 0), nullptr);
 	MySprite->PlayAnimation(false);
 
 	// destroy actor
-	thread* t1 = new thread([&]()
+	thread([&]()
 		{
 			std::this_thread::sleep_for(std::chrono::seconds(1));
+			if(!MySprite)
+				return;
 			MySprite->StopAnimation();
 			GameplayStatics::GetGameEngine()->RemoveActor(this);
-		});
-	t1->detach();
-	delete t1;
+		}).detach();
 }
 

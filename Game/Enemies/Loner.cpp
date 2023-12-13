@@ -18,6 +18,8 @@ Loner::~Loner()
 void Loner::BeginPlay()
 {
 	Actor::BeginPlay();
+	AssignTexture("src/Sprites/LonerB.bmp", 4, 4, 2, this);
+	GetSpriteComponent()->PlayAnimation(true);
 }
 
 void Loner::Tick(float DeltaSeconds)
