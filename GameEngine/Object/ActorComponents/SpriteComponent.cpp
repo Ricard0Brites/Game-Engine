@@ -41,6 +41,8 @@ SpriteComponent::SpriteComponent()
 SpriteComponent::~SpriteComponent()
 {
 	delete MyTransform;
+	MyTransform = nullptr;
+	SDL_DestroyTexture(DisplaySprite);
 }
 
 void SpriteComponent::Tick(float DeltaSeconds)

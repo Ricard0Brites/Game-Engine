@@ -7,7 +7,6 @@ class XennonStaticSpriteComponent : SpriteComponent
 
 public:
 	XennonStaticSpriteComponent(std::string TexturePath, int TilesX, int TilesY, Actor* ComponentOwner, int TextureIndexToDisplay);
-	~XennonStaticSpriteComponent();
 
 
 	virtual void Tick(float DeltaSeconds) override;

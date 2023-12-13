@@ -27,11 +27,6 @@ XennonStaticSpriteComponent::XennonStaticSpriteComponent(std::string TexturePath
 	SetTextureIndexToDisplay(TextureIndexToDisplay);
 }
 
-XennonStaticSpriteComponent::~XennonStaticSpriteComponent()
-{
-
-}
-
 void XennonStaticSpriteComponent::Tick(float DeltaSeconds)
 {
 	if (IsPlayingAnimation)

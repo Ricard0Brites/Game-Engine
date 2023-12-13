@@ -1,8 +1,6 @@
 #include "CollisionSystem.h"
 #include "GameEngine.h"
 
-#define LISTCONTAINS(list, Content) std::find(list.begin(), list.end(), Content) != list.end()
-
 CollisionSystem::CollisionSystem()
 {
 }
@@ -40,27 +38,14 @@ void CollisionSystem::CheckCollision()
 			Vector RelativeActorLocation = Actor2CollisionComponentLocation - Actor1CollisionComponentLocation;
 			float DistanceBetweenActors = GameplayStatics::GetVectorNorm(&RelativeActorLocation);
 
-			if(LISTCONTAINS(Entity->ActorsInRange, ComparativeEntity) || LISTCONTAINS(ComparativeEntity->ActorsInRange, Entity)) //skip if either actor is already present in eithers list
-			{
-				if(DistanceBetweenActors < Entity->CollisionRadius + ComparativeEntity->CollisionRadius)
-				{
-					Entity->ActorsInRange.remove(ComparativeEntity);
-					ComparativeEntity->ActorsInRange.remove(Entity);
-				}
-				continue;
-			}
-
-			if(DistanceBetweenActors < Entity->CollisionRadius + ComparativeEntity->CollisionRadius)
-			{					
-				if(!Entity->IsPendingKill && !ComparativeEntity->IsPendingKill)
-				{
+ 			if(DistanceBetweenActors < Entity->CollisionRadius + ComparativeEntity->CollisionRadius)
+ 			{					
+ 				if(!Entity->IsPendingKill && !ComparativeEntity->IsPendingKill)
+ 				{
 					Entity->OnCollisionStarted(ComparativeEntity);
-					Entity->ActorsInRange.push_front(ComparativeEntity);
-				
 					ComparativeEntity->OnCollisionStarted(Entity);
-					ComparativeEntity->ActorsInRange.push_front(Entity);
-				}
-			}
+ 				}
+ 			}
 		}
 	}
 }

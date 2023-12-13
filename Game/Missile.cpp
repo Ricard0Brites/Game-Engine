@@ -25,9 +25,9 @@ void Missile::BeginPlay()
 void Missile::Tick(float DeltaSeconds)
 {
 	Actor::Tick(DeltaSeconds);
-	if (!CanMove) return;
-	if(!Exploded)
-		GetTransform()->SetLocation(Vector::CreateVector(GetTransform()->GetLocation().X, GetTransform()->GetLocation().Y + (-RocketSpeed * DeltaSeconds), GetTransform()->GetLocation().Z));
+	if (!CanMove || Exploded) 
+		return;
+	GetTransform()->SetLocation(Vector::CreateVector(GetTransform()->GetLocation().X, GetTransform()->GetLocation().Y + (-RocketSpeed * DeltaSeconds), GetTransform()->GetLocation().Z));
 
 	// should only trigger once per Class instance
 	if(GetTransform()->GetLocation().Y <= -20) 
