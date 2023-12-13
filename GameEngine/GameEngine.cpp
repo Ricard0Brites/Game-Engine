@@ -66,11 +66,7 @@ void GameEngine::start()
 		//Check Collisions
 		_CollisionSystem.CheckCollision();
 
-		// Render
-		_Window->updateSurface();
-
 		#pragma region Event System
-
 		SDL_RenderClear(GameplayStatics::GetGameEngine()->GetRenderer()); // clear screen
 			for (auto const &actor : _Actors)
 			{
@@ -82,8 +78,11 @@ void GameEngine::start()
 			{
 				if(actor)_EventSystem.TriggerTick(actor, (float)DeltaTime);				
 			}
+		#pragma endregion
+
+		// Render
+		_Window->updateSurface();
 		SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer()); // render
-#pragma endregion
 
 		#pragma region Clean Pending Kill Actors
 		std::list<Actor*> Cache = _Actors;
