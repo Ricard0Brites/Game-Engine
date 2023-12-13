@@ -10,11 +10,6 @@ Loner::Loner(Actor* Owner) : Actor(Owner)
 	CollisionRadius = 100.f;
 }
 
-Loner::~Loner()
-{
-
-}
-
 void Loner::BeginPlay()
 {
 	Actor::BeginPlay();
