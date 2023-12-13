@@ -15,11 +15,12 @@ Actor::Actor(Actor* Parent, const char* DisplayName) : Actor(Parent)
 {
 	ActorDisplayName = DisplayName;
 }
-
 Actor::~Actor()
 {
 	delete MyTransform;
-	delete MySprite;
+	MyTransform = nullptr;
+	delete MySprite; 
+	MySprite = nullptr;
 }
 
 void Actor::Tick(float DeltaSeconds)

@@ -10,14 +10,11 @@ Loner::Loner(Actor* Owner) : Actor(Owner)
 	CollisionRadius = 100.f;
 }
 
-Loner::~Loner()
-{
-
-}
-
 void Loner::BeginPlay()
 {
 	Actor::BeginPlay();
+	AssignTexture("src/Sprites/LonerB.bmp", 4, 4, 2, this);
+	GetSpriteComponent()->PlayAnimation(true);
 }
 
 void Loner::Tick(float DeltaSeconds)

@@ -23,7 +23,11 @@ Player::Player(Actor* Parent) : Actor(Parent)
 
 Player::~Player()
 {
-	if(MySprite) delete MySprite;
+	if(MySprite) 
+	{
+		delete MySprite; 
+		MySprite = nullptr;
+	}
 }
 
 void Player::BeginPlay()
@@ -189,17 +193,16 @@ void Player::OnCollisionStarted(const Actor* OtherActor)
 
 	Exploded = true;
 	delete MySprite;
+	MySprite = nullptr;
 	MySprite = new SpriteComponent("src/Sprites/Ship2.bmp", 7, 3, 2, this);
 	MySprite->PlayAnimation(false);
 
 	// destroy actor
-	thread* t1 = new thread([&]() 
+	thread([&]() 
 	{
 		std::this_thread::sleep_for(std::chrono::seconds(3));
 		DestroyPlayer();
-	});
-	t1->detach();
-	delete t1;
+	}).detach();
 }
 
 void Player::DestroyPlayer()

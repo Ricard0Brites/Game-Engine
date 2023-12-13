@@ -3,15 +3,20 @@
 #include "GameEngine.h"
 #include "Player.h"
 #include "Enemies/Loner.h"
-#include "Spawner.h"
+#include "Systems/Spawner.h"
+#include "Enemies/Asteroid.h"
 
 #if _DEBUG
-    #define CLASSTOTEST Loner
+    #define CLASSTOTEST Asteroid
+    #define DEBUGENTITYNUM 5
 #endif
+
+#define WINDOWWIDTH 1280
+#define WINDOWHEIGHT 720
+
 int main(int argc, char** argv)
 {
     GameEngine engine;
-	const int TotalEnemies = 5;
          
     engine.init("Engine", 1280, 720);
   
@@ -35,14 +40,12 @@ int main(int argc, char** argv)
 
     //Enemies
 #if _DEBUG
-    CLASSTOTEST* enemy[TotalEnemies]{};
+    CLASSTOTEST* enemy[DEBUGENTITYNUM] = {};
 
-    for (int i = 0; i < TotalEnemies; ++i)
+    for (int i = 0; i < DEBUGENTITYNUM - 1; ++i)
     {
         enemy[i] = engine.CreateActor<CLASSTOTEST>(nullptr);
-		enemy[i]->AssignTexture("src/Sprites/LonerB.bmp", 4, 4, 2, (Actor*)enemy[i]);
-		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector((150 * (float)i) + 100, 0, 0));
-		enemy[i]->GetSpriteComponent()->PlayAnimation(true);
+		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector( (float)(WINDOWWIDTH / DEBUGENTITYNUM) * (float)(i + 1), 0, 0));
     }
 
     Spawner spawner;
