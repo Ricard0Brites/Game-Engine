@@ -1,6 +1,6 @@
 #pragma once
-#include "..\..\Object/Actor.h"
-#include "../../Data/DataTypes.h"
+#include "Object/Actor.h"
+#include "Data/DataTypes.h"
 
 enum InputKeyCodes;
 

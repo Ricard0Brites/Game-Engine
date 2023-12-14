@@ -1,6 +1,5 @@
 #include "EventSystem.h"
-#include "..\..\GameEngine.h"
-#include "..\Game\Player.h"
+#include "GameEngine.h"
 
 EventSystem::EventSystem()
 {
@@ -26,54 +25,33 @@ void EventSystem::TriggerBeginPlay(Actor* actor)
 
 void EventSystem::TriggerOnInputPress(InputKeyCodes KeyCode)
 {
-	if (!GameplayStatics::GetGameEngine()->GetPlayer())
-	{
-		LOG("Player Reference is null. When creating the player please call GameEngine->SetPlayerReference( YOURPLAYERREFERENCE );", 3);
-		EXECUTIONLOG;
+	GameEngine* EngineRef = GameplayStatics::GetGameEngine();
+	Validate(EngineRef,);
+	Actor* PlayerReference = EngineRef->GetPlayer();
+	Validate(PlayerReference,);
+	if(PlayerReference->IsPendingKill)
 		return;
-	}
-	if(GameEngine* engine = GameplayStatics::GetGameEngine())
-	{
-		if(Actor* playerActor = engine->GetPlayer())
-		{
-			if(Player* player = static_cast<Player*>(playerActor))
-				player->OnKeyPressed(KeyCode);
-		}
-	}
+	PlayerReference->OnKeyPressed(KeyCode);
 }
 
 void EventSystem::TriggerOnInputRelease(InputKeyCodes KeyCode)
 {
-	if (!GameplayStatics::GetGameEngine()->GetPlayer())
-	{
-		LOG("Player Reference is null. When creating the player please call GameEngine->SetPlayerReference( YOURPLAYERREFERENCE );", 3);
-		EXECUTIONLOG;
+	GameEngine* EngineRef = GameplayStatics::GetGameEngine();
+	Validate(EngineRef, );
+	Actor* PlayerReference = EngineRef->GetPlayer();
+	Validate(PlayerReference, );
+	if(PlayerReference->IsPendingKill)
 		return;
-	}
-	if(GameEngine* engine = GameplayStatics::GetGameEngine())
-	{
-		if(Actor* playerActor = engine->GetPlayer())
-		{
-			if(Player* player = static_cast<Player*>(playerActor))
-				player->OnKeyReleased(KeyCode);
-		}
-	}
+	PlayerReference->OnKeyReleased(KeyCode);
 }
 
 void EventSystem::TriggerOnInputAxis(InputKeyCodes KeyCode, Vector Data)
 {
-	if (!GameplayStatics::GetGameEngine()->GetPlayer())
-	{
-		LOG("Player Reference is null. When creating the player please call GameEngine->SetPlayerReference( YOURPLAYERREFERENCE );", 3);
-		EXECUTIONLOG;
+	GameEngine* EngineRef = GameplayStatics::GetGameEngine();
+	Validate(EngineRef, );
+	Actor* PlayerReference = EngineRef->GetPlayer();
+	Validate(PlayerReference, );
+	if(PlayerReference->IsPendingKill)
 		return;
-	}
-	if(GameEngine* engine = GameplayStatics::GetGameEngine())
-	{
-		if(Actor* playerActor = engine->GetPlayer())
-		{
-			if(Player* player = static_cast<Player*>(playerActor))
-				player->OnInputAxis(KeyCode, Data);
-		}
-	}
+	PlayerReference->OnInputAxis(KeyCode, Data);
 }
