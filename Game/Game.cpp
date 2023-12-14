@@ -46,7 +46,7 @@ int main(int argc, char** argv)
     for (int i = 0; i < DEBUGENTITYNUM + 1; ++i)
     {
         enemy[i] = engine.CreateActor<CLASSTOTEST>(nullptr);
-		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector((float)(windowWidth / (DEBUGENTITYNUM + 1)) * (float)(i + 1), windowHeight / 4, 0));
+		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector((float)(windowWidth / (DEBUGENTITYNUM + 1)) * (float)(i + 1), (float)windowHeight / 4, 0));
     }
 #endif
 #if _RELEASE

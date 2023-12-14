@@ -20,5 +20,5 @@ protected:
 	bool CanMove = false;
 	float RocketSpeed;
 	int RocketDamage;
-	bool Exploded = false;
+	bool HasExploded = false;
 };

@@ -188,10 +188,10 @@ void Player::OnCollisionStarted(const Actor* OtherActor)
 	// play ship destruct animation
 	if(dynamic_cast<const Missile*>(OtherActor))
 		return;
-	if(Exploded)
+	if(HasDied)
 		return;
 
-	Exploded = true;
+	HasDied = true;
 	delete MySprite;
 	MySprite = nullptr;
 	MySprite = new SpriteComponent("src/Sprites/Ship2.bmp", 7, 3, 2, this);

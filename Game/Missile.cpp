@@ -25,7 +25,7 @@ void Missile::BeginPlay()
 void Missile::Tick(float DeltaSeconds)
 {
 	Actor::Tick(DeltaSeconds);
-	if (!CanMove || Exploded) 
+	if (!CanMove || HasExploded) 
 		return;
 	GetTransform()->SetLocation(Vector::CreateVector(GetTransform()->GetLocation().X, GetTransform()->GetLocation().Y + (-RocketSpeed * DeltaSeconds), GetTransform()->GetLocation().Z));
 
@@ -44,9 +44,9 @@ void Missile::StartMovement()
 
 void Missile::OnCollisionStarted(const Actor* OtherActor)
 {
-	if(Exploded)
+	if(HasExploded)
 		return;
-	Exploded = true;
+	HasExploded = true;
 	CollisionRadius = -1;
 	delete MySprite;
 	MySprite = nullptr;

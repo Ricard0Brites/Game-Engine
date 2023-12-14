@@ -35,5 +35,5 @@ private:
 	bool _CanKeepShooting = false; 
 	float _ShootingTimer = MAXFLOAT;
 
-	bool Exploded = false;
+	bool HasDied = false;
 };
