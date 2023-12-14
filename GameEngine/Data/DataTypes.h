@@ -1,6 +1,10 @@
 #pragma once
 #include "Object\Actor.h"
 #include "Logger\Logger.h"
+#include <string>
+#include <iostream>
+
+using namespace std;
 
 class Actor;
 
@@ -24,6 +28,9 @@ public:
 	Vector Zero(bool ApplyToSelf);
 	//Fills the vector with the provided float
 	void Fill(float Payload);
+	//Converts a vector to a string
+	string ToString();
+	
 	// Returns a copy of a custom made Vector
 	static Vector CreateVector(float PayloadX, float PayloadY, float PayloadZ) { Vector vec; vec.X = PayloadX; vec.Y = PayloadY; vec.Z = PayloadZ; return vec; };
 

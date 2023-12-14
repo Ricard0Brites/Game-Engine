@@ -51,7 +51,7 @@ void Missile::OnCollisionStarted(const Actor* OtherActor)
 	delete MySprite;
 	MySprite = nullptr;
 	MySprite = new SpriteComponent("src/Sprites/explode16.bmp", 5, 2, 1.f, this);
-	MySprite->SetLocation(Vector::CreateVector((float)(-MySprite->GetSpriteWidth() * 0.6f), (float)(-MySprite->GetSpriteHeight() * 0.6f), 0), nullptr);
+	MySprite->SetLocation(Vector::CreateVector(0.f, (float)(-MySprite->GetSpriteHeight() * 0.6f), 0), nullptr);
 	MySprite->PlayAnimation(false);
 
 	// destroy actor

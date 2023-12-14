@@ -10,11 +10,13 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 
-	virtual void AssignTexture(std::string TexturePath, int TileAmountX, int TileAmountY, float AnimationTimeInSeconds, Actor* ComponentOwner) override;
-
 	SpriteComponent* GetSpriteComponent();
 
 	virtual void OnCollisionStarted(const Actor* OtherActor) override;
 	
-
+private:
+	void SpawnProjectile();
+	int _WindowWidth = 0, _WindowHeight = 0;
+	GameEngine *_GameEngineRef = nullptr;
+	
 };

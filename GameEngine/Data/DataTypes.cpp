@@ -47,6 +47,17 @@ void Vector::Fill(float Payload)
 }
 
 
+string Vector::ToString()
+{
+	string StringToReturn = "";
+
+	StringToReturn += "X=" + to_string(X);
+	StringToReturn += "Y=" + to_string(Y);
+	StringToReturn += "Z=" + to_string(Z);
+
+	return StringToReturn;
+}
+
 // Transform ---------------------------------------------------
 
 Transform::Transform()

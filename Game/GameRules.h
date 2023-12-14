@@ -1,4 +1,5 @@
 #pragma once
+
 class GameRules
 {
 public:
@@ -9,11 +10,18 @@ public:
 	static int GetRocketDamage() { return _RocketDamage; }
 	static int GetTimeBetweenShots() { return _TimeBetweenRocketSpawn; }
 
-	//Enemy
-	static float GetEnemyMovementSpeed() { return _EnemySpeed; }
-
+	//Enemies
+		//Loner
+		static float GetLonerMovementSpeed() { return _LonerSpeed; }
+		static float GetLonerProjectileFiringInterval() { return _LonerProjectileFiringInterval; }
+			// Loner Projectile
+			static float GetLonerProjectileSpeed() { return _LonerProjectileSpeed; }
+		
 	//level
 	static float GetLevelMovementSpeed() { return _LevelMovementSpeed; }
+	
+	//Window
+	static void GetWindowDimentions(int &Width, int &Height);
 
 private:
 	//Spaceship/Player
@@ -24,8 +32,11 @@ private:
 	static int _RocketDamage;
 	static int _TimeBetweenRocketSpawn;
 
-	//enemy
-	static float _EnemySpeed;
+	//enemies
+		//Loner
+		static float _LonerSpeed;
+		static float _LonerProjectileSpeed;
+		static float _LonerProjectileFiringInterval;
 
 	//Level
 	static float _LevelMovementSpeed; // this is the vertical movement speed of the whole game (multiply this for paralax)

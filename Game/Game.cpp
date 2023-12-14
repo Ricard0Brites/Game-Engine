@@ -1,24 +1,25 @@
 #pragma once
 #include <iostream>
 #include "GameEngine.h"
+
 #include "Player.h"
 #include "Enemies/Loner.h"
 #include "Systems/Spawner.h"
 #include "Enemies/Asteroid.h"
+#include "GameRules.h"
 
 #if _DEBUG
-    #define CLASSTOTEST Asteroid
-    #define DEBUGENTITYNUM 5
+    #define CLASSTOTEST Loner
+    #define DEBUGENTITYNUM 1
 #endif
-
-#define WINDOWWIDTH 1280
-#define WINDOWHEIGHT 720
 
 int main(int argc, char** argv)
 {
     GameEngine engine;
-         
-    engine.init("Engine", 1280, 720);
+    int windowWidth = 0, windowHeight = 0;
+    GameRules::GetWindowDimentions(windowWidth, windowHeight);
+
+    engine.init("Engine", windowWidth, windowHeight);
   
 
     //this is a good place to create a game mode/ game instance whatever you wanna call it.
@@ -40,17 +41,16 @@ int main(int argc, char** argv)
 
     //Enemies
 #if _DEBUG
-    CLASSTOTEST* enemy[DEBUGENTITYNUM] = {};
+    CLASSTOTEST* enemy[DEBUGENTITYNUM + 1] = {};
 
-    for (int i = 0; i < DEBUGENTITYNUM - 1; ++i)
+    for (int i = 0; i < DEBUGENTITYNUM + 1; ++i)
     {
         enemy[i] = engine.CreateActor<CLASSTOTEST>(nullptr);
-		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector( (float)(WINDOWWIDTH / DEBUGENTITYNUM) * (float)(i + 1), 0, 0));
+		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector((float)(windowWidth / (DEBUGENTITYNUM + 1)) * (float)(i + 1), windowHeight / 4, 0));
     }
-
-    Spawner spawner;
 #endif
 #if _RELEASE
+    Spawner spawner;
     spawner.InitSpawner();
 #endif
     engine.start();// no code after this function will be called. from this point on to do anything it has to be inside the gameloop... this means only spawned and active actors can spawn other actors.

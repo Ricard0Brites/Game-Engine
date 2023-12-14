@@ -200,7 +200,7 @@ void Player::OnCollisionStarted(const Actor* OtherActor)
 	// destroy actor
 	thread([&]() 
 	{
-		std::this_thread::sleep_for(std::chrono::seconds(3));
+		GameplayStatics::Delay(3);
 		DestroyPlayer();
 	}).detach();
 }

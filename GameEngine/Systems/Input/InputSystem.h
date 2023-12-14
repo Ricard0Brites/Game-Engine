@@ -30,9 +30,6 @@ public:
 	InputSystem();
 	~InputSystem();
 
-	// Listens for keyboard input
-
-		// TODO: Add Controller Input Listener
 	void ListenForInput(SDL_Event* key);
 	void SetGamepadDeadzone(int NewDeadZone) { _ControllerDeadzone = NewDeadZone; }
 private:

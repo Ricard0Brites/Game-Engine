@@ -2,17 +2,21 @@
 #include <string>
 #include <time.h>
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include <list>
 
 //systems
 #include "Systems/Input/InputSystem.h"
 #include "Systems/EventSystem/EventSystem.h"
+#include "Systems/Collision/CollisionSystem.h"
 #include "Logger/Logger.h"
 
 #include "Window.h"
 
-#include "SDL_timer.h"
-#include "Systems/Collision/CollisionSystem.h"
+
+#define Validate(Ptr, InvalidValueToReturn) if(!Ptr) { LOG("Invalid Reference, stopping execution", 4); EXECUTIONLOG; return ##InvalidValueToReturn;}
+
 
 // FWD declarations
 class Actor;
@@ -31,7 +35,7 @@ public:
 	~GameEngine();
 
 // Creates an Actor of type T and returns a reference to said object
-	template <typename T> T* CreateActor(T* Owner);
+	template <typename T> T* CreateActor(Actor* Owner);
 
 	void RemoveActor(Actor* ActorToRemove);
 
@@ -44,6 +48,7 @@ public:
 	float GetDeltaSeconds() { return (float)DeltaTime; }
 
 	void QuitGame() {IsRunning = false;}
+	const bool* GetIsRunning() { return &IsRunning; }
 private:
 	class SDLWrapper* sdl;
 	Window* _Window;
@@ -68,7 +73,7 @@ protected:
 #pragma endregion
 };
 
-template <typename T> T* GameEngine::CreateActor(T* Owner)
+template <typename T> T* GameEngine::CreateActor(Actor* Owner)
 {
 	std::string DisplayName = typeid(T).name();
 	string cachedName = "";
@@ -129,7 +134,7 @@ public:
 	static void RenderTexture(SDL_Texture* TextureToRender, SDL_Rect* TexturePortion, SDL_Rect* DisplayQuad);
 
 	//Delay in the same thread
-	static void Delay(float Sec) { SDL_Delay(Uint32(Sec * 1000)); }
+	static void Delay(float Sec) { std::this_thread::sleep_for(std::chrono::seconds((long)Sec)); }
 
 	//screen data
 	static void SetScreenDimentions(int Width, int Height) { _ScreenWidth = Width; _ScreenHeight = Height; }
@@ -138,6 +143,8 @@ public:
 
 	//Game Loop
 	static void QuitGame() { GetGameEngine()->QuitGame(); }
+	static const bool* GetIsGameRunning() { return GetGameEngine()->GetIsRunning(); }
+
 private:
 	static GameEngine* _GameEngineRef;
 	static EventSystem* _EventSystem;

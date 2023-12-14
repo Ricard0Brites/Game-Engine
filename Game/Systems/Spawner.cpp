@@ -12,7 +12,9 @@ Spawner::Spawner()
 Spawner::~Spawner()
 {
 	if(SpawnerThread) 
+	{
 		delete SpawnerThread;
+	}
 }
 
 void Spawner::InitSpawner()
