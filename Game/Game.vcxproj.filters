@@ -42,7 +42,7 @@
     <ClInclude Include="Enemies\Rusher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Drone.h">
+    <ClInclude Include="Enemies\Drone.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -77,7 +77,7 @@
     <ClCompile Include="Enemies\Rusher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Drone.cpp">
+    <ClCompile Include="Enemies\Drone.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

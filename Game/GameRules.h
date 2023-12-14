@@ -16,6 +16,9 @@ public:
 		static float GetLonerProjectileFiringInterval() { return _LonerProjectileFiringInterval; }
 			// Loner Projectile
 			static float GetLonerProjectileSpeed() { return _LonerProjectileSpeed; }
+		//Drone
+		static float GetDroneMovementSpeed() { return _DroneMovementSpeed;}
+		static float GetDroneMovementAmplitude() { return _DroneSineMovementAmplitude; }
 		
 	//level
 	static float GetLevelMovementSpeed() { return _LevelMovementSpeed; }
@@ -37,8 +40,11 @@ private:
 		//Loner
 		static float _LonerSpeed;
 		static float _LonerProjectileSpeed;
-		static float _LonerProjectileFiringInterval;
-
+			//Loner Projectile
+			static float _LonerProjectileFiringInterval;
+		//Drone
+		static float _DroneMovementSpeed;
+		static float _DroneSineMovementAmplitude;
 	//Level
 	static float _LevelMovementSpeed; // this is the vertical movement speed of the whole game (multiply this for paralax)
 	static float _EnemySpawnScreenDivisions;

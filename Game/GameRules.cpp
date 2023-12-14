@@ -24,6 +24,9 @@ int GameRules::_TimeBetweenRocketSpawn = 200;
 		//Loner Projectile
 		float GameRules::_LonerProjectileFiringInterval = 2.f;
 		float GameRules::_LonerProjectileSpeed = 0.1f;
+	//Drone
+		float GameRules::_DroneMovementSpeed = 0.2f;
+		float GameRules::_DroneSineMovementAmplitude = 0.15f;
 
 //level 
 		float  GameRules::_LevelMovementSpeed = 0.04f;
