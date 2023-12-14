@@ -93,6 +93,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Drone.h" />
     <ClInclude Include="Enemies\Asteroid.h" />
     <ClInclude Include="Components\XennonSpriteComponent.h" />
     <ClInclude Include="Enemies\Loner.h" />
@@ -104,6 +105,7 @@
     <ClInclude Include="Systems\Spawner.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Drone.cpp" />
     <ClCompile Include="Enemies\Asteroid.cpp" />
     <ClCompile Include="Components\XennonSpriteComponent.cpp" />
     <ClCompile Include="Enemies\Loner.cpp" />

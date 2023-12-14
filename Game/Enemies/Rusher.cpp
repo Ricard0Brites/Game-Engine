@@ -1,6 +1,7 @@
 #include "Rusher.h"
 #include "..\Player.h"
 #include "..\GameRules.h"
+#include <time.h>
 
 Rusher::Rusher(Actor* Owner) : Actor(Owner)
 {
@@ -28,11 +29,10 @@ void Rusher::BeginPlay()
 
 	MovementDirection = roundf((float)rand() / (float)RAND_MAX);
 	GameRules::GetWindowDimentions(WindowWidth, WindowHeight);
-	
-	Vector SpawnLocation = Vector::CreateVector(
-	(WindowWidth / GameRules::GetNumberOfSpawns()) * (round(((float)rand() / (float)RAND_MAX) * 9)),
+	GetTransform()->SetLocation(Vector::CreateVector(
+	(WindowWidth / GameRules::GetNumberOfSpawns()) * (rand() % (int)GameRules::GetNumberOfSpawns() + 1),
 	MovementDirection ? WindowWidth : 0.f - MySprite->GetSpriteHeight(),
-	0.f);
+	0.f));
 }
 
 void Rusher::OnCollisionStarted(const Actor* OtherActor)

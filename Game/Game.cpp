@@ -8,10 +8,11 @@
 #include "Enemies/Asteroid.h"
 #include "GameRules.h"
 #include "Enemies/Rusher.h"
+#include "Drone.h"
 
 #if _DEBUG
     #define CLASSTOTEST Rusher
-    #define DEBUGENTITYNUM 1
+    #define DEBUGENTITYNUM 5
 #endif
 
 int main(int argc, char** argv)
@@ -47,7 +48,7 @@ int main(int argc, char** argv)
     for (int i = 0; i < DEBUGENTITYNUM + 1; ++i)
     {
         enemy[i] = engine.CreateActor<CLASSTOTEST>(nullptr);
-		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector((float)(windowWidth / (DEBUGENTITYNUM + 1)) * (float)(i + 1), (float)windowHeight / 4, 0));
+		//enemy[i]->GetTransform()->SetLocation(Vector::CreateVector((float)(windowWidth / (DEBUGENTITYNUM + 1)) * (float)(i + 1), (float)windowHeight / 4, 0));
     }
 #endif
 #if _RELEASE
