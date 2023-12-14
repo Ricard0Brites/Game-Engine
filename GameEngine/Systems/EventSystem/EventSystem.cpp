@@ -37,9 +37,9 @@ void EventSystem::TriggerOnInputPress(InputKeyCodes KeyCode)
 void EventSystem::TriggerOnInputRelease(InputKeyCodes KeyCode)
 {
 	GameEngine* EngineRef = GameplayStatics::GetGameEngine();
-	Validate(EngineRef, );
+	Validate(EngineRef,);
 	Actor* PlayerReference = EngineRef->GetPlayer();
-	Validate(PlayerReference, );
+	Validate(PlayerReference,);
 	if(PlayerReference->IsPendingKill)
 		return;
 	PlayerReference->OnKeyReleased(KeyCode);

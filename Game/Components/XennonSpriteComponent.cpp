@@ -3,6 +3,7 @@
 
 #include <thread>
 #include <corecrt_math.h>
+#include <thread>
 
 XennonStaticSpriteComponent::XennonStaticSpriteComponent(std::string TexturePath, int TilesX, int TilesY, Actor* ComponentOwner, int TextureIndexToDisplay) : SpriteComponent(TexturePath, TilesX, TilesY, 0, ComponentOwner)
 {
@@ -103,17 +104,20 @@ void XennonStaticSpriteComponent::SetTextureIndexToDisplay(int NewIndex)
 
 void XennonStaticSpriteComponent::AnimTansitionToIndex(int Index, float TotalSeconds, bool *StateReset)
 {
-	_CurrentIndex;
 	int maxNumberOfLoops = abs(Index - _CurrentIndex);
 	std::thread t1([=]() 
 	{
 		*StateReset = true;
 		int loopCounter = 0;
 		if (Index > _CurrentIndex)
-		{
+		{	
 			//++
 			while (_CurrentIndex < Index && loopCounter <= maxNumberOfLoops)
 			{
+				if (_CurrentIndex < 0)
+				{
+					return;
+				}
 				GameplayStatics::Delay(fabs(TotalSeconds / (Index - _CurrentIndex)));
 				SetTextureIndexToDisplay(_CurrentIndex + 1);
 				loopCounter++;
@@ -125,6 +129,10 @@ void XennonStaticSpriteComponent::AnimTansitionToIndex(int Index, float TotalSec
 			loopCounter = 0;
 			while (_CurrentIndex > Index && loopCounter <= maxNumberOfLoops)
 			{	
+				if (_CurrentIndex < 0)
+				{
+					return;
+				}
 				GameplayStatics::Delay(fabs(TotalSeconds / (_CurrentIndex - Index)));
 				SetTextureIndexToDisplay(_CurrentIndex - 1);
 				loopCounter++;

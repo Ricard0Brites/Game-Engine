@@ -100,6 +100,7 @@
     <ClInclude Include="Enemies\LonerProjectile.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Enemies\Rusher.h" />
     <ClInclude Include="Systems\Spawner.h" />
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +112,7 @@
     <ClCompile Include="Enemies\LonerProjectile.cpp" />
     <ClCompile Include="Missile.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Enemies\Rusher.cpp" />
     <ClCompile Include="Systems\Spawner.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

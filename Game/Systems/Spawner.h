@@ -1,9 +1,10 @@
 #pragma once
 #include <iostream>
-
-namespace std { class thread; }
+#include <thread>
 
 using namespace std;
+
+class thread;
 
 class Spawner
 {
@@ -20,7 +21,7 @@ private:
 	void SpawnAsteroid();
 	void SpawnRusher();
 
-	thread* SpawnerThread = nullptr;
+	std::thread* SpawnerThread = nullptr;
 	float TimeBetweenWaves = 3.f;
 };
 

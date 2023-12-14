@@ -7,9 +7,10 @@
 #include "Systems/Spawner.h"
 #include "Enemies/Asteroid.h"
 #include "GameRules.h"
+#include "Enemies/Rusher.h"
 
 #if _DEBUG
-    #define CLASSTOTEST Loner
+    #define CLASSTOTEST Rusher
     #define DEBUGENTITYNUM 1
 #endif
 

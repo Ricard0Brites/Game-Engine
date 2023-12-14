@@ -19,7 +19,7 @@ Spawner::~Spawner()
 
 void Spawner::InitSpawner()
 {
-	SpawnerThread = new thread([&](){
+	SpawnerThread = new std::thread([&](){
 
 		Spawn = true;
 		while (true)

@@ -44,7 +44,7 @@ void GameEngine::start()
 	//------- Game Loop -------------------------------------------------------------------------------
 	while (IsRunning)
 	{
-		if(GetPlayer()->IsPendingKill)
+		if(_PlayerReference->IsPendingKill)
 			QuitGame();
 		#pragma region Delta Time
 		last = now;
@@ -92,7 +92,14 @@ void GameEngine::start()
 			{
 				Cache.remove(actor);
 				printf("Deleting %s \n", actor->ActorDisplayName.c_str());
-				delete actor;
+
+				if(actor == _PlayerReference)
+				{
+					delete actor;
+					QuitGame();
+				}
+				else
+					delete actor;
 			}
 		}
 		_Actors = Cache;

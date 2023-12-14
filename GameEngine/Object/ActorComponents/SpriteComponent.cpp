@@ -40,8 +40,11 @@ SpriteComponent::SpriteComponent()
 
 SpriteComponent::~SpriteComponent()
 {
-	delete MyTransform;
-	MyTransform = nullptr;
+	if(MyTransform)
+	{
+		delete MyTransform;
+		MyTransform = nullptr;
+	}
 	SDL_DestroyTexture(DisplaySprite);
 }
 

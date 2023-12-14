@@ -12,8 +12,6 @@
 
 #define PLAYERSPEED 0.2f
 
-
-
 Player::Player(Actor* Parent) : Actor(Parent)
 {
 	MySprite = (SpriteComponent*) new XennonStaticSpriteComponent("src/Sprites/Ship1.bmp", 7, 1, this, _IdleShipAnimIndex); // starting state = 4
@@ -36,6 +34,10 @@ void Player::BeginPlay()
 
 void Player::Tick(float DeltaSeconds)
 {
+	if(!MySprite) return;
+	if(!MyTransform) return;
+	if(IsPendingKill) return;
+
 	if (MySprite)MySprite->Tick(DeltaSeconds);
 	
 	if (bMoveDirection[0])//up
@@ -94,6 +96,7 @@ void Player::Tick(float DeltaSeconds)
 
 void Player::OnKeyPressed(InputKeyCodes KeyCode)
 {
+	if(IsPendingKill) return;
 	switch (KeyCode)
 	{
 		case InputKeyCodes::K_w:
@@ -138,6 +141,7 @@ void Player::OnKeyPressed(InputKeyCodes KeyCode)
 
 void Player::OnKeyReleased(InputKeyCodes KeyCode)
 {
+	if(IsPendingKill) return;
 	switch (KeyCode)
 	{
 		case InputKeyCodes::K_w:
@@ -180,7 +184,8 @@ void Player::OnKeyReleased(InputKeyCodes KeyCode)
 
 void Player::OnInputAxis(InputKeyCodes KeyCode, Vector AxisValue)
 {
-	GetTransform()->SetLocation(GetTransform()->GetLocation() += (AxisValue * 0.2f) * GameplayStatics::GetGameEngine()->GetDeltaSeconds());
+	if(GetTransform())
+		GetTransform()->SetLocation(GetTransform()->GetLocation() += (AxisValue * 0.2f) * GameplayStatics::GetGameEngine()->GetDeltaSeconds());
 }
 
 void Player::OnCollisionStarted(const Actor* OtherActor)
@@ -196,9 +201,10 @@ void Player::OnCollisionStarted(const Actor* OtherActor)
 	MySprite = nullptr;
 	MySprite = new SpriteComponent("src/Sprites/Ship2.bmp", 7, 3, 2, this);
 	MySprite->PlayAnimation(false);
+	CollisionRadius = -1;
 
 	// destroy actor
-	thread([&]() 
+	std::thread([&]() 
 	{
 		GameplayStatics::Delay(3);
 		DestroyPlayer();
@@ -209,4 +215,3 @@ void Player::DestroyPlayer()
 {
 	GameplayStatics::GetGameEngine()->RemoveActor(this);
 }
-
