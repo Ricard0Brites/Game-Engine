@@ -13,5 +13,7 @@ public:
 
 private:
 	GameEngine* _EngineRef = nullptr;
+	int WindowWidth, WindowHeight;
+	bool MovementDirection = false;
 };
 

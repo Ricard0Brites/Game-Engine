@@ -26,4 +26,5 @@ int GameRules::_TimeBetweenRocketSpawn = 200;
 		float GameRules::_LonerProjectileSpeed = 0.1f;
 
 //level 
-float  GameRules::_LevelMovementSpeed = 0.04f;
+		float  GameRules::_LevelMovementSpeed = 0.04f;
+		float GameRules::_EnemySpawnScreenDivisions = 9.f;

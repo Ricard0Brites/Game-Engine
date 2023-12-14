@@ -19,6 +19,7 @@ public:
 		
 	//level
 	static float GetLevelMovementSpeed() { return _LevelMovementSpeed; }
+	static float GetNumberOfSpawns() { return _EnemySpawnScreenDivisions; }
 	
 	//Window
 	static void GetWindowDimentions(int &Width, int &Height);
@@ -40,4 +41,5 @@ private:
 
 	//Level
 	static float _LevelMovementSpeed; // this is the vertical movement speed of the whole game (multiply this for paralax)
+	static float _EnemySpawnScreenDivisions;
 };
