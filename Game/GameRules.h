@@ -20,6 +20,8 @@ public:
 		static float GetDroneMovementSpeed() { return _DroneMovementSpeed;}
 		static float GetDroneMovementAmplitude() { return _DroneSineMovementAmplitude; }
 		
+		//Asteroid
+		static float GetAsteroidFallingSpeed() { return _AsteroidFallingSpeed; }
 	//level
 	static float GetLevelMovementSpeed() { return _LevelMovementSpeed; }
 	static float GetNumberOfSpawns() { return _EnemySpawnScreenDivisions; }
@@ -45,6 +47,9 @@ private:
 		//Drone
 		static float _DroneMovementSpeed;
 		static float _DroneSineMovementAmplitude;
+		
+		//Asteroid
+		static float _AsteroidFallingSpeed;
 	//Level
 	static float _LevelMovementSpeed; // this is the vertical movement speed of the whole game (multiply this for paralax)
 	static float _EnemySpawnScreenDivisions;

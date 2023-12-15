@@ -2,16 +2,17 @@
 #include <iostream>
 #include "GameEngine.h"
 
+#include "Systems/Spawner.h"
+#include "GameRules.h"
+
 #include "Player.h"
 #include "Enemies/Loner.h"
-#include "Systems/Spawner.h"
 #include "Enemies/Asteroid.h"
-#include "GameRules.h"
 #include "Enemies/Rusher.h"
 #include "Enemies/Drone.h"
 
 #if _DEBUG
-    #define CLASSTOTEST Drone
+    #define CLASSTOTEST Asteroid
     #define DEBUGENTITYNUM 5
 #endif
 

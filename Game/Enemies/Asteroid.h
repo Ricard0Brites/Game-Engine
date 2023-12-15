@@ -21,7 +21,17 @@ public:
 
 	virtual void OnCollisionStarted(const Actor* OtherActor) override;
 
-private:
-	  AnimationParameters Asteroids[9];
-};
+	// 0 stone, 1 rock, 2 Metal
+	void SetAsteroidType(int Type) { AsteroidType = Type; }
+	void SetAsteroidState(int State) {AsteroidState = State; }
+	void SetMovementDirection(Vector Direction) { FallingDirection = Direction; }
+	virtual void Tick(float DeltaSeconds) override;
 
+private:
+	AnimationParameters Asteroids[3];
+	unsigned int AsteroidType = 0, AsteroidState = 0, TypeTwoAsteroidHitCount = 0;
+	Vector FallingDirection = Vector::CreateVector(0,1,0);
+
+	void DisableCollision() { CollisionRadius = -1; };
+	void SpawnChildAsteroids();
+};
