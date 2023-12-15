@@ -10,6 +10,8 @@
 #include "..\Enemies\Rusher.h"
 #include "..\GameRules.h"
 
+//TODO - test and implement the powerups (+hp and the companion)
+
 Spawner::Spawner()
 {
 }
