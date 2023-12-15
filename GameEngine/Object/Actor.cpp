@@ -33,6 +33,13 @@ void Actor::Tick(float DeltaSeconds)
 {
 	if(IsPendingKill) return;
 	if(MySprite)MySprite->Tick(DeltaSeconds);
+	if (GetTransform()->GetLocation().Y > (GameplayStatics::GetScreenHeight() * 1.25f) || 
+		GetTransform()->GetLocation().X > (GameplayStatics::GetScreenWidth() * 1.25f))
+	{
+		GameEngine* EngineRef = GameplayStatics::GetGameEngine();
+		Validate(EngineRef,);
+		EngineRef->RemoveActor(this);
+	}
 }
 
 void Actor::AssignTexture(std::string TexturePath, int TileAmountX, int TileAmountY, float AnimationTimeInSeconds, Actor* ComponentOwner)
