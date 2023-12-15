@@ -29,9 +29,8 @@ public:
 
 private:
 	AnimationParameters Asteroids[3];
-	unsigned int AsteroidType = 0, AsteroidState = 0, TypeTwoAsteroidHitCount = 0;
+	unsigned int AsteroidType = 1, AsteroidState = 0, TypeTwoAsteroidHitCount = 0;
 	Vector FallingDirection = Vector::CreateVector(0,1,0);
-
-	void DisableCollision() { CollisionRadius = -1; };
+	bool IsInvincible = false;
 	void SpawnChildAsteroids();
 };

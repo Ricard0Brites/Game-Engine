@@ -22,20 +22,6 @@ Asteroid::Asteroid(Actor* Parent) : Actor(Parent)
 			break;
 
 		case 1:
-			Asteroids[2].Path = GETTEXPATH(MAster32.bmp);
-			Asteroids[2].TileX = 8;
-			Asteroids[2].TileY = 2;
-
-			Asteroids[1].Path = GETTEXPATH(MAster64.bmp);
-			Asteroids[1].TileX = 8;
-			Asteroids[1].TileY = 3;
-
-			Asteroids[0].Path = GETTEXPATH(MAster96.bmp);
-			Asteroids[0].TileX = 5;
-			Asteroids[0].TileY = 5;
-			break;
-
-		case 2:
 			Asteroids[2].Path = GETTEXPATH(SAster32.bmp);
 			Asteroids[2].TileX = 8;
 			Asteroids[2].TileY = 2;
@@ -45,6 +31,20 @@ Asteroid::Asteroid(Actor* Parent) : Actor(Parent)
 			Asteroids[1].TileY = 3;
 
 			Asteroids[0].Path = GETTEXPATH(SAster96.bmp);
+			Asteroids[0].TileX = 5;
+			Asteroids[0].TileY = 5;
+			break;
+
+		case 2:
+			Asteroids[2].Path = GETTEXPATH(MAster32.bmp);
+			Asteroids[2].TileX = 8;
+			Asteroids[2].TileY = 2;
+
+			Asteroids[1].Path = GETTEXPATH(MAster64.bmp);
+			Asteroids[1].TileX = 8;
+			Asteroids[1].TileY = 3;
+
+			Asteroids[0].Path = GETTEXPATH(MAster96.bmp);
 			Asteroids[0].TileX = 5;
 			Asteroids[0].TileY = 5;
 			break;
@@ -64,7 +64,7 @@ void Asteroid::BeginPlay()
 	MySprite->PlayAnimation(true);
 	
 	if (AsteroidType == 2)
-		DisableCollision();
+		IsInvincible = true;
 }
 
 void Asteroid::Tick(float DeltaSeconds)
@@ -72,9 +72,10 @@ void Asteroid::Tick(float DeltaSeconds)
 	Actor::Tick(DeltaSeconds);
 	GetTransform()->SetLocation(((FallingDirection * GameRules::GetAsteroidFallingSpeed())) * DeltaSeconds + GetTransform()->GetLocation());
 }
+
 void Asteroid::OnCollisionStarted(const Actor* OtherActor)
 {
-	if(dynamic_cast<const Missile*>(OtherActor))
+	if(dynamic_cast<const Missile*>(OtherActor) && !IsInvincible)
 	{
 		GameEngine* EngineRef = GameplayStatics::GetGameEngine();
 		Validate(EngineRef, );
