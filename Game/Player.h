@@ -26,11 +26,15 @@ public:
 
 	virtual void OnCollisionStarted(const Actor* OtherActor) override;
 
+	void DestroyCompanion();
+	void DestroyCompanion(Companion* Ref);
+
 protected:
 	bool bMoveDirection[4];//0-> up 1->left 2->down 3->right
 	void DestroyPlayer();
 
 	void CreateCompanion();
+	
 
 private:
 	bool _AnimStateManager;

@@ -10,7 +10,7 @@ Companion::Companion(Actor* Owner) : Actor(Owner)
 void Companion::Tick(float DeltaSeconds)
 {
 	Actor::Tick(DeltaSeconds);
-	LOGALL(GetTransform()->GetLocation().ToString().c_str());
+	LOGALL(CollisionRadius);
 }
 void Companion::BeginPlay()
 {
@@ -30,13 +30,16 @@ void Companion::OnCollisionStarted(const Actor* OtherActor)
 	}
 	AssignTexture("src/Sprites/CloneDeath.bmp", 4, 1, 1, this);
 	MySprite->PlayAnimation(0);
-	std::thread t1([&]() {
+	std::thread t1([&]() 
+	{
 		GameplayStatics::Delay(1);
 		GameEngine* EngineRef = GameplayStatics::GetGameEngine();
 		Validate(EngineRef,);
-		EngineRef->RemoveActor(this);
-		return;
-		});
+		if (Player* PlayerRef = dynamic_cast<Player*>(const_cast<Actor*>(OtherActor)))
+		{
+			PlayerRef->DestroyCompanion(this);
+		}
+	});
 		t1.detach();
 }
 

@@ -31,7 +31,6 @@ void Player::BeginPlay()
 {
 	_HealthPoints *= 2;
 	CreateCompanion();
-	CreateCompanion();
 }
 
 void Player::Tick(float DeltaSeconds)
@@ -263,5 +262,38 @@ void Player::CreateCompanion()
 		Companion2 = EngineRef->CreateActor<Companion>(this);
 		Companion2->GetTransform()->IsRelative = true;
 		Companion2->GetTransform()->SetRelativeLocation(Vector::CreateVector(MySprite->GetSpriteWidth() *  -0.6f, MySprite->GetSpriteHeight() * -0.1f, 0));
+	}
+}
+
+void Player::DestroyCompanion()
+{
+	GameEngine* EngineRef = GameplayStatics::GetGameEngine();
+	Validate(EngineRef, );
+	if (Companion2)
+	{
+		EngineRef->RemoveActor(Companion2);
+		Companion2 = nullptr;
+	}
+	else if (Companion1)
+	{
+		EngineRef->RemoveActor(Companion1);
+		Companion1 = nullptr;
+	}
+}
+
+void Player::DestroyCompanion(Companion* Ref)
+{
+	GameEngine* EngineRef = GameplayStatics::GetGameEngine();
+	Validate(EngineRef, );
+
+	if (Ref == Companion1)
+	{
+		EngineRef->RemoveActor(Companion1);
+		Companion1 = nullptr;
+	}
+	else if (Ref == Companion2)
+	{
+		EngineRef->RemoveActor(Companion2);
+		Companion2 = nullptr;
 	}
 }
