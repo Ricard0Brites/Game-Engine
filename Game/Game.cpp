@@ -10,9 +10,10 @@
 #include "Enemies/Asteroid.h"
 #include "Enemies/Rusher.h"
 #include "Enemies/Drone.h"
+#include "Companion.h"
 
 #if _DEBUG
-    #define CLASSTOTEST Asteroid
+    #define CLASSTOTEST Companion
     #define DEBUGENTITYNUM 5
 #endif
 

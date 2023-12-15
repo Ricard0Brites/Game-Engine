@@ -45,6 +45,9 @@
     <ClInclude Include="Enemies\Drone.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Companion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\XennonSpriteComponent.cpp">
@@ -78,6 +81,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Enemies\Drone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Companion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,7 @@
 #include "Actor.h"
-#include "../GameEngine.h"
+#include "GameEngine.h"
 #include "ActorComponents\SpriteComponent.h"
+#include "Data\DataTypes.h"
 
 Actor::Actor(Actor* Parent)
 {
@@ -17,16 +18,8 @@ Actor::Actor(Actor* Parent, const char* DisplayName) : Actor(Parent)
 }
 Actor::~Actor()
 {
-	if(MyTransform)
-	{
-		delete MyTransform;
-		MyTransform = nullptr;
-	}
-	if (MySprite)
-	{
-		delete MySprite; 
-		MySprite = nullptr;
-	}
+	DestroySpriteComponent();
+	DestroyTransform();
 }
 
 void Actor::Tick(float DeltaSeconds)
