@@ -12,6 +12,7 @@ void Drone::BeginPlay()
 
 	AssignTexture("src/Sprites/drone.bmp", 8, 2, 1, this);
 	GetSpriteComponent()->PlayAnimation(1);
+	TimeCounter += Offset;
 }
 
 void Drone::Tick(float DeltaSeconds)

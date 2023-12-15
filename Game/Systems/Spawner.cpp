@@ -8,6 +8,7 @@
 #include "..\Enemies\Drone.h"
 #include "..\Enemies\Asteroid.h"
 #include "..\Enemies\Rusher.h"
+#include "..\GameRules.h"
 
 Spawner::Spawner()
 {
@@ -57,7 +58,7 @@ void Spawner::InitSpawner()
 
 void Spawner::SpawnLoner()
 {
-	int NumOfEnemiesToSpawn = 5 + (rand() % 6);
+	int NumOfEnemiesToSpawn = (rand() % 11);
 	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
 		for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
 		{
@@ -72,22 +73,24 @@ void Spawner::SpawnLoner()
 
 void Spawner::SpawnDrone()
 {
-	int NumOfEnemiesToSpawn = 5 + (rand() % 6);
+	int NumOfEnemiesToSpawn = (rand() % 11);
 	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
+	int YSpawnLocation = rand() % (GameplayStatics::GetScreenHeight() / 2) + 1;
 		for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
 		{
 			Drone* Enemy = EngineRef->CreateActor<Drone>(nullptr);
-// 			Enemy->GetTransform()->SetLocation(Vector::CreateVector(
-// 			Spacing * i,
-// 			,
-// 			0
-// 			));
+			Enemy->GetTransform()->SetLocation(Vector::CreateVector(
+			40.f * i,
+			(float)YSpawnLocation,
+			0.f
+			));
+			Enemy->Offset = i * (1000.f/NumOfEnemiesToSpawn);
 		}
 }
 
 void Spawner::SpawnAsteroid()
 {
-	int NumOfEnemiesToSpawn = 5 + (rand() % 6);
+	int NumOfEnemiesToSpawn = (rand() % 11);
 	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
 		for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
 		{
@@ -102,7 +105,7 @@ void Spawner::SpawnAsteroid()
 
 void Spawner::SpawnRusher()
 {
-	int NumOfEnemiesToSpawn = 5 + (rand() % 6);
+	int NumOfEnemiesToSpawn = (rand() % 11);
 	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
 	for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
 	{

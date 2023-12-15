@@ -10,6 +10,7 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 
 	float MovementDirectionX = 1;
+	float Offset = 0;
 
 private: 
 	float TimeCounter = 0;	
