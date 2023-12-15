@@ -5,8 +5,27 @@
 
 Asteroid::Asteroid(Actor* Parent) : Actor(Parent)
 {
-	switch(AsteroidType)
+
+}
+
+void Asteroid::BeginPlay()
+{	
+	if (AsteroidType == 2)
 	{
+		IsInvincible = true;
+		AsteroidState = rand() % (sizeof(Asteroids) / sizeof(Asteroids[0]));
+	}
+}
+
+void Asteroid::Tick(float DeltaSeconds)
+{
+	Actor::Tick(DeltaSeconds);
+	GetTransform()->SetLocation(((FallingDirection * GameRules::GetAsteroidFallingSpeed())) * DeltaSeconds + GetTransform()->GetLocation());
+
+	if (AsteroidType != -1 && !HasAsteroidInit)
+	{
+		switch (AsteroidType)
+		{
 		case 0:
 			Asteroids[2].Path = GETTEXPATH(GAster32.bmp);
 			Asteroids[2].TileX = 8;
@@ -50,31 +69,18 @@ Asteroid::Asteroid(Actor* Parent) : Actor(Parent)
 			break;
 		default:
 			break;
-	}
+		}
 
-	for(AnimationParameters& AnimParams : Asteroids)
-	{
-		AnimParams.AnimationTime = AnimParams.TileX * AnimParams.TileY * 0.0625f;
+		for (AnimationParameters& AnimParams : Asteroids)
+		{
+			AnimParams.AnimationTime = AnimParams.TileX * AnimParams.TileY * 0.0625f;
+		}
+
+		AssignTexture(Asteroids[0].Path, Asteroids[0].TileX, Asteroids[0].TileY, Asteroids[0].AnimationTime, this);
+		MySprite->PlayAnimation(true);
+		HasAsteroidInit = true;
 	}
 }
-
-void Asteroid::BeginPlay()
-{	
-	if (AsteroidType == 2)
-	{
-		IsInvincible = true;
-		AsteroidState = rand() % (sizeof(Asteroids) / sizeof(Asteroids[0]));
-	}
-	AssignTexture(Asteroids[AsteroidState].Path, Asteroids[AsteroidState].TileX, Asteroids[AsteroidState].TileY, Asteroids[AsteroidState].AnimationTime, this);
-	MySprite->PlayAnimation(true);
-}
-
-void Asteroid::Tick(float DeltaSeconds)
-{
-	Actor::Tick(DeltaSeconds);
-	GetTransform()->SetLocation(((FallingDirection * GameRules::GetAsteroidFallingSpeed())) * DeltaSeconds + GetTransform()->GetLocation());
-}
-
 void Asteroid::OnCollisionStarted(const Actor* OtherActor)
 {
 	if(dynamic_cast<const Missile*>(OtherActor) && !IsInvincible)

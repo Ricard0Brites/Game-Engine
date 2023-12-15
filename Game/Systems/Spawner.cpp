@@ -92,14 +92,16 @@ void Spawner::SpawnAsteroid()
 {
 	int NumOfEnemiesToSpawn = (rand() % 11);
 	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
+	int YSpawnLocation = rand() % (GameplayStatics::GetScreenHeight() / 4) + 1;
 		for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
 		{
  			Asteroid* Enemy = EngineRef->CreateActor<Asteroid>(nullptr);
-// 			Enemy->GetTransform()->SetLocation(Vector::CreateVector(
-// 			Spacing * i,
-// 			,
-// 			0
-// 			));
+			Enemy->GetTransform()->SetLocation(Vector::CreateVector(
+			(rand() % GameplayStatics::GetScreenWidth() * 0.75f) + ((GameplayStatics::GetScreenWidth() * 0.5f) * 0.25f),
+			(float)YSpawnLocation,
+			0
+			));
+			Enemy->SetAsteroidType(0);
 		}
 }
 
@@ -110,10 +112,5 @@ void Spawner::SpawnRusher()
 	for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
 	{
 		Rusher* Enemy = EngineRef->CreateActor<Rusher>(nullptr);
-// 		Enemy->GetTransform()->SetLocation(Vector::CreateVector(
-// 		Spacing * i,
-// 		,
-// 		0
-// 		));
 	}
 }
