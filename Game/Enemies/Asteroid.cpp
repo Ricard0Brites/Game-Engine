@@ -59,12 +59,14 @@ Asteroid::Asteroid(Actor* Parent) : Actor(Parent)
 }
 
 void Asteroid::BeginPlay()
-{
+{	
+	if (AsteroidType == 2)
+	{
+		IsInvincible = true;
+		AsteroidState = rand() % (sizeof(Asteroids) / sizeof(Asteroids[0]));
+	}
 	AssignTexture(Asteroids[AsteroidState].Path, Asteroids[AsteroidState].TileX, Asteroids[AsteroidState].TileY, Asteroids[AsteroidState].AnimationTime, this);
 	MySprite->PlayAnimation(true);
-	
-	if (AsteroidType == 2)
-		IsInvincible = true;
 }
 
 void Asteroid::Tick(float DeltaSeconds)
