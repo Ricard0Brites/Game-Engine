@@ -78,16 +78,25 @@ public:
 	bool IsRelative = false;
 
 	void SetLocation(Vector NewLocation) {_Location = NewLocation; }
+	void SetRelativeLocation(Vector NewLocation) { _RelativeLocation = NewLocation; }
 	void SetRotation(Vector NewRotation) { _Rotation = NewRotation; }
+	void SetRelativeRotation(Vector NewRotation) { _RelativeRotation = NewRotation; }
 	void SetScale(Vector NewScale) { _Scale = NewScale; }
+	void SetRelativeScale(Vector NewScale) { _RelativeScale = NewScale; }
 
 
 	// Returns a copy of World location
 	Vector GetLocation();
+	//Returns a copy of the relative Location
+	Vector GetRelativeLocation() { return _RelativeLocation; }
 	// Returns a copy of World rotation
 	Vector GetRotation();
+	//Returns a copy of the relative Rotation
+	Vector GetRelativeRotation() { return _RelativeRotation; }
 	// Returns a copy of World Scale
 	Vector GetScale();
+	//Returns a copy of the relative Scale
+	Vector GetRelativeScale() { return _RelativeScale; }
 
 	//Dirtyness
 	bool GetIsLocationMarkedDirty() { return _IsLocationDirty; }
@@ -100,6 +109,7 @@ public:
 
 private:
 	Vector _Location, _Rotation, _Scale;
+	Vector _RelativeLocation, _RelativeRotation, _RelativeScale;
 	bool _IsLocationDirty, _IsRotationDirty, _IsScaleDirty;
 
 	Transform operator=(const Transform a) { _Location = a._Location, _Rotation = a._Rotation, _Scale = a._Scale, IsRelative = a.IsRelative; return *this; };

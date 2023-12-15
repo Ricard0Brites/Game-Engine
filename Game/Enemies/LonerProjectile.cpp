@@ -1,6 +1,7 @@
 #include "LonerProjectile.h"
 #include "../GameRules.h"
 #include "../Player.h"
+#include "../Missile.h"
 
 LonerProjectile::LonerProjectile(Actor* Owner) : Actor(Owner)
 {
@@ -26,7 +27,7 @@ void LonerProjectile::BeginPlay()
 
 void LonerProjectile::OnCollisionStarted(const Actor* OtherActor)
 {
-	if(dynamic_cast<const Player*>(OtherActor))
+	if(dynamic_cast<const Player*>(OtherActor) || dynamic_cast<const Missile*>(OtherActor))
 	{
 		LOG("Hit player", 0);
 		GameEngine* EngineRef = GameplayStatics::GetGameEngine();

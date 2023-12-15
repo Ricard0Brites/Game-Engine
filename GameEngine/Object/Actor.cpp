@@ -41,6 +41,8 @@ void Actor::Tick(float DeltaSeconds)
 		Validate(EngineRef,);
 		EngineRef->RemoveActor(this);
 	}
+	if(Owner)
+		GetTransform()->SetLocation(Owner->GetTransform()->GetLocation() + GetTransform()->GetRelativeLocation());
 }
 
 void Actor::AssignTexture(std::string TexturePath, int TileAmountX, int TileAmountY, float AnimationTimeInSeconds, Actor* ComponentOwner)
