@@ -18,8 +18,16 @@ Actor::Actor(Actor* Parent, const char* DisplayName) : Actor(Parent)
 }
 Actor::~Actor()
 {
-	DestroySpriteComponent();
-	DestroyTransform();
+	if (MySprite)
+	{
+		delete MySprite;
+		MySprite = nullptr;
+	}
+	if (MyTransform)
+	{
+		delete MyTransform;
+		MyTransform = nullptr;
+	}
 }
 
 void Actor::Tick(float DeltaSeconds)

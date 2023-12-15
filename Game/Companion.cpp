@@ -22,7 +22,11 @@ void Companion::OnCollisionStarted(const Actor* OtherActor)
 	if (dynamic_cast<const Player*>(OtherActor))
 	{
 		CollisionRadius = -1;
-		DestroySpriteComponent();
+		if (MySprite)
+		{
+			delete MySprite;
+			MySprite = nullptr;
+		}
 		AssignTexture("src/Sprites/CloneDeath.bmp", 4, 1, 1, this);
 		MySprite->PlayAnimation(0);
 		std::thread t1([&]() {
@@ -30,6 +34,7 @@ void Companion::OnCollisionStarted(const Actor* OtherActor)
 			GameEngine* EngineRef = GameplayStatics::GetGameEngine();
 			Validate(EngineRef,);
 			EngineRef->RemoveActor(this);
+			return;
 			});
 			t1.detach();
 	}

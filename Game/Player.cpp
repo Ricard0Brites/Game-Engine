@@ -30,6 +30,7 @@ Player::~Player()
 
 void Player::BeginPlay()
 {
+	_HealthPoints *= 2;
 }
 
 void Player::Tick(float DeltaSeconds)

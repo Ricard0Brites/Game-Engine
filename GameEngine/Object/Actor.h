@@ -39,9 +39,6 @@ public:
 
 	virtual void OnKeyReleased(InputKeyCodes KeyCode) override;
 
-	void DestroySpriteComponent() { if(MySprite)delete GetSpriteComponent(); MySprite = nullptr; }
-	void DestroyTransform() { if(MyTransform) delete GetTransform(); MyTransform = nullptr; }
-
 	std::string ActorDisplayName = "";
 protected:
 	Transform* MyTransform;
