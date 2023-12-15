@@ -49,26 +49,16 @@ void Actor::AssignTexture(std::string TexturePath, int TileAmountX, int TileAmou
 }
 
 void Actor::OnCollisionStarted(const Actor* OtherActor)
-{
-
-}
+{}
 
 void Actor::BeginPlay()
-{
-
-}
+{}
 
 void Actor::OnInputAxis(InputKeyCodes KeyCode, Vector AxisValue)
-{
-
-}
+{}
 
 void Actor::OnKeyPressed(InputKeyCodes KeyCode)
-{
-
-}
+{}
 
 void Actor::OnKeyReleased(InputKeyCodes KeyCode)
-{
-
-}
+{}

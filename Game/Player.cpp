@@ -190,20 +190,25 @@ void Player::OnInputAxis(InputKeyCodes KeyCode, Vector AxisValue)
 
 void Player::OnCollisionStarted(const Actor* OtherActor)
 {
-	// play ship destruct animation
 	if(dynamic_cast<const Missile*>(OtherActor))
 		return;
-	if(HasDied)
+	if(_HasDied)
+		return;
+	LOG("TAKING DAMAGE", 3);
+	_HealthPoints--;
+	const_cast<Actor*>(OtherActor)->CollisionRadius = -1;
+	if(_HealthPoints != 0)
 		return;
 
-	HasDied = true;
+	_HasDied = true;
 	delete MySprite;
 	MySprite = nullptr;
 	MySprite = new SpriteComponent("src/Sprites/Ship2.bmp", 7, 3, 2, this);
 	MySprite->PlayAnimation(false);
 	CollisionRadius = -1;
 
-	// destroy actor
+	// destroy actor (ideally this would be done with delegates but making a delegate system 
+	//would take too much time)
 	std::thread([&]() 
 	{
 		GameplayStatics::Delay(3);

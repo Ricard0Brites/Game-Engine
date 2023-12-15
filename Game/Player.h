@@ -24,16 +24,19 @@ public:
 	XennonStaticSpriteComponent* GetCustomSpriteComponent() { return (XennonStaticSpriteComponent*)MySprite; }
 
 	virtual void OnCollisionStarted(const Actor* OtherActor) override;
+
 protected:
 	bool bMoveDirection[4];//0-> up 1->left 2->down 3->right
 	void DestroyPlayer();
 
 private:
 	bool _AnimStateManager;
-	int _IdleShipAnimIndex = 4;
+	unsigned short int _IdleShipAnimIndex = 4;
 	
 	bool _CanKeepShooting = false; 
 	float _ShootingTimer = MAXFLOAT;
 
-	bool HasDied = false;
+	bool _HasDied = false;
+
+	unsigned short int _HealthPoints = 5;
 };
