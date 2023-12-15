@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <thread>
+#include "GameEngine.h"
 
 using namespace std;
 
