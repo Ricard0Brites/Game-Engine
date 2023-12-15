@@ -65,7 +65,7 @@ void Spawner::SpawnLoner()
 			Loner* Enemy = EngineRef->CreateActor<Loner>(nullptr);
 			Enemy->GetTransform()->SetLocation(Vector::CreateVector(
 			(float)Spacing * i,
-			0,
+			(float)(rand() % (GameplayStatics::GetScreenHeight() / 3)),
 			0
 			));
 		}
@@ -90,9 +90,9 @@ void Spawner::SpawnDrone()
 
 void Spawner::SpawnAsteroid()
 {
-	int NumOfEnemiesToSpawn = (rand() % 11);
+	int NumOfEnemiesToSpawn = (rand() % 5);
 	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
-	int YSpawnLocation = rand() % (GameplayStatics::GetScreenHeight() / 4) + 1;
+	int YSpawnLocation = rand() % (GameplayStatics::GetScreenHeight() / 4);
 		for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
 		{
  			Asteroid* Enemy = EngineRef->CreateActor<Asteroid>(nullptr);
@@ -101,7 +101,7 @@ void Spawner::SpawnAsteroid()
 			(float)YSpawnLocation,
 			0
 			));
-			Enemy->SetAsteroidType(0);
+			Enemy->SetAsteroidType(rand() % 3);
 		}
 }
 

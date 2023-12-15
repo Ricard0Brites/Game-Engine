@@ -25,7 +25,7 @@ void Loner::Tick(float DeltaSeconds)
 	Actor::Tick(DeltaSeconds);
 	GetTransform()->SetLocation(Vector::CreateVector(
 		/*X*/ GetTransform()->GetLocation().X + (GameRules::GetLonerMovementSpeed() * DeltaSeconds),
-		/*Y*/ GetTransform()->GetLocation().Y + GameRules::GetLevelMovementSpeed(), // falling speed
+		/*Y*/ GetTransform()->GetLocation().Y, // falling speed
 		/*Z*/ 0
 	));
 	
