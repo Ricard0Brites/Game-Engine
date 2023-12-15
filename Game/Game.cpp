@@ -12,11 +12,6 @@
 #include "Enemies/Drone.h"
 #include "Companion\Companion.h"
 
-#if _DEBUG
-    #define CLASSTOTEST Loner
-    #define DEBUGENTITYNUM 5
-#endif
-
 int main(int argc, char** argv)
 {
     GameEngine engine;
@@ -44,19 +39,9 @@ int main(int argc, char** argv)
     engine.SetPlayerReference(Player1);
 
     //Enemies
-#if _DEBUG
-    CLASSTOTEST* enemy[DEBUGENTITYNUM + 1] = {};
-
-    for (int i = 0; i < DEBUGENTITYNUM + 1; ++i)
-    {
-        enemy[i] = engine.CreateActor<CLASSTOTEST>(nullptr);
-		enemy[i]->GetTransform()->SetLocation(Vector::CreateVector((float)(windowWidth / (DEBUGENTITYNUM + 1)) * (float)(i + 1), (float)windowHeight / 4, 0));
-    }
-#endif
-#if _RELEASE
     Spawner spawner;
     spawner.InitSpawner();
-#endif
+
     engine.start();// no code after this function will be called. from this point on to do anything it has to be inside the gameloop... this means only spawned and active actors can spawn other actors.
     
     return 0;

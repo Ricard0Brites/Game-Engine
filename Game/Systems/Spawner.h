@@ -21,7 +21,7 @@ private:
 	void SpawnAsteroid();
 	void SpawnRusher();
 
+	GameEngine* EngineRef = nullptr;
 	std::thread* SpawnerThread = nullptr;
-	float TimeBetweenWaves = 3.f;
 };
 

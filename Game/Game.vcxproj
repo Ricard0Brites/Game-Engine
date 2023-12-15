@@ -103,6 +103,8 @@
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Enemies\Rusher.h" />
+    <ClInclude Include="BuffsDebufs\Shield.h" />
+    <ClInclude Include="PowerUp.h" />
     <ClInclude Include="Systems\Spawner.h" />
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +119,8 @@
     <ClCompile Include="Missile.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Enemies\Rusher.cpp" />
+    <ClCompile Include="BuffsDebufs\Shield.cpp" />
+    <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="Systems\Spawner.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

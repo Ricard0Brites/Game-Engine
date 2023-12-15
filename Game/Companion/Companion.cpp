@@ -6,12 +6,6 @@ Companion::Companion(Actor* Owner) : Actor(Owner)
 {
 
 }
-
-void Companion::Tick(float DeltaSeconds)
-{
-	Actor::Tick(DeltaSeconds);
-	LOGALL(CollisionRadius);
-}
 void Companion::BeginPlay()
 {
 	AssignTexture("src/Sprites/clone1.bmp", 4,4,1,this);

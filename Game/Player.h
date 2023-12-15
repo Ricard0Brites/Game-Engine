@@ -26,14 +26,15 @@ public:
 
 	virtual void OnCollisionStarted(const Actor* OtherActor) override;
 
+	void CreateCompanion();
 	void DestroyCompanion();
 	void DestroyCompanion(Companion* Ref);
+
+	void AddHealth(int LifestoAdd) { _HealthPoints += 2 * LifestoAdd; }
 
 protected:
 	bool bMoveDirection[4];//0-> up 1->left 2->down 3->right
 	void DestroyPlayer();
-
-	void CreateCompanion();
 	
 
 private:

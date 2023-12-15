@@ -19,13 +19,14 @@ Spawner::~Spawner()
 
 void Spawner::InitSpawner()
 {
+	EngineRef = GameplayStatics::GetGameEngine();
+	Validate(EngineRef, );
 	SpawnerThread = new std::thread([&](){
 
 		Spawn = true;
 		while (true)
 		{
-			GameplayStatics::Delay(TimeBetweenWaves);
-			TimeBetweenWaves = 3 * ((float)rand() / (float)RAND_MAX);
+			GameplayStatics::Delay(1);
 
 			switch (rand() % 6)
 			{
@@ -55,7 +56,7 @@ void Spawner::InitSpawner()
 
 void Spawner::SpawnLoner()
 {
-	LOG("SpawnLoner", 3);
+	//for()
 }
 
 void Spawner::SpawnClone()

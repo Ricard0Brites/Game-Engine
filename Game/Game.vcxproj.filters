@@ -48,6 +48,12 @@
     <ClInclude Include="Companion\Companion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BuffsDebufs\Shield.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerUp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\XennonSpriteComponent.cpp">
@@ -84,6 +90,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Companion\Companion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BuffsDebufs\Shield.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
