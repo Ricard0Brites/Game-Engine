@@ -2,7 +2,6 @@
 #include "Loner.h"
 #include "GameEngine.h"
 #include "../GameRules.h"
-#include <thread>
 #include "LonerProjectile.h"
 
 
@@ -19,36 +18,22 @@ void Loner::BeginPlay()
 	GameRules::GetWindowDimentions(_WindowWidth, _WindowHeight);
 	_GameEngineRef = GameplayStatics::GetGameEngine();
 	Validate(_GameEngineRef,);
-
-	thread([&](){
-		const bool* IsRunning = GameplayStatics::GetIsGameRunning();
-		while(*IsRunning)
-		{
-			if(IsPendingKill) 
-			{
-				break;
-			}
-			GameplayStatics::Delay(GameRules::GetLonerProjectileFiringInterval());
-			SpawnProjectile();
-		}
-	}).detach();
 }
 
 void Loner::Tick(float DeltaSeconds)
 {
 	Actor::Tick(DeltaSeconds);
-#if _RELEASE
 	GetTransform()->SetLocation(Vector::CreateVector(
 		/*X*/ GetTransform()->GetLocation().X + (GameRules::GetLonerMovementSpeed() * DeltaSeconds),
 		/*Y*/ GetTransform()->GetLocation().Y + GameRules::GetLevelMovementSpeed(), // falling speed
 		/*Z*/ 0
 	));
-#endif
-
-	// should only trigger once per Class instance
-	if (GetTransform()->GetLocation().X > (float)(_WindowWidth + 10))
+	
+	TimerCounter += DeltaSeconds;
+	if(TimerCounter > GameRules::GetLonerProjectileFiringInterval() && !IsPendingKill)
 	{
-		GameplayStatics::GetGameEngine()->RemoveActor(this);
+		SpawnProjectile();
+		TimerCounter = 0;
 	}
 }
 
@@ -65,6 +50,9 @@ void Loner::OnCollisionStarted(const Actor* OtherActor)
 void Loner::SpawnProjectile()
 {
 	if(IsPendingKill) return;
+	if(!this || !HasInit) return;
+	if(!MyTransform) return;
+
 	bool XIsInBounds = GetTransform()->GetLocation().X >= 0 && GetTransform()->GetLocation().X < _WindowWidth;
 	bool YIsInBounds = GetTransform()->GetLocation().Y >= 0 && GetTransform()->GetLocation().Y < _WindowHeight;
 

@@ -1,6 +1,6 @@
 #include "PowerUp.h"
-#include "GameRules.h"
-#include "Player.h"
+#include "../GameRules.h"
+#include "../Player.h"
 
 void PowerUp::BeginPlay()
 {

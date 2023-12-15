@@ -6,6 +6,19 @@ Companion::Companion(Actor* Owner) : Actor(Owner)
 {
 
 }
+
+void Companion::Tick(float DeltaSeconds)
+{
+	Actor::Tick(DeltaSeconds);
+
+	if (AllowDestroy)
+	{
+		TimerCounter += DeltaSeconds;
+		if(TimerCounter > 1000.f && PlayerRef)
+			PlayerRef->DestroyCompanion(this);		
+	}
+}
+
 void Companion::BeginPlay()
 {
 	AssignTexture("src/Sprites/clone1.bmp", 4,4,1,this);
@@ -29,11 +42,12 @@ void Companion::OnCollisionStarted(const Actor* OtherActor)
 		GameplayStatics::Delay(1);
 		GameEngine* EngineRef = GameplayStatics::GetGameEngine();
 		Validate(EngineRef,);
-		if (Player* PlayerRef = dynamic_cast<Player*>(const_cast<Actor*>(OtherActor)))
+		if (Player* LPlayerRef = dynamic_cast<Player*>(const_cast<Actor*>(OtherActor)))
 		{
-			PlayerRef->DestroyCompanion(this);
+			PlayerRef = LPlayerRef;
+			AllowDestroy = true;
 		}
 	});
-		t1.detach();
+	t1.detach();
 }
 

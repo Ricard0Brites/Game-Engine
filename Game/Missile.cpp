@@ -60,8 +60,8 @@ void Missile::OnCollisionStarted(const Actor* OtherActor)
 			std::this_thread::sleep_for(std::chrono::seconds(1));
 			if(!MySprite)
 				return;
-			MySprite->StopAnimation();
 			GameplayStatics::GetGameEngine()->RemoveActor(this);
+
 		}).detach();
 }
 

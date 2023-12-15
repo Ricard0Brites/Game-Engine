@@ -17,7 +17,6 @@ public:
 	bool Spawn = false;
 private:
 	void SpawnLoner();
-	void SpawnClone();
 	void SpawnDrone();
 	void SpawnAsteroid();
 	void SpawnRusher();

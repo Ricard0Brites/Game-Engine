@@ -2,9 +2,6 @@
 #include "GameEngine.h"
 
 #include <iostream>
-using namespace std;
-
-class thread;
 
 class XennonStaticSpriteComponent : SpriteComponent
 {

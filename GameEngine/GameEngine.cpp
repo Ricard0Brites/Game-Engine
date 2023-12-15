@@ -1,7 +1,6 @@
 #include "GameEngine.h"
 #include "SDLWrapper.h"
 #include "Window.h"
-#include <thread>
 
 GameEngine::~GameEngine()
 {
@@ -91,7 +90,10 @@ void GameEngine::start()
 			if(actor->IsPendingKill)
 			{
 				Cache.remove(actor);
+
+				#if _DEBUG
 				printf("Deleting %s \n", actor->ActorDisplayName.c_str());
+				#endif
 
 				if(actor == _PlayerReference)
 				{

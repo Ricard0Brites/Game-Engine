@@ -1,10 +1,6 @@
 #include "InputSystem.h"
 #include "Data\DataTypes.h"
 #include "GameEngine.h"
-#include <thread>
-#include <iostream>
-
-class thread;
 
 InputSystem::InputSystem()
 {

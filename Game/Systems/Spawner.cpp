@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <math.h>
 #include <thread>
+#include "..\Enemies\Loner.h"
+#include "..\Enemies\Drone.h"
+#include "..\Enemies\Asteroid.h"
+#include "..\Enemies\Rusher.h"
 
 Spawner::Spawner()
 {
@@ -26,23 +30,20 @@ void Spawner::InitSpawner()
 		Spawn = true;
 		while (true)
 		{
-			GameplayStatics::Delay(1);
+			GameplayStatics::Delay(2);
 
-			switch (rand() % 6)
+			switch (rand() % 5)
 			{
 			case 0:
 				SpawnLoner();
 				break;
 			case 1:
-				SpawnClone();
-				break;
-			case 2:
 				SpawnDrone();
 				break;
-			case 3:
+			case 2:
 				SpawnAsteroid();
 				break;
-			case 4:
+			case 3:
 				SpawnRusher();
 				break;
 			default:
@@ -56,25 +57,60 @@ void Spawner::InitSpawner()
 
 void Spawner::SpawnLoner()
 {
-	//for()
-}
-
-void Spawner::SpawnClone()
-{
-	LOG("SpawnClone", 3);
+	int NumOfEnemiesToSpawn = 5 + (rand() % 6);
+	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
+		for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
+		{
+			Loner* Enemy = EngineRef->CreateActor<Loner>(nullptr);
+			Enemy->GetTransform()->SetLocation(Vector::CreateVector(
+			(float)Spacing * i,
+			0,
+			0
+			));
+		}
 }
 
 void Spawner::SpawnDrone()
 {
-	LOG("SpawnDrone", 3);
+	int NumOfEnemiesToSpawn = 5 + (rand() % 6);
+	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
+		for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
+		{
+			Drone* Enemy = EngineRef->CreateActor<Drone>(nullptr);
+// 			Enemy->GetTransform()->SetLocation(Vector::CreateVector(
+// 			Spacing * i,
+// 			,
+// 			0
+// 			));
+		}
 }
 
 void Spawner::SpawnAsteroid()
 {
-	LOG("SpawnAsteroid", 3);
+	int NumOfEnemiesToSpawn = 5 + (rand() % 6);
+	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
+		for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
+		{
+ 			Asteroid* Enemy = EngineRef->CreateActor<Asteroid>(nullptr);
+// 			Enemy->GetTransform()->SetLocation(Vector::CreateVector(
+// 			Spacing * i,
+// 			,
+// 			0
+// 			));
+		}
 }
 
 void Spawner::SpawnRusher()
 {
-	LOG("SpawnRusher", 3);
+	int NumOfEnemiesToSpawn = 5 + (rand() % 6);
+	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
+	for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
+	{
+		Rusher* Enemy = EngineRef->CreateActor<Rusher>(nullptr);
+// 		Enemy->GetTransform()->SetLocation(Vector::CreateVector(
+// 		Spacing * i,
+// 		,
+// 		0
+// 		));
+	}
 }

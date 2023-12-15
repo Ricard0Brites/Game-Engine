@@ -1,9 +1,7 @@
 #pragma once
 #include "XennonSpriteComponent.h"
-
 #include <thread>
 #include <corecrt_math.h>
-#include <thread>
 
 XennonStaticSpriteComponent::XennonStaticSpriteComponent(std::string TexturePath, int TilesX, int TilesY, Actor* ComponentOwner, int TextureIndexToDisplay) : SpriteComponent(TexturePath, TilesX, TilesY, 0, ComponentOwner)
 {

@@ -51,7 +51,7 @@
     <ClInclude Include="BuffsDebufs\Shield.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PowerUp.h">
+    <ClInclude Include="BuffsDebufs\PowerUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -95,7 +95,7 @@
     <ClCompile Include="BuffsDebufs\Shield.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PowerUp.cpp">
+    <ClCompile Include="BuffsDebufs\PowerUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

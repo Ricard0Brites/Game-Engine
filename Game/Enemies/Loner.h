@@ -18,5 +18,6 @@ private:
 	void SpawnProjectile();
 	int _WindowWidth = 0, _WindowHeight = 0;
 	GameEngine *_GameEngineRef = nullptr;
+	float TimerCounter = 0;
 	
 };

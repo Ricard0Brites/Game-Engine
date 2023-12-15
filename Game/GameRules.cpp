@@ -22,7 +22,7 @@ int GameRules::_TimeBetweenRocketSpawn = 200;
 	//Loner
 	float GameRules::_LonerSpeed = 0.1f;
 		//Loner Projectile
-		float GameRules::_LonerProjectileFiringInterval = 2.f;
+		float GameRules::_LonerProjectileFiringInterval = 2000.f;
 		float GameRules::_LonerProjectileSpeed = 0.1f;
 	//Drone
 	float GameRules::_DroneMovementSpeed = 0.2f;
