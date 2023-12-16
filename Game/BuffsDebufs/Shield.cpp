@@ -2,6 +2,11 @@
 #include "..\Player.h"
 #include "..\GameRules.h"
 
+Shield::Shield(Actor* Owner) : Actor(Owner)
+{
+	
+}
+
 void Shield::BeginPlay()
 {
 	Actor::BeginPlay();

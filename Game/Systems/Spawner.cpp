@@ -9,8 +9,8 @@
 #include "..\Enemies\Asteroid.h"
 #include "..\Enemies\Rusher.h"
 #include "..\GameRules.h"
-
-//TODO - test and implement the powerups (+hp and the companion)
+#include "..\BuffsDebufs\PowerUp.h"
+#include "..\BuffsDebufs\Shield.h"
 
 Spawner::Spawner()
 {
@@ -35,7 +35,7 @@ void Spawner::InitSpawner()
 		{
 			GameplayStatics::Delay(2);
 
-			switch (rand() % 5)
+			switch (rand() % 7)
 			{
 			case 0:
 				SpawnLoner();
@@ -49,6 +49,12 @@ void Spawner::InitSpawner()
 			case 3:
 				SpawnRusher();
 				break;
+			case 4:
+				SpawnWeaponPowerUp();
+				break;
+			case 5:
+				SpawnShieldPowerUp();
+				break;
 			default:
 				break;
 			}
@@ -60,7 +66,7 @@ void Spawner::InitSpawner()
 
 void Spawner::SpawnLoner()
 {
-	int NumOfEnemiesToSpawn = (rand() % 11);
+	int NumOfEnemiesToSpawn = (rand() % 10)+1;
 	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
 		for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
 		{
@@ -75,7 +81,7 @@ void Spawner::SpawnLoner()
 
 void Spawner::SpawnDrone()
 {
-	int NumOfEnemiesToSpawn = (rand() % 11);
+	int NumOfEnemiesToSpawn = (rand() % 10)+1;
 	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
 	int YSpawnLocation = rand() % (GameplayStatics::GetScreenHeight() / 2) + 1;
 		for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
@@ -92,7 +98,7 @@ void Spawner::SpawnDrone()
 
 void Spawner::SpawnAsteroid()
 {
-	int NumOfEnemiesToSpawn = (rand() % 5);
+	int NumOfEnemiesToSpawn = (rand() % 4)+1;
 	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
 	int YSpawnLocation = rand() % (GameplayStatics::GetScreenHeight() / 4);
 		for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
@@ -109,10 +115,26 @@ void Spawner::SpawnAsteroid()
 
 void Spawner::SpawnRusher()
 {
-	int NumOfEnemiesToSpawn = (rand() % 11);
+	int NumOfEnemiesToSpawn = (rand() % 10) + 1;
 	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
 	for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
 	{
 		Rusher* Enemy = EngineRef->CreateActor<Rusher>(nullptr);
 	}
+}
+
+void Spawner::SpawnShieldPowerUp()
+{
+	int NumOfEnemiesToSpawn = (rand() % 10)+1;
+	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
+	PowerUp* Enemy = EngineRef->CreateActor<PowerUp>(nullptr);
+	Enemy->GetTransform()->SetLocation(Vector::CreateVector((float)Spacing, 0, 0));
+}
+
+void Spawner::SpawnWeaponPowerUp()
+{
+	int NumOfEnemiesToSpawn = (rand() % 10)+1;
+	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
+	Shield* Enemy = EngineRef->CreateActor<Shield>(nullptr);
+	Enemy->GetTransform()->SetLocation(Vector::CreateVector((float)Spacing, 0, 0));
 }

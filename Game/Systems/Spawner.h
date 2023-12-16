@@ -20,6 +20,8 @@ private:
 	void SpawnDrone();
 	void SpawnAsteroid();
 	void SpawnRusher();
+	void SpawnShieldPowerUp();
+	void SpawnWeaponPowerUp();
 
 	GameEngine* EngineRef = nullptr;
 	std::thread* SpawnerThread = nullptr;

@@ -2,6 +2,11 @@
 #include "../GameRules.h"
 #include "../Player.h"
 
+PowerUp::PowerUp(Actor* Owner) : Actor(Owner)
+{
+
+}
+
 void PowerUp::BeginPlay()
 {
 	Actor::BeginPlay();
