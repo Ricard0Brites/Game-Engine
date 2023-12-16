@@ -89,7 +89,7 @@ void Spawner::SpawnDrone()
 		{
 			Drone* Enemy = EngineRef->CreateActor<Drone>(nullptr);
 			Enemy->GetTransform()->SetLocation(Vector::CreateVector(
-			40.f * i,
+			-40.f * (i + 1),
 			(float)YSpawnLocation,
 			0.f
 			));
