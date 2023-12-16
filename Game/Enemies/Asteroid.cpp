@@ -76,7 +76,7 @@ void Asteroid::Tick(float DeltaSeconds)
 			AnimParams.AnimationTime = AnimParams.TileX * AnimParams.TileY * 0.0625f;
 		}
 
-		AssignTexture(Asteroids[0].Path, Asteroids[0].TileX, Asteroids[0].TileY, Asteroids[0].AnimationTime, this);
+		AssignTexture(Asteroids[AsteroidState].Path, Asteroids[AsteroidState].TileX, Asteroids[AsteroidState].TileY, Asteroids[AsteroidState].AnimationTime, this);
 		MySprite->PlayAnimation(true);
 		HasAsteroidInit = true;
 	}
