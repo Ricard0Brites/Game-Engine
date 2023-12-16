@@ -129,7 +129,7 @@ void Spawner::SpawnShieldPowerUp()
 	int NumOfEnemiesToSpawn = (rand() % 10)+1;
 	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
 	PowerUp* Enemy = EngineRef->CreateActor<PowerUp>(nullptr);
-	Enemy->GetTransform()->SetLocation(Vector::CreateVector((float)Spacing, 0, 0));
+	Enemy->GetTransform()->SetLocation(Vector::CreateVector((float)Spacing, -128.f, 0));
 }
 
 void Spawner::SpawnWeaponPowerUp()
@@ -137,5 +137,5 @@ void Spawner::SpawnWeaponPowerUp()
 	int NumOfEnemiesToSpawn = (rand() % 10)+1;
 	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
 	Shield* Enemy = EngineRef->CreateActor<Shield>(nullptr);
-	Enemy->GetTransform()->SetLocation(Vector::CreateVector((float)Spacing, 0, 0));
+	Enemy->GetTransform()->SetLocation(Vector::CreateVector((float)Spacing, -128.f, 0));
 }
