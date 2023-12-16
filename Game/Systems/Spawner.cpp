@@ -68,12 +68,13 @@ void Spawner::SpawnLoner()
 {
 	int NumOfEnemiesToSpawn = (rand() % 10)+1;
 	int Spacing = GameplayStatics::GetScreenWidth() / NumOfEnemiesToSpawn;
+	int YLocation = (rand() % (GameplayStatics::GetScreenHeight() / 3));
 		for (int i = 0; i < NumOfEnemiesToSpawn; ++i)
 		{
 			Loner* Enemy = EngineRef->CreateActor<Loner>(nullptr);
 			Enemy->GetTransform()->SetLocation(Vector::CreateVector(
-			(float)Spacing * i,
-			(float)(rand() % (GameplayStatics::GetScreenHeight() / 3)),
+			-64.f * (i + 1),
+			(float)YLocation,
 			0
 			));
 		}

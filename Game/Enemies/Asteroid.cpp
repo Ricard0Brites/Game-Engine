@@ -121,7 +121,6 @@ void Asteroid::OnCollisionStarted(const Actor* OtherActor)
 		}
 	}
 }
-
 void Asteroid::SpawnChildAsteroids()
 {
 	GameEngine* EngineRef = GameplayStatics::GetGameEngine();
