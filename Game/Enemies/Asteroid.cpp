@@ -15,12 +15,6 @@ void Asteroid::BeginPlay()
 		IsInvincible = true;
 		AsteroidState = rand() % (sizeof(Asteroids) / sizeof(Asteroids[0]));
 	}
-}
-
-void Asteroid::Tick(float DeltaSeconds)
-{
-	Actor::Tick(DeltaSeconds);
-	GetTransform()->SetLocation(((FallingDirection * GameRules::GetAsteroidFallingSpeed())) * DeltaSeconds + GetTransform()->GetLocation());
 
 	if (AsteroidType != -1 && !HasAsteroidInit)
 	{
@@ -79,7 +73,16 @@ void Asteroid::Tick(float DeltaSeconds)
 		AssignTexture(Asteroids[AsteroidState].Path, Asteroids[AsteroidState].TileX, Asteroids[AsteroidState].TileY, Asteroids[AsteroidState].AnimationTime, this);
 		MySprite->PlayAnimation(true);
 		HasAsteroidInit = true;
+
+		if (AsteroidState == 0)
+			MyTransform->SetLocation(MyTransform->GetLocation() * ((Vector::CreateVector(0, -1, 0) * MySprite->GetSpriteHeight()) * 1.25f));
 	}
+}
+
+void Asteroid::Tick(float DeltaSeconds)
+{
+	Actor::Tick(DeltaSeconds);
+	GetTransform()->SetLocation(((FallingDirection * GameRules::GetAsteroidFallingSpeed())) * DeltaSeconds + GetTransform()->GetLocation());
 }
 void Asteroid::OnCollisionStarted(const Actor* OtherActor)
 {

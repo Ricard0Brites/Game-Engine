@@ -106,7 +106,7 @@ void Spawner::SpawnAsteroid()
  			Asteroid* Enemy = EngineRef->CreateActor<Asteroid>(nullptr);
 			Enemy->GetTransform()->SetLocation(Vector::CreateVector(
 			(rand() % GameplayStatics::GetScreenWidth() * 0.75f) + ((GameplayStatics::GetScreenWidth() * 0.5f) * 0.25f),
-			(float)YSpawnLocation,
+			0,
 			0
 			));
 			Enemy->SetAsteroidType(rand() % 3);
