@@ -73,9 +73,6 @@ void Asteroid::BeginPlay()
 		AssignTexture(Asteroids[AsteroidState].Path, Asteroids[AsteroidState].TileX, Asteroids[AsteroidState].TileY, Asteroids[AsteroidState].AnimationTime, this);
 		MySprite->PlayAnimation(true);
 		HasAsteroidInit = true;
-
-		if (AsteroidState == 0)
-			MyTransform->SetLocation(MyTransform->GetLocation() * ((Vector::CreateVector(0, -1, 0) * MySprite->GetSpriteHeight()) * 1.25f));
 	}
 }
 
