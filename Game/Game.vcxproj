@@ -106,6 +106,7 @@
     <ClInclude Include="BuffsDebufs\Shield.h" />
     <ClInclude Include="BuffsDebufs\PowerUp.h" />
     <ClInclude Include="Systems\Spawner.h" />
+    <ClInclude Include="UserInterface\Widget.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Companion\Companion.cpp" />
@@ -122,6 +123,7 @@
     <ClCompile Include="BuffsDebufs\Shield.cpp" />
     <ClCompile Include="BuffsDebufs\PowerUp.cpp" />
     <ClCompile Include="Systems\Spawner.cpp" />
+    <ClCompile Include="UserInterface\Widget.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

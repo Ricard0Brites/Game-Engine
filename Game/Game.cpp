@@ -11,6 +11,7 @@
 #include "Enemies/Rusher.h"
 #include "Enemies/Drone.h"
 #include "Companion\Companion.h"
+#include "UserInterface/Widget.h"
 
 int main(int argc, char** argv)
 {
@@ -33,6 +34,13 @@ int main(int argc, char** argv)
 	Player1->GetTransform()->SetLocation(Vector::CreateVector(500, 600, 0));
     Player1->GetCustomSpriteComponent()->PlayAnimation(true);
     engine.SetPlayerReference(Player1);
+
+    //UI
+        //Player HP Bottom Left
+    Widget* UI = engine.CreateActor<Widget>(nullptr);
+    UI->GetTransform()->SetLocation(Vector::CreateVector(0, 0, 0));
+    UI->Alignment.SetAlignment(WidgetAnchorH::Left, WidgetAnchorV::Bottom);
+    UI->SetText("Health " + std::to_string(Player1->GetHP())); // the space generates a null surface error... this is safe.
 
     //Enemies
     Spawner spawner;

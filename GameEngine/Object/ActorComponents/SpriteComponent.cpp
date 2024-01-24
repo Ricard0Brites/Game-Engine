@@ -23,8 +23,8 @@ SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY
 	TextureAmountH = TilesX;
 	TextureAmountV = TilesY;
 
-	fw = tw / TextureAmountH;
-	fh = th / TextureAmountV;
+	fw = tw / max(TextureAmountH, 1);
+	fh = th / max(TextureAmountV, 1);
 
 	Quad.x = 0; Quad.y = 0;
 	Quad.w = fw; Quad.h = fh;
@@ -50,6 +50,7 @@ SpriteComponent::~SpriteComponent()
 
 void SpriteComponent::Tick(float DeltaSeconds)
 {
+	
 	if (IsPlayingAnimation)
 	{
 	//update animations each frame
@@ -87,6 +88,7 @@ void SpriteComponent::Tick(float DeltaSeconds)
 
 	#pragma endregion
 
+	#pragma region Animations
 		ElapsedTime += DeltaSeconds;
 
 		if (_IsAnimationReverse)
@@ -99,9 +101,9 @@ void SpriteComponent::Tick(float DeltaSeconds)
 				if (Quad.x < 0)
 				{
 					Quad.x = tw - fw;
-					
+
 					Quad.y -= fh;
-					if (Quad.y > 0) 
+					if (Quad.y > 0)
 					{
 						Quad.y = th - fh;
 						if (!LoopAnimation) StopAnimation();
@@ -117,11 +119,11 @@ void SpriteComponent::Tick(float DeltaSeconds)
 			{
 				ElapsedTime = 0;
 				Quad.x += fw;
-				if (Quad.x >= tw) 
+				if (Quad.x >= tw)
 				{
 					Quad.x = 0;
 					Quad.y += fh;
-					if (Quad.y >= th) 
+					if (Quad.y >= th)
 					{
 						Quad.y = 0;
 						if (!LoopAnimation) StopAnimation();
@@ -129,6 +131,43 @@ void SpriteComponent::Tick(float DeltaSeconds)
 				}
 			}
 		}
+#pragma endregion
+
+
+		SDL_RenderCopy(GameplayStatics::GetGameEngine()->GetRenderer(), DisplaySprite, &Quad, &DisplayQuad);
+	}
+
+	if (PlaySingleFrame)
+	{
+		//TEXTURE POSITION -----------------------------------------------------------
+		if (Owner != nullptr)
+		{
+			DisplayQuad.x = (int)MyTransform->GetLocation().X + (int)Owner->GetTransform()->GetLocation().X;
+			DisplayQuad.y = (int)MyTransform->GetLocation().Y + (int)Owner->GetTransform()->GetLocation().Y;
+		}
+		else
+		{
+			DisplayQuad.x = (int)MyTransform->GetLocation().X;
+			DisplayQuad.y = (int)MyTransform->GetLocation().Y;
+		}
+
+
+
+		//TEXTURE SCALE --------------------------------------------------------------
+		// Quad Scale X = (Texture width / Texture Amount horizontally) * X Scale
+		if (Owner != nullptr)
+		{
+			DisplayQuad.w = (int)((float)(tw / max(TextureAmountH, 1)) * (MyTransform->GetScale().X * Owner->GetTransform()->GetScale().X));
+			// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
+			DisplayQuad.h = (int)((float)(th / max(TextureAmountV, 1)) * (MyTransform->GetScale().Y * Owner->GetTransform()->GetScale().Y));
+		}
+		else
+		{
+			DisplayQuad.w = (int)((float)(tw / max(TextureAmountH, 1)) * MyTransform->GetScale().X);
+			// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
+			DisplayQuad.h = (int)((float)(th / max(TextureAmountV, 1)) * MyTransform->GetScale().Y);
+		}
+
 
 		SDL_RenderCopy(GameplayStatics::GetGameEngine()->GetRenderer(), DisplaySprite, &Quad, &DisplayQuad);
 	}
@@ -199,4 +238,12 @@ void SpriteComponent::PlayAnimationReverse(bool Loop)
 void SpriteComponent::StopAnimation()
 {
 	IsPlayingAnimation = false;
+}
+
+void SpriteComponent::ShowFrame(int FrameIndex)
+{
+	FrameToRender = FrameIndex;
+	Quad.x = FrameIndex * GetSpriteWidth();
+	Quad.y = 0; // only should be used with 1D spritesheets
+	PlaySingleFrame = true;
 }

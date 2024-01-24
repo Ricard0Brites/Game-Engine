@@ -8,6 +8,8 @@
 #include <chrono>
 #include "Companion\Companion.h"
 #include "Enemies\LonerProjectile.h"
+#include "BuffsDebufs\PowerUp.h"
+#include "BuffsDebufs\Shield.h"
 
 #define PLAYERSPEED 0.2f
 
@@ -215,17 +217,21 @@ void Player::OnCollisionStarted(const Actor* OtherActor)
 		return;
 	if(dynamic_cast<const Companion*>(OtherActor))
 		return;
+	if(dynamic_cast<const PowerUp*>(OtherActor))
+		return;
+	if (dynamic_cast<const Shield*>(OtherActor))
+		return;
 	if(_HasDied)
 		return;
 
-	if(dynamic_cast<const LonerProjectile*>(OtherActor))
-		_HealthPoints--;
 	LOG("TAKING DAMAGE", 3);
 	_HealthPoints--;
-	const_cast<Actor*>(OtherActor)->CollisionRadius = -1;
+	if(OtherActor)
+		const_cast<Actor*>(OtherActor)->CollisionRadius = -1;
+	
 	if(_HealthPoints != 0)
 		return;
-
+	//kill player
 	_HasDied = true;
 	delete MySprite;
 	MySprite = nullptr;

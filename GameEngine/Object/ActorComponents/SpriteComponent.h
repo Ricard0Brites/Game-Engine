@@ -34,6 +34,8 @@ public:
 	virtual void PlayAnimationReverse(bool Loop);
 	//stops animation from playing
 	virtual void StopAnimation();
+	//Plays Single Frame
+	virtual void ShowFrame(int FrameIndex);
 
 	int GetSpriteWidth() { return fw; }
 	int GetSpriteHeight() { return fh; }
@@ -51,6 +53,10 @@ protected:
 	int tw, th, fw, fh;
 	int TextureAmountH, TextureAmountV;
 	bool LoopAnimation;
+
+	//Single Frame
+	bool PlaySingleFrame;
+	int FrameToRender = 0;
 	
 	//Animation Timer
 	float AnimationTimeInMS, ElapsedTime;
