@@ -31,7 +31,6 @@ Player::~Player()
 
 void Player::BeginPlay()
 {
-	_HealthPoints *= 2;
 	CreateCompanion();
 }
 
