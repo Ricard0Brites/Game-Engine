@@ -30,7 +30,7 @@ public:
 	void DestroyCompanion();
 	void DestroyCompanion(Companion* Ref);
 
-	void AddHealth(int LifestoAdd) { _HealthPoints += 2 * LifestoAdd; }
+	void AddHealth(int LifestoAdd) { _HealthPoints += LifestoAdd;  OnHealthChangedDelegate(); }
 	int GetHP() {return _HealthPoints; }
 
 	void (*OnHealthChangedDelegate)() = nullptr;
