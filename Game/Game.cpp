@@ -48,9 +48,8 @@ int main(int argc, char** argv)
     UI->GetTransform()->SetLocation(Vector::CreateVector(0, 0, 0));
     UI->Alignment.SetAlignment(WidgetAnchorH::Left, WidgetAnchorV::Bottom);
     UI->SetText("Health " + std::to_string(Player1->GetHP())); // the space generates a null surface error... this is safe.
-    
-    
     Player1->OnHealthChangedDelegate = &UpdateUI;
+
     //Enemies
     Spawner spawner;
     spawner.InitSpawner();

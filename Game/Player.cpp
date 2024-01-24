@@ -31,7 +31,9 @@ Player::~Player()
 
 void Player::BeginPlay()
 {
+	#if _DEBUG
 	CreateCompanion();
+	#endif
 }
 
 void Player::Tick(float DeltaSeconds)
