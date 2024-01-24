@@ -33,7 +33,7 @@ public:
 	void AddHealth(int LifestoAdd) { _HealthPoints += 2 * LifestoAdd; }
 	int GetHP() {return _HealthPoints; }
 
-	void*(*OnHealthChangedDelegate)[] = nullptr; 
+	void (*OnHealthChangedDelegate)() = nullptr;
 
 protected:
 	bool bMoveDirection[4];//0-> up 1->left 2->down 3->right

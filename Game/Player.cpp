@@ -228,6 +228,8 @@ void Player::OnCollisionStarted(const Actor* OtherActor)
 	_HealthPoints--;
 	if(OtherActor)
 		const_cast<Actor*>(OtherActor)->CollisionRadius = -1;
+		if(OnHealthChangedDelegate)
+			OnHealthChangedDelegate();
 	
 	if(_HealthPoints != 0)
 		return;
