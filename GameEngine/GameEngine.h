@@ -5,6 +5,7 @@
 #include <chrono>
 #include <thread>
 #include <list>
+#include "glm.hpp"
 
 //systems
 #include "Systems/Input/InputSystem.h"
@@ -61,7 +62,6 @@ private:
 	bool IsRunning = true;
 
 	Actor* _PlayerReference = nullptr;
-
 	InputSystem _InputSystem;
 	CollisionSystem _CollisionSystem;
 	EventSystem _EventSystem;
