@@ -80,8 +80,10 @@ void GameEngine::start()
 		#pragma endregion
 
 		// Render
+		// TODO - call renderer here
 		_Window->updateSurface();
-		SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer()); // render
+		SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer());
+		SDL_GL_SwapWindow(_Window->GetWindow());
 
 		#pragma region Clean Pending Kill Actors
 		std::list<Actor*> Cache = _Actors;

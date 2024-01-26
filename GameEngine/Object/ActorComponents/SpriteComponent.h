@@ -3,6 +3,7 @@
 #include <list>
 #include <string>
 #include "Data\DataTypes.h"
+#include "glew.h"
 
 using namespace std;
 
@@ -65,5 +66,8 @@ protected:
 
 private:
 	bool _IsAnimationReverse = false;
+
+	//OpenGL
+	GLuint VAO, VBO;
 };
 

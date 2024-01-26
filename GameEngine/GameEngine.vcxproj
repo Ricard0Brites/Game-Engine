@@ -57,7 +57,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)bin\glm;$(SolutionDir)GameEngine;$(SolutionDir)bin\SDL2\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)bin\Glew\source;$(SolutionDir)bin\glm;$(SolutionDir)GameEngine;$(SolutionDir)bin\SDL2\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -72,7 +72,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_RELEASE;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)bin\glm;$(SolutionDir)GameEngine;$(SolutionDir)bin\SDL2\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)bin\Glew\source;$(SolutionDir)bin\glm;$(SolutionDir)GameEngine;$(SolutionDir)bin\SDL2\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -87,6 +87,7 @@
     <ClCompile Include="InitError.cpp" />
     <ClCompile Include="Object\Actor.cpp" />
     <ClCompile Include="Object\ActorComponents\SpriteComponent.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="SDLWrapper.cpp" />
     <ClCompile Include="Systems\Collision\CollisionSystem.cpp" />
     <ClCompile Include="Systems\EventSystem\EventSystem.cpp" />
@@ -102,11 +103,22 @@
     <ClInclude Include="Object\ActorComponents\CollisionComponent.h" />
     <ClInclude Include="Object\ActorComponents\SpriteComponent.h" />
     <ClInclude Include="Object\object.h" />
+    <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="SDLWrapper.h" />
     <ClInclude Include="Systems\Collision\CollisionSystem.h" />
     <ClInclude Include="Systems\EventSystem\EventSystem.h" />
     <ClInclude Include="Systems\Input\InputSystem.h" />
     <ClInclude Include="Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Renderer\FragmentShader.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Renderer\VertexShader.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

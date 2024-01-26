@@ -45,6 +45,9 @@
     <ClCompile Include="Data\DataTypes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -86,5 +89,12 @@
     <ClInclude Include="Data\DataTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Renderer\FragmentShader.hlsl" />
+    <FxCompile Include="Renderer\VertexShader.hlsl" />
   </ItemGroup>
 </Project>
