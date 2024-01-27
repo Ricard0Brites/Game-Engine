@@ -4,21 +4,23 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <iostream>
 
+using namespace std;
 
 class Renderer
 {
+public:
 	Renderer();
 	~Renderer();
 
+	static GLuint WindowShader;
 	void Init();
-
-public:
-	 GLuint WindowShader = 0;
+	void Render();
 
 private:
 	GLuint VertexShader, FragmentShader;
-	std::map<std::string, const char*> ShadersToLoad = 
+	std::map<std::string, std::string> ShadersToLoad = 
 	{
 	{"VertexShader.hlsl", VertexShaderSource},
 	{"FragmentShader.hlsl", FragmentShaderSource}
@@ -29,15 +31,14 @@ private:
 	void InitBuffers();
 	void InitVAO();
 	void InitVBO();
-	void Render();
 	void Cleanup();
 	void TryLoadShaders();
-	void LoadShader(const char* File, const char *ReturnVal);
+	void LoadShader(const char* File, std::string &ReturnVal);
 
 	#if _DEBUG
 	void AttachDebugger(const GLuint *ShaderReference);
 	#endif
-	const char *VertexShaderSource, *FragmentShaderSource;
+	std::string VertexShaderSource = "", FragmentShaderSource = "";
 
 	// Set up vertex data for a fullscreen quad
 	GLfloat Vertices[8] = {
@@ -50,4 +51,3 @@ private:
 	//This window only
 	GLuint VAO, VBO;
 };
-

@@ -4,6 +4,7 @@
 #include <string>
 #include "Data\DataTypes.h"
 #include "glew.h"
+#include <vector>
 
 using namespace std;
 
@@ -11,6 +12,12 @@ struct SDL_Texture;
 class Transform;
 class Vector;
 class Actor;
+
+struct Vertex
+{
+	/*Vertex Location*/ float x = 0, y = 0;
+	/*Texture Coordinates*/ float tcx = 0, tcy = 0;
+};
 
 class SpriteComponent
 {
@@ -51,7 +58,7 @@ protected:
 	unsigned int frameCounter = 0;
 
 	bool IsPlayingAnimation = false;
-	int tw, th, fw, fh;
+	int tw, th, fw, fh, ChannelCount;
 	int TextureAmountH, TextureAmountV;
 	bool LoopAnimation;
 
@@ -68,6 +75,17 @@ private:
 	bool _IsAnimationReverse = false;
 
 	//OpenGL
-	GLuint VAO, VBO;
+	GLuint VAO, VBO, Texture;
+	unsigned char* TextureData; // The Raw texture 
+	//-------------------------------------------------------
+	std::vector<float> Vertices = {};
+	
+
+	//-------------------------------------------------------
+
+
+	Vector NormalizeLocation(Vector Location);
+	void CreateVertices(float SpriteX, float SpriteY, int SpriteCountX, int SpriteCountY);
+	void RenderSprite();
 };
 

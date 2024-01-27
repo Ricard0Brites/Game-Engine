@@ -14,6 +14,7 @@
 #include "Logger/Logger.h"
 
 #include "Window.h"
+#include "Renderer/Renderer.h"
 
 
 #if _DEBUG
@@ -66,6 +67,11 @@ private:
 	CollisionSystem _CollisionSystem;
 	EventSystem _EventSystem;
 	list<Actor*> _Actors;
+
+#pragma region OpenGL
+	Renderer _Renderer;
+#pragma endregion
+
 
 #pragma region DisplayNames
 	map<string, unsigned int> DisplayNames = {};

@@ -30,6 +30,7 @@ void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight
 	SDL_Joystick* joystick = SDL_JoystickOpen(0);
 	_Window = new Window(windowTitle, windowWidth, windowHeight);
 	GameplayStatics::SetScreenDimentions(windowWidth, windowHeight);
+	_Renderer.Init();
 }
 
 void GameEngine::start()
@@ -81,6 +82,7 @@ void GameEngine::start()
 
 		// Render
 		// TODO - call renderer here
+		_Renderer.Render();
 		_Window->updateSurface();
 		SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer());
 		SDL_GL_SwapWindow(_Window->GetWindow());

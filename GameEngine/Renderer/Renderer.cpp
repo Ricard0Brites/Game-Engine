@@ -5,6 +5,8 @@
 
 using namespace std;
 
+GLuint Renderer::WindowShader = 0;
+
 Renderer::Renderer()
 {
 
@@ -29,7 +31,8 @@ void Renderer::Init()
 void Renderer::InitVertexShader()
 {
 	VertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(VertexShader, 1, &VertexShaderSource, nullptr);
+	const char *tmp = VertexShaderSource.c_str();
+	glShaderSource(VertexShader, 1, &tmp, nullptr);
 	glCompileShader(VertexShader);
 	#pragma region Debug
 #if _DEBUG
@@ -41,7 +44,8 @@ void Renderer::InitVertexShader()
 void Renderer::InitFragmentShader()
 {
 	FragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(FragmentShader, 1, &FragmentShaderSource, nullptr);
+	const char* tmp = FragmentShaderSource.c_str();
+	glShaderSource(FragmentShader, 1, &tmp, nullptr);
 	glCompileShader(FragmentShader);
 	#pragma region Debug
 #if _DEBUG
@@ -108,11 +112,20 @@ void Renderer::Cleanup()
 
 void Renderer::TryLoadShaders()
 {
-	for (std::pair<std::string, const char*> ShaderPair : ShadersToLoad)
+	for (std::pair<std::string, std::string> ShaderPair : ShadersToLoad)
 	{
-		LoadShader(ShaderPair.first.c_str(), ShaderPair.second);
-		if(!ShaderPair.second)
-			LOG("Attempt to load Shader Failed" __FILE__,3);
+		std::string currentSourceFile(__FILE__);
+
+		// Find the last occurrence of the directory separator
+		size_t lastSeparatorPos = currentSourceFile.rfind('\\');
+
+		// Extract the directory path (excluding the file name)
+		std::string directoryPath = currentSourceFile.substr(0, lastSeparatorPos);
+
+		// Construct the full path to the file
+		std::string filePath = directoryPath + "\\" + ShaderPair.first;
+
+		LoadShader(filePath.c_str(), ShaderPair.second);
 	}
 }
 
@@ -143,12 +156,12 @@ void Renderer::AttachDebugger(const GLuint* ShaderReference)
 }
 #endif
 
-void Renderer::LoadShader(const char* File, const char *ReturnVal)
+void Renderer::LoadShader(const char* File, std::string &ReturnVal)
 {
 	ifstream file(File);
 	if (!file)
 		return;
 
 	string shaderCode((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-	ReturnVal = shaderCode.c_str();
+	ReturnVal = shaderCode;
 }

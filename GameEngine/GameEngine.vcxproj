@@ -46,6 +46,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)Intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <PublicIncludeDirectories>$(SolutionDir)Plugins\STB_Image;$(PublicIncludeDirectories)</PublicIncludeDirectories>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
@@ -72,7 +73,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_RELEASE;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)bin\Glew\source;$(SolutionDir)bin\glm;$(SolutionDir)GameEngine;$(SolutionDir)bin\SDL2\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GameEngine\Plugins\STB_Image;$(SolutionDir)bin\Glew\source;$(SolutionDir)bin\glm;$(SolutionDir)GameEngine;$(SolutionDir)bin\SDL2\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -89,6 +90,7 @@
     <ClCompile Include="Object\ActorComponents\SpriteComponent.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="SDLWrapper.cpp" />
+    <ClCompile Include="STB\stb_image.cpp" />
     <ClCompile Include="Systems\Collision\CollisionSystem.cpp" />
     <ClCompile Include="Systems\EventSystem\EventSystem.cpp" />
     <ClCompile Include="Systems\Input\InputSystem.cpp" />
@@ -105,6 +107,7 @@
     <ClInclude Include="Object\object.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="SDLWrapper.h" />
+    <ClInclude Include="STB\stb_image.h" />
     <ClInclude Include="Systems\Collision\CollisionSystem.h" />
     <ClInclude Include="Systems\EventSystem\EventSystem.h" />
     <ClInclude Include="Systems\Input\InputSystem.h" />
@@ -114,10 +117,12 @@
     <FxCompile Include="Renderer\FragmentShader.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </FxCompile>
     <FxCompile Include="Renderer\VertexShader.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
