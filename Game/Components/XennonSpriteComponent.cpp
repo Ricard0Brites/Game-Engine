@@ -14,11 +14,11 @@ XennonStaticSpriteComponent::XennonStaticSpriteComponent(std::string TexturePath
 
 	GameplayStatics::QueryTexture(DisplaySprite, tw, th);
 
-	TextureAmountH = TilesX;
-	TextureAmountV = TilesY;
+	TextureAmountX = TilesX;
+	TextureAmountY = TilesY;
 
-	fw = tw / TextureAmountH;
-	fh = th / TextureAmountV;
+	fw = tw / TextureAmountX;
+	fh = th / TextureAmountY;
 
 	Quad.x = 0; Quad.y = 0;
 	Quad.w = fw; Quad.h = fh;
@@ -49,15 +49,15 @@ void XennonStaticSpriteComponent::Tick(float DeltaSeconds)
 		// Quad Scale X = (Texture width / Texture Amount horizontally) * X Scale
 		if (Owner != nullptr)
 		{
-			DisplayQuad.w = (int)((float)(tw / TextureAmountH) * (MyTransform->GetScale().X * Owner->GetTransform()->GetScale().X));
+			DisplayQuad.w = (int)((float)(tw / TextureAmountX) * (MyTransform->GetScale().X * Owner->GetTransform()->GetScale().X));
 			// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
-			DisplayQuad.h = (int)((float)(th / TextureAmountV) * (MyTransform->GetScale().Y * Owner->GetTransform()->GetScale().Y));
+			DisplayQuad.h = (int)((float)(th / TextureAmountY) * (MyTransform->GetScale().Y * Owner->GetTransform()->GetScale().Y));
 		}
 		else
 		{
-			DisplayQuad.w = (int)((float)(tw / TextureAmountH) * MyTransform->GetScale().X);
+			DisplayQuad.w = (int)((float)(tw / TextureAmountX) * MyTransform->GetScale().X);
 			// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
-			DisplayQuad.h = (int)((float)(th / TextureAmountV) * MyTransform->GetScale().Y);
+			DisplayQuad.h = (int)((float)(th / TextureAmountY) * MyTransform->GetScale().Y);
 		}
 
 

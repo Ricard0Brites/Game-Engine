@@ -57,7 +57,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GameEngine;$(SolutionDir)bin\SDL2\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)bin\Glew\source;$(SolutionDir)GameEngine;$(SolutionDir)bin\SDL2\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -87,6 +87,7 @@
     <ClCompile Include="InitError.cpp" />
     <ClCompile Include="Object\Actor.cpp" />
     <ClCompile Include="Object\ActorComponents\SpriteComponent.cpp" />
+    <ClCompile Include="Plugins\stb_image.cpp" />
     <ClCompile Include="SDLWrapper.cpp" />
     <ClCompile Include="Systems\Collision\CollisionSystem.cpp" />
     <ClCompile Include="Systems\EventSystem\EventSystem.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="Object\ActorComponents\CollisionComponent.h" />
     <ClInclude Include="Object\ActorComponents\SpriteComponent.h" />
     <ClInclude Include="Object\object.h" />
+    <ClInclude Include="Plugins\stb_image.h" />
     <ClInclude Include="SDLWrapper.h" />
     <ClInclude Include="Systems\Collision\CollisionSystem.h" />
     <ClInclude Include="Systems\EventSystem\EventSystem.h" />

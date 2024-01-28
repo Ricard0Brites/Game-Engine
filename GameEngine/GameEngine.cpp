@@ -65,23 +65,27 @@ void GameEngine::start()
 		//Check Collisions
 		_CollisionSystem.CheckCollision();
 
-		#pragma region Event System
+		glClear(GL_COLOR_BUFFER_BIT);
 		SDL_RenderClear(GameplayStatics::GetGameEngine()->GetRenderer()); // clear screen
-			for (auto const &actor : _Actors)
-			{
-				//triggers all beginplays evey tick in case any new object is added.
-				if(actor)_EventSystem.TriggerBeginPlay(actor);
 
-			}
-			for (auto const& actor : _Actors)
+		#pragma region Event System
+		for (auto const &actor : _Actors)
+		{
+			//triggers all beginplays evey tick in case any new object is added.
+			if(actor)_EventSystem.TriggerBeginPlay(actor);
+
+		}
+		for (auto const& actor : _Actors)
 			{
 				if(actor)_EventSystem.TriggerTick(actor, (float)DeltaTime);				
 			}
 		#pragma endregion
 
 		// Render
-		_Window->updateSurface();
-		SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer()); // render
+		// 	// Swap buffers
+		SDL_GL_SwapWindow(_Window->GetWindow());
+		//_Window->updateSurface();
+		//SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer()); // render
 
 		#pragma region Clean Pending Kill Actors
 		std::list<Actor*> Cache = _Actors;

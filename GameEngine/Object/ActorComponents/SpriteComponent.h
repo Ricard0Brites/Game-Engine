@@ -3,6 +3,7 @@
 #include <list>
 #include <string>
 #include "Data\DataTypes.h"
+#include <glew.h>
 
 using namespace std;
 
@@ -37,6 +38,7 @@ public:
 	//Plays Single Frame
 	virtual void ShowFrame(int FrameIndex);
 
+	GLuint LoadTexture(const char* filePath);
 	int GetSpriteWidth() { return fw; }
 	int GetSpriteHeight() { return fh; }
 
@@ -51,7 +53,7 @@ protected:
 
 	bool IsPlayingAnimation = false;
 	int tw, th, fw, fh;
-	int TextureAmountH, TextureAmountV;
+	int TextureAmountX, TextureAmountY;
 	bool LoopAnimation;
 
 	//Single Frame
@@ -65,5 +67,42 @@ protected:
 
 private:
 	bool _IsAnimationReverse = false;
+	int CurrentFrame = 0;
+
+	GLuint MyTextureID = 0, ShaderProgram = 0, VBO = 0, VAO = 0;
+	GLuint VertexShader, FragmentShader;
+	void UpdateVerticesLocations();
+	float vertices[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+#pragma region Shaders Source
+
+	const char* vertexShaderSource = R"(
+    #version 330 core
+    layout (location = 0) in vec2 position;
+    layout (location = 1) in vec2 texCoords;
+    out vec2 TexCoords;
+
+    uniform vec2 resolution; // Screen resolution
+
+    void main()
+    {
+        gl_Position = vec4(position.x / resolution.x * 2.0 - 1.0, (position.y / resolution.y * 2.0 - 1.0) * -1, 0.0, 1.0);
+        TexCoords = texCoords;
+    }
+)";
+
+	const char* fragmentShaderSource = R"(
+    #version 330 core
+    in vec2 TexCoords;
+    out vec4 FragColor;
+
+    uniform sampler2D spriteTexture;
+
+    void main()
+    {
+        FragColor = texture(spriteTexture, TexCoords);
+    }
+)";
+#pragma endregion
+	
 };
 

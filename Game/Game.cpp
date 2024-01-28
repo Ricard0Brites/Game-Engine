@@ -32,6 +32,7 @@ int main(int argc, char** argv)
 	Actor* BgActor = engine.CreateActor<Actor>(nullptr);
 	BgActor->AssignTexture("src/Sprites/galaxy2.bmp", 1, 1, 1, BgActor);
     BgActor->GetTransform()->SetScale(Vector::CreateVector(2, 2, 0));
+    BgActor->GetTransform()->SetLocation(Vector::CreateVector(GameplayStatics::GetScreenWidth() / 2, GameplayStatics::GetScreenHeight() / 2, 0));
 	BgActor->GetSpriteComponent()->PlayAnimation(true);
     BgActor->CollisionRadius = -1;
 
