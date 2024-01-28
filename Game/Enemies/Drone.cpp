@@ -31,8 +31,6 @@ void Drone::OnCollisionStarted(const Actor* OtherActor)
 {
 	if(dynamic_cast<const Actor*>(OtherActor))
 	{
-		GameEngine* EngineRef = GameplayStatics::GetGameEngine();
-		Validate(EngineRef,);
-		EngineRef->RemoveActor(this);
+		GameplayStatics::GetGameEngine()->RemoveActor(this);
 	}
 }

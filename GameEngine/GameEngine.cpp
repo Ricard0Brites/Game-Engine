@@ -125,7 +125,11 @@ void GameEngine::start()
 					QuitGame();
 				}
 				else
+				{
 					delete actor;
+					actor = nullptr;
+				}
+					
 			}
 		}
 		_Actors = Cache;

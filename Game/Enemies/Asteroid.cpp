@@ -85,8 +85,6 @@ void Asteroid::OnCollisionStarted(const Actor* OtherActor)
 {
 	if(dynamic_cast<const Missile*>(OtherActor) && !IsInvincible)
 	{
-		GameEngine* EngineRef = GameplayStatics::GetGameEngine();
-		Validate(EngineRef, );
 		//1 hit
 		if (AsteroidType == 0)
 		{
@@ -94,10 +92,10 @@ void Asteroid::OnCollisionStarted(const Actor* OtherActor)
 			if(AsteroidState < (sizeof(Asteroids) / sizeof(Asteroids[0])))
 			{
 				SpawnChildAsteroids();
-				EngineRef->RemoveActor(this);
+				GameplayStatics::GetGameEngine()->RemoveActor(this);
 				return;
 			}
-			EngineRef->RemoveActor(this);
+			GameplayStatics::GetGameEngine()->RemoveActor(this);
 		}
 		// 2 hit
 		else if (AsteroidType == 1)
@@ -110,10 +108,10 @@ void Asteroid::OnCollisionStarted(const Actor* OtherActor)
 				if (AsteroidState < (sizeof(Asteroids) / sizeof(Asteroids[0])))
 				{
 					SpawnChildAsteroids();
-					EngineRef->RemoveActor(this);
+					GameplayStatics::GetGameEngine()->RemoveActor(this);
 					return;
 				}
-				EngineRef->RemoveActor(this);
+				GameplayStatics::GetGameEngine()->RemoveActor(this);
 			}
 		}
 	}

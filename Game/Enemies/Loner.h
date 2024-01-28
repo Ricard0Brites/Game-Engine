@@ -5,6 +5,7 @@ class Loner : public Actor
 {
 public:
 	Loner(Actor* Owner);
+	~Loner();
 
 	virtual void BeginPlay() override;
 
