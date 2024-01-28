@@ -6,20 +6,6 @@
 XennonStaticSpriteComponent::XennonStaticSpriteComponent(std::string TexturePath, int TilesX, int TilesY, Actor* ComponentOwner, int TextureIndexToDisplay) : SpriteComponent(TexturePath, TilesX, TilesY, 0, ComponentOwner)
 {
 	Owner = ComponentOwner;
-
-	MyTransform = new Transform;
-	MyTransform->IsRelative = true;
-
-	DisplaySprite = GameplayStatics::CreateTextureFromSurface(TexturePath);
-
-	GameplayStatics::QueryTexture(DisplaySprite, tw, th);
-
-	TextureAmountX = TilesX;
-	TextureAmountY = TilesY;
-
-	fw = tw / TextureAmountX;
-	fh = th / TextureAmountY;
-	
 	ShowFrame(TextureIndexToDisplay);
 }
 
