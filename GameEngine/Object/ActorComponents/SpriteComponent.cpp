@@ -2,32 +2,18 @@
 #include "SDL.h"
 #include "..\..\GameEngine.h"
 #include "SDL_opengl.h"
+#include "Data\DataTypes.h"
 #include "Plugins\stb_image.h"
 
 
 SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY, float AnimationTimeInSeconds, Actor* ComponentOwner)
 {
 	Owner = ComponentOwner;
-
 	MyTransform = new Transform;
 	MyTransform->IsRelative = true;
 
-
-	SDL_Surface* surface = GameplayStatics::LoadSurface(TexturePath, GameplayStatics::GetGameEngine()->GetRenderer());
-	if(surface) SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0xFF, 0, 0xFF));
-	
-	DisplaySprite = SDL_CreateTextureFromSurface(GameplayStatics::GetGameEngine()->GetRenderer(), surface);
-	
-	SDL_FreeSurface(surface);
-
-	SDL_QueryTexture(DisplaySprite, NULL, NULL, &tw, &th);
-	SDL_DestroyTexture(DisplaySprite);
-
 	TextureAmountX = TilesX;
 	TextureAmountY = TilesY;
-
-	fw = tw / max(TextureAmountX, 1);
-	fh = th / max(TextureAmountY, 1);
 
 	AnimationTimeInMS = AnimationTimeInSeconds * 1000;
 	ElapsedTime = 0;
@@ -226,14 +212,21 @@ GLuint SpriteComponent::LoadTexture(const char* filePath)
 {
 	int width, height, channels;
 	unsigned char* image = stbi_load(filePath, &width, &height, &channels, STBI_rgb);
+	if(!image)
+		return -1;
 
+	tw = width;
+	th = height;
+	fw = width / max(TextureAmountX, 1);
+	fh = height / max(TextureAmountY, 1);
+	
 	// Create a new array for RGBA
 	unsigned char* imageDataRGBA = new unsigned char[width * height * 4];
 
 	// Color keying: Remove background color (RGB: 255, 0, 255)
 	for (int i = 0; i < width * height; ++i)
 	{
-		if (image[i * 3] == ColorKey.X && image[i * 3 + 1] == ColorKey.Y && image[i * 3 + 2] == ColorKey.Z) 
+		if (image[i * 3] == CKR && image[i * 3 + 1] == CKG && image[i * 3 + 2] == CKB) 
 		{
 			// Set alpha channel to 0 to make the pixel transparent
 			imageDataRGBA[i * 4] = imageDataRGBA[i * 4 + 1] = imageDataRGBA[i * 4 + 2] = imageDataRGBA[i * 4 + 3] = 0;

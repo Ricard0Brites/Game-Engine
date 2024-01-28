@@ -2,8 +2,8 @@
 
 #include <list>
 #include <string>
-#include "Data\DataTypes.h"
 #include <glew.h>
+#include "Data\DataTypes.h"
 
 using namespace std;
 
@@ -39,7 +39,7 @@ public:
 	GLuint LoadTexture(const char* filePath);
 	int GetSpriteWidth() { return fw; }
 	int GetSpriteHeight() { return fh; }
-	Vector ColorKey = Vector::CreateVector(255, 0, 255);
+	void SetColorKey(float R, float G, float B) { CKR = R; CKG = G; CKB = B;}
 
 protected:
 	//
@@ -60,6 +60,8 @@ protected:
 	//Animation Timer
 	float AnimationTimeInMS, ElapsedTime;
 	Actor* Owner;
+
+	float CKR = 255, CKG = 0, CKB = 255;
 
 private:
 	int CurrentFrame = 0;
