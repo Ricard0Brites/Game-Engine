@@ -34,6 +34,9 @@ SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY
 
 	#pragma region OpenGL
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	VertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(VertexShader, 1, &vertexShaderSource, NULL);
 	glCompileShader(VertexShader);
@@ -107,16 +110,17 @@ void SpriteComponent::Tick(float DeltaSeconds)
 		if (!PlaySingleFrame)
 		{
 			ElapsedTime += DeltaSeconds;
-			if (ElapsedTime > AnimationTimeInMS)
+			if (ElapsedTime > (AnimationTimeInMS / (TextureAmountX * TextureAmountY)))
 			{
-				if (!LoopAnimation)
-					IsPlayingAnimation = false;
 				ElapsedTime = 0;
-			}
-			if (ElapsedTime / (TextureAmountX * TextureAmountY) > AnimationTimeInMS / (TextureAmountX * TextureAmountY))
-			{
-				if(++CurrentFrame > (TextureAmountX * TextureAmountY))
+
+				if (++CurrentFrame > (TextureAmountX * TextureAmountY))
+				{
 					CurrentFrame = 0;
+					ElapsedTime = 100000;
+					if(!LoopAnimation)
+						StopAnimation();
+				}
 			}
 		}
 
@@ -214,43 +218,54 @@ void SpriteComponent::StopAnimation()
 void SpriteComponent::ShowFrame(int FrameIndex)
 {
 	CurrentFrame = FrameIndex;
+	LoopAnimation = true;
  	PlaySingleFrame = true;
  }
 
 GLuint SpriteComponent::LoadTexture(const char* filePath)
 {
-	stbi_set_flip_vertically_on_load(false);
-	int width, height, nrChannels;
-	unsigned char* data = stbi_load(filePath, &width, &height, &nrChannels, 0);
-	if (!data) {
-		// Handle texture loading error
-		return 0;
+	int width, height, channels;
+	unsigned char* image = stbi_load(filePath, &width, &height, &channels, STBI_rgb);
+
+	// Create a new array for RGBA
+	unsigned char* imageDataRGBA = new unsigned char[width * height * 4];
+
+	// Color keying: Remove background color (RGB: 255, 0, 255)
+	for (int i = 0; i < width * height; ++i)
+	{
+		if (image[i * 3] == ColorKey.X && image[i * 3 + 1] == ColorKey.Y && image[i * 3 + 2] == ColorKey.Z) 
+		{
+			// Set alpha channel to 0 to make the pixel transparent
+			imageDataRGBA[i * 4] = imageDataRGBA[i * 4 + 1] = imageDataRGBA[i * 4 + 2] = imageDataRGBA[i * 4 + 3] = 0;
+		}
+		else 
+		{
+			// Copy RGB values and set alpha to 255
+			imageDataRGBA[i * 4] = image[i * 3];
+			imageDataRGBA[i * 4 + 1] = image[i * 3 + 1];
+			imageDataRGBA[i * 4 + 2] = image[i * 3 + 2];
+			imageDataRGBA[i * 4 + 3] = 255;  // Set alpha to 255 (fully opaque)
+		}
 	}
 
-	GLuint textureID;
+	// Generate OpenGL texture
+	unsigned int textureID;
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
-	// Set the texture wrapping parameters
+	// Set texture parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	// Set the texture filtering parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	// Generate the texture
-	if (nrChannels == 3) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-	}
-	else if (nrChannels == 4) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-	}
-
+	// Load modified image data into the texture
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageDataRGBA);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
-	// Free image data
-	stbi_image_free(data);
+	// Clean up
+	stbi_image_free(image);
+	delete[] imageDataRGBA;
 
 	return textureID;
 }

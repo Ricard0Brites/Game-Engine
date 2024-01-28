@@ -67,7 +67,6 @@ void GameEngine::start()
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);  // Set clear color to black
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		//SDL_RenderClear(GameplayStatics::GetGameEngine()->GetRenderer()); // clear screen
 
 		#pragma region Event System
 		for (auto const &actor : _Actors)
@@ -83,10 +82,7 @@ void GameEngine::start()
 		#pragma endregion
 
 		// Render
-		// 	// Swap buffers
 		SDL_GL_SwapWindow(_Window->GetWindow());
-		//_Window->updateSurface();
-		//SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer()); // render
 
 		#pragma region Clean Pending Kill Actors
 		std::list<Actor*> Cache = _Actors;

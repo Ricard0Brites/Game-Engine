@@ -39,6 +39,7 @@ public:
 	GLuint LoadTexture(const char* filePath);
 	int GetSpriteWidth() { return fw; }
 	int GetSpriteHeight() { return fh; }
+	Vector ColorKey = Vector::CreateVector(255, 0, 255);
 
 protected:
 	//
@@ -62,6 +63,7 @@ protected:
 
 private:
 	int CurrentFrame = 0;
+	
 
 	GLuint MyTextureID = 0, ShaderProgram = 0, VBO = 0, VAO = 0;
 	GLuint VertexShader, FragmentShader;

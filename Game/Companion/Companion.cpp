@@ -21,7 +21,7 @@ void Companion::Tick(float DeltaSeconds)
 
 void Companion::BeginPlay()
 {
-	AssignTexture("src/Sprites/clone1.bmp", 4,4,1,this);
+	AssignTexture("src/Sprites/clone1.bmp", 4,4,1.5f,this);
 	MySprite->PlayAnimation(1);
 }
 
