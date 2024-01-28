@@ -278,36 +278,34 @@ void SpriteComponent::UpdateVerticesLocations()
 		CurrentScale = Gettransform()->GetScale();
 	}
 
-	float SpriteStepX = 1.f / (float)max(TextureAmountX, 1);
-	float SpriteStepY = 1.f / (float)max(TextureAmountY, 1);
+	float SpriteStepX = 1.0f / static_cast<float>(max(TextureAmountX, 1));
+	float SpriteStepY = 1.0f / static_cast<float>(max(TextureAmountY, 1));
 
-	float CurrentFrameX = (max(CurrentFrame , 1) % max(TextureAmountX, 1)) == 0 ? (float)TextureAmountX : (float)(max(CurrentFrame , 1)% max(TextureAmountX, 1));
-	float CurrentFrameY = (max(CurrentFrame , 1) % max(TextureAmountY, 1)) == 0 ? (float)TextureAmountY : (float)(max(CurrentFrame , 1)% max(TextureAmountY, 1));
-	
+	float CurrentFrameX = fmod(static_cast<float>(max(CurrentFrame, 1) - 1), static_cast<float>(max(TextureAmountX, 1)));
+	float CurrentFrameY = floor(static_cast<float>(max(CurrentFrame, 1) - 1) / static_cast<float>(max(TextureAmountX, 1)));
 
 	//Top Left
-	vertices[0] = (CurrentLocation.X - (max(fw, 1) / 2) * CurrentScale.X);/* X */
-	vertices[1] = (CurrentLocation.Y + (max(fh, 1) / 2) * CurrentScale.Y);/* Y */
-	vertices[2] = (CurrentFrameX  - 1) * SpriteStepX;
-	vertices[3] = CurrentFrameY * SpriteStepY;
+	vertices[0] = CurrentLocation.X - (max(fw, 1) / 2) * CurrentScale.X;    /* X */
+	vertices[1] = CurrentLocation.Y + (max(fh, 1) / 2) * CurrentScale.Y;    /* Y */
+	vertices[2] = CurrentFrameX * SpriteStepX;
+	vertices[3] = 1.0f - (CurrentFrameY * SpriteStepY);
 
 	//Bottom Left
-	vertices[4] = (CurrentLocation.X - (max(fw, 1) / 2) * CurrentScale.X);/* X */
-	vertices[5] = (CurrentLocation.Y - (max(fh, 1) / 2) * CurrentScale.Y);/* Y */
-	vertices[6] = (CurrentFrameX - 1) * SpriteStepX;
-	vertices[7] = (CurrentFrameY - 1) * SpriteStepY;
-
+	vertices[4] = CurrentLocation.X - (max(fw, 1) / 2) * CurrentScale.X;    /* X */
+	vertices[5] = CurrentLocation.Y - (max(fh, 1) / 2) * CurrentScale.Y;    /* Y */
+	vertices[6] = CurrentFrameX * SpriteStepX;
+	vertices[7] = 1.0f - ((CurrentFrameY + 1.0f) * SpriteStepY);
 
 	//Bottom Right
-	vertices[8] = (CurrentLocation.X + (max(fw, 1) / 2) * CurrentScale.X);/* X */
-	vertices[9] = (CurrentLocation.Y - (max(fh, 1) / 2) * CurrentScale.Y);/* Y */
-	vertices[10] = CurrentFrameX * SpriteStepX;
-	vertices[11] = (CurrentFrameY - 1) * SpriteStepY;
+	vertices[8] = CurrentLocation.X + (max(fw, 1) / 2) * CurrentScale.X;    /* X */
+	vertices[9] = CurrentLocation.Y - (max(fh, 1) / 2) * CurrentScale.Y;    /* Y */
+	vertices[10] = (CurrentFrameX + 1.0f) * SpriteStepX;
+	vertices[11] = 1.0f - ((CurrentFrameY + 1.0f) * SpriteStepY);
 
 	//Top Right
-	vertices[12] = (CurrentLocation.X + (max(fw, 1) / 2) * CurrentScale.X);/* X */
-	vertices[13] = (CurrentLocation.Y + (max(fh, 1) / 2) * CurrentScale.Y);/* Y */
-	vertices[14] = CurrentFrameX * SpriteStepX;
-	vertices[15] = CurrentFrameY * SpriteStepY;
+	vertices[12] = CurrentLocation.X + (max(fw, 1) / 2) * CurrentScale.X;   /* X */
+	vertices[13] = CurrentLocation.Y + (max(fh, 1) / 2) * CurrentScale.Y;   /* Y */
+	vertices[14] = (CurrentFrameX + 1.0f) * SpriteStepX;
+	vertices[15] = 1.0f - (CurrentFrameY * SpriteStepY);
 
 }

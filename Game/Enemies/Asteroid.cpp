@@ -67,7 +67,7 @@ void Asteroid::BeginPlay()
 
 		for (AnimationParameters& AnimParams : Asteroids)
 		{
-			AnimParams.AnimationTime = AnimParams.TileX * AnimParams.TileY * 0.0625f;
+			AnimParams.AnimationTime = 2;
 		}
 
 		AssignTexture(Asteroids[AsteroidState].Path, Asteroids[AsteroidState].TileX, Asteroids[AsteroidState].TileY, Asteroids[AsteroidState].AnimationTime, this);
