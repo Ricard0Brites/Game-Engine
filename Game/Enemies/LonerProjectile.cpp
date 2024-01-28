@@ -30,9 +30,7 @@ void LonerProjectile::OnCollisionStarted(const Actor* OtherActor)
 	if(dynamic_cast<const Player*>(OtherActor) || dynamic_cast<const Missile*>(OtherActor))
 	{
 		LOG("Hit player", 0);
-		GameEngine* EngineRef = GameplayStatics::GetGameEngine();
-		Validate(EngineRef,);
 
-		EngineRef->RemoveActor(this);
+		GameplayStatics::GetGameEngine()->RemoveActor(this);
 	}
 }

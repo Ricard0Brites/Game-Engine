@@ -13,6 +13,7 @@
 #include "Logger/Logger.h"
 
 #include "Window.h"
+#include "SDL_opengl.h"
 
 
 #if _DEBUG
@@ -55,10 +56,44 @@ public:
 
 	void QuitGame() {IsRunning = false;}
 	const bool* GetIsRunning() { return &IsRunning; }
+
+	GLuint* GetShader() { return &ShaderProgram; }
 private:
 	class SDLWrapper* sdl;
 	Window* _Window;
 	bool IsRunning = true;
+	GLuint ShaderProgram = 0, VertexShader, FragmentShader;
+
+	#pragma region Shaders Source
+
+	const char* vertexShaderSource = R"(
+    #version 330 core
+    in vec2 position;
+    in vec2 InTextureCoordinates;
+    out vec2 TexCoords;
+
+    uniform vec2 resolution; // Screen resolution
+
+    void main()
+    {
+        gl_Position = vec4(position.x / resolution.x * 2.0 - 1.0, (position.y / resolution.y * 2.0 - 1.0) * -1, 0.0, 1.0);
+        TexCoords = InTextureCoordinates;
+    }
+)";
+
+	const char* fragmentShaderSource = R"(
+    #version 330 core
+    in vec2 TexCoords;
+    out vec4 FragColor;
+
+    uniform sampler2D spriteTexture;
+
+    void main()
+    {
+        FragColor = texture(spriteTexture, TexCoords);
+    }
+)";
+#pragma endregion
 
 	Actor* _PlayerReference = nullptr;
 

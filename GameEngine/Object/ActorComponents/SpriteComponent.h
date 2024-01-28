@@ -2,6 +2,7 @@
 
 #include <list>
 #include <string>
+#include <glew.h>
 #include "Data\DataTypes.h"
 
 using namespace std;
@@ -30,40 +31,43 @@ public:
 
 	//
 	virtual void PlayAnimation(bool Loop);
-	//plays animation in reverse (X reverse, Y Keeps the order)
-	virtual void PlayAnimationReverse(bool Loop);
 	//stops animation from playing
 	virtual void StopAnimation();
 	//Plays Single Frame
 	virtual void ShowFrame(int FrameIndex);
 
+	GLuint LoadTexture(const char* filePath);
 	int GetSpriteWidth() { return fw; }
 	int GetSpriteHeight() { return fh; }
-
+	void SetColorKey(float R, float G, float B) { CKR = R; CKG = G; CKB = B;}
 protected:
 	//
 	Transform* MyTransform = nullptr;
 	SDL_Texture* DisplaySprite;
-	SDL_Rect Quad;
 
 	//Animation
 	unsigned int frameCounter = 0;
 
 	bool IsPlayingAnimation = false;
 	int tw, th, fw, fh;
-	int TextureAmountH, TextureAmountV;
+	int TextureAmountX, TextureAmountY;
 	bool LoopAnimation;
 
 	//Single Frame
 	bool PlaySingleFrame;
-	int FrameToRender = 0;
 	
 	//Animation Timer
 	float AnimationTimeInMS, ElapsedTime;
 	Actor* Owner;
-	SDL_Rect DisplayQuad;
 
+	float CKR = 255, CKG = 0, CKB = 255;
+
+	int CurrentFrame = 0;
 private:
-	bool _IsAnimationReverse = false;
+	GLuint MyTextureID = 0, VBO = 0, VAO = 0;
+	void UpdateVerticesLocations();
+	float vertices[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+	
 };
 

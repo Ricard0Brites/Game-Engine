@@ -3,6 +3,7 @@
 #include "..\GameRules.h"
 #include <time.h>
 #include "..\Missile.h"
+#include "GameEngine.h"
 
 Rusher::Rusher(Actor* Owner) : Actor(Owner)
 {
@@ -40,6 +41,6 @@ void Rusher::OnCollisionStarted(const Actor* OtherActor)
 {
 	if(dynamic_cast<const Player*>(OtherActor) || dynamic_cast<const Missile*>(OtherActor))
 	{
-		_EngineRef->RemoveActor(this);
+		GameplayStatics::GetGameEngine()->RemoveActor(this);
 	}
 }

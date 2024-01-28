@@ -6,66 +6,12 @@
 XennonStaticSpriteComponent::XennonStaticSpriteComponent(std::string TexturePath, int TilesX, int TilesY, Actor* ComponentOwner, int TextureIndexToDisplay) : SpriteComponent(TexturePath, TilesX, TilesY, 0, ComponentOwner)
 {
 	Owner = ComponentOwner;
-
-	MyTransform = new Transform;
-	MyTransform->IsRelative = true;
-
-	DisplaySprite = GameplayStatics::CreateTextureFromSurface(TexturePath);
-
-	GameplayStatics::QueryTexture(DisplaySprite, tw, th);
-
-	TextureAmountH = TilesX;
-	TextureAmountV = TilesY;
-
-	fw = tw / TextureAmountH;
-	fh = th / TextureAmountV;
-
-	Quad.x = 0; Quad.y = 0;
-	Quad.w = fw; Quad.h = fh;
-
-	SetTextureIndexToDisplay(TextureIndexToDisplay);
+	ShowFrame(TextureIndexToDisplay);
 }
 
 void XennonStaticSpriteComponent::Tick(float DeltaSeconds)
 {
-	if (IsPlayingAnimation)
-	{
-		#pragma region Dimentions
-		//TEXTURE POSITION -----------------------------------------------------------
-		if (Owner != nullptr)
-		{
-			DisplayQuad.x = (int)MyTransform->GetLocation().X + (int)Owner->GetTransform()->GetLocation().X;
-			DisplayQuad.y = (int)MyTransform->GetLocation().Y + (int)Owner->GetTransform()->GetLocation().Y;
-		}
-		else
-		{
-			DisplayQuad.x = (int)MyTransform->GetLocation().X;
-			DisplayQuad.y = (int)MyTransform->GetLocation().Y;
-		}
-
-
-
-		//TEXTURE SCALE --------------------------------------------------------------
-		// Quad Scale X = (Texture width / Texture Amount horizontally) * X Scale
-		if (Owner != nullptr)
-		{
-			DisplayQuad.w = (int)((float)(tw / TextureAmountH) * (MyTransform->GetScale().X * Owner->GetTransform()->GetScale().X));
-			// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
-			DisplayQuad.h = (int)((float)(th / TextureAmountV) * (MyTransform->GetScale().Y * Owner->GetTransform()->GetScale().Y));
-		}
-		else
-		{
-			DisplayQuad.w = (int)((float)(tw / TextureAmountH) * MyTransform->GetScale().X);
-			// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
-			DisplayQuad.h = (int)((float)(th / TextureAmountV) * MyTransform->GetScale().Y);
-		}
-
-
-
-#pragma endregion
-
-		GameplayStatics::RenderTexture(DisplaySprite, &Quad, &DisplayQuad);
-	}
+	SpriteComponent::Tick(DeltaSeconds);
 }
 
 //this component does not loop, loop is irrelevant
@@ -79,45 +25,24 @@ void XennonStaticSpriteComponent::StopAnimation()
 	IsPlayingAnimation = false;
 }
 
-void XennonStaticSpriteComponent::SetTextureIndexToDisplay(int NewIndex)
-{
-	_CurrentIndex = NewIndex;
-	Quad.x = 0;
-	Quad.y = 0;
-	for (int i = 0; i < NewIndex - 1; ++i)
-	{
-		//Animation->Forward
-		Quad.x += fw;
-		if (Quad.x >= tw)
-		{
-			Quad.x = 0;
-			Quad.y += fh;
-			if (Quad.y >= th)
-			{
-				Quad.y = 0;
-			}
-		}
-	}
-}
-
 void XennonStaticSpriteComponent::AnimTansitionToIndex(int Index, float TotalSeconds, bool *StateReset)
 {
-	int maxNumberOfLoops = abs(Index - _CurrentIndex);
+	int maxNumberOfLoops = abs(Index - CurrentFrame);
 	std::thread t1([=]() 
 	{
 		*StateReset = true;
 		int loopCounter = 0;
-		if (Index > _CurrentIndex)
+		if (Index > CurrentFrame)
 		{	
 			//++
-			while (_CurrentIndex < Index && loopCounter <= maxNumberOfLoops)
+			while (CurrentFrame < Index && loopCounter <= maxNumberOfLoops)
 			{
-				if (_CurrentIndex < 0)
+				if (CurrentFrame < 0)
 				{
 					return;
 				}
-				GameplayStatics::Delay(fabs(TotalSeconds / (Index - _CurrentIndex)));
-				SetTextureIndexToDisplay(_CurrentIndex + 1);
+				GameplayStatics::Delay(fabs(TotalSeconds / (Index - CurrentFrame)));
+				ShowFrame(CurrentFrame + 1);
 				loopCounter++;
 			}
 		}
@@ -125,14 +50,14 @@ void XennonStaticSpriteComponent::AnimTansitionToIndex(int Index, float TotalSec
 		{
 			//--
 			loopCounter = 0;
-			while (_CurrentIndex > Index && loopCounter <= maxNumberOfLoops)
+			while (CurrentFrame > Index && loopCounter <= maxNumberOfLoops)
 			{	
-				if (_CurrentIndex < 0)
+				if (CurrentFrame < 0)
 				{
 					return;
 				}
-				GameplayStatics::Delay(fabs(TotalSeconds / (_CurrentIndex - Index)));
-				SetTextureIndexToDisplay(_CurrentIndex - 1);
+				GameplayStatics::Delay(fabs(TotalSeconds / (CurrentFrame - Index)));
+				ShowFrame(CurrentFrame - 1);
 				loopCounter++;
 			}
 		}

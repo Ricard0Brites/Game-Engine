@@ -6,6 +6,10 @@ GameEngine::~GameEngine()
 {
 	delete _Window;
 	delete sdl;
+	glDeleteProgram(ShaderProgram);
+	// Delete shaders
+	glDeleteShader(VertexShader);
+	glDeleteShader(FragmentShader);
 	for(auto Actor : _Actors)
 	{
 		delete Actor;
@@ -30,6 +34,24 @@ void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight
 	SDL_Joystick* joystick = SDL_JoystickOpen(0);
 	_Window = new Window(windowTitle, windowWidth, windowHeight);
 	GameplayStatics::SetScreenDimentions(windowWidth, windowHeight);
+
+	VertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(VertexShader, 1, &vertexShaderSource, NULL);
+	glCompileShader(VertexShader);
+
+	// Create fragment shader
+	FragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(FragmentShader, 1, &fragmentShaderSource, NULL);
+	glCompileShader(FragmentShader);
+
+	// Link shaders into a program
+	ShaderProgram = glCreateProgram();
+	glAttachShader(ShaderProgram, VertexShader);
+	glAttachShader(ShaderProgram, FragmentShader);
+	glLinkProgram(ShaderProgram);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void GameEngine::start()
@@ -43,8 +65,9 @@ void GameEngine::start()
 	//------- Game Loop -------------------------------------------------------------------------------
 	while (IsRunning)
 	{
-		if(_PlayerReference->IsPendingKill)
-			QuitGame();
+		if(_PlayerReference)
+			if(_PlayerReference->IsPendingKill)
+				QuitGame();
 		#pragma region Delta Time
 		last = now;
 		now = SDL_GetPerformanceCounter();
@@ -65,23 +88,24 @@ void GameEngine::start()
 		//Check Collisions
 		_CollisionSystem.CheckCollision();
 
-		#pragma region Event System
-		SDL_RenderClear(GameplayStatics::GetGameEngine()->GetRenderer()); // clear screen
-			for (auto const &actor : _Actors)
-			{
-				//triggers all beginplays evey tick in case any new object is added.
-				if(actor)_EventSystem.TriggerBeginPlay(actor);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);  // Set clear color to black
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			}
-			for (auto const& actor : _Actors)
+		#pragma region Event System
+		for (auto const &actor : _Actors)
+		{
+			//triggers all beginplays evey tick in case any new object is added.
+			if(actor)_EventSystem.TriggerBeginPlay(actor);
+
+		}
+		for (auto const& actor : _Actors)
 			{
 				if(actor)_EventSystem.TriggerTick(actor, (float)DeltaTime);				
 			}
 		#pragma endregion
 
 		// Render
-		_Window->updateSurface();
-		SDL_RenderPresent(GameplayStatics::GetGameEngine()->GetRenderer()); // render
+		SDL_GL_SwapWindow(_Window->GetWindow());
 
 		#pragma region Clean Pending Kill Actors
 		std::list<Actor*> Cache = _Actors;
@@ -101,7 +125,11 @@ void GameEngine::start()
 					QuitGame();
 				}
 				else
+				{
 					delete actor;
+					actor = nullptr;
+				}
+					
 			}
 		}
 		_Actors = Cache;

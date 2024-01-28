@@ -68,6 +68,11 @@ public:
 
 };
 
+struct Color
+{
+	float R = 0, G = 0, B = 0, A = 255;
+};
+
 class Transform
 {
 public:

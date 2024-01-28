@@ -9,6 +9,11 @@ Loner::Loner(Actor* Owner) : Actor(Owner)
 {
 }
 
+Loner::~Loner()
+{
+	Actor::~Actor();
+}
+
 void Loner::BeginPlay()
 {
 	Actor::BeginPlay();

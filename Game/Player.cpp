@@ -83,13 +83,13 @@ void Player::Tick(float DeltaSeconds)
 			GameEngine* EngineRef = GameplayStatics::GetGameEngine();
 			Validate(EngineRef,);
 			Missile* Rocket = EngineRef->CreateActor<Missile>(nullptr);
-			Rocket->GetTransform()->SetLocation(Vector::CreateVector(MyTransform->GetLocation().X + (MySprite->GetSpriteWidth() / 2) - 10, MyTransform->GetLocation().Y - (MySprite->GetSpriteHeight() / 2), MyTransform->GetLocation().Z));
+			Rocket->GetTransform()->SetLocation(Vector::CreateVector(MyTransform->GetLocation().X, MyTransform->GetLocation().Y - (MySprite->GetSpriteHeight() / 2), MyTransform->GetLocation().Z));
 
 			if (Companion1)
 			{
 				Missile* C1M = EngineRef->CreateActor<Missile>(nullptr);
 				C1M->GetTransform()->SetLocation(Vector::CreateVector(
-				Companion1->GetTransform()->GetLocation().X + (Companion1->GetSpriteComponent()->GetSpriteWidth() / 2) - 10,
+				Companion1->GetTransform()->GetLocation().X,
 				MyTransform->GetLocation().Y - (Companion1->GetSpriteComponent()->GetSpriteHeight() * 0.7f),
 				MyTransform->GetLocation().Z));
 
@@ -98,7 +98,7 @@ void Player::Tick(float DeltaSeconds)
 			{
 				Missile* C2M = EngineRef->CreateActor<Missile>(nullptr);
 				C2M->GetTransform()->SetLocation(Vector::CreateVector(
-					Companion2->GetTransform()->GetLocation().X + (Companion2->GetSpriteComponent()->GetSpriteWidth() / 2) - 10,
+					Companion2->GetTransform()->GetLocation().X,
 					MyTransform->GetLocation().Y - (Companion2->GetSpriteComponent()->GetSpriteHeight() * 0.7f),
 					MyTransform->GetLocation().Z));
 			}
@@ -270,7 +270,7 @@ void Player::CreateCompanion()
 	{
 		Companion2 = EngineRef->CreateActor<Companion>(this);
 		Companion2->GetTransform()->IsRelative = true;
-		Companion2->GetTransform()->SetRelativeLocation(Vector::CreateVector(MySprite->GetSpriteWidth() *  -0.6f, MySprite->GetSpriteHeight() * -0.1f, 0));
+		Companion2->GetTransform()->SetRelativeLocation(Vector::CreateVector(MySprite->GetSpriteWidth() *  -1.1f, MySprite->GetSpriteHeight() * -0.1f, 0));
 	}
 }
 

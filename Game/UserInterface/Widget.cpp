@@ -71,18 +71,18 @@ void Widget::SetText(std::string NewText)
 		else if(CharAsciiCode >= 65 && CharAsciiCode <= 90)
 		{
 			TexturePath = UPPERCASETEXTUREPATH;
-			TileAmountX = 25;
+			TileAmountX = 26;
 			RealIndex = CharAsciiCode - 65;
 		}
 		else if (CharAsciiCode >= 97 && CharAsciiCode <= 122)
 		{
 			TexturePath = LOWERCASETEXTUREPATH;
-			TileAmountX = 25;
+			TileAmountX = 26;
 			RealIndex = CharAsciiCode - 97;
 		}
 
 		Array[i] = new SpriteComponent(TexturePath, TileAmountX, 1, 0, nullptr);
-		Array[i]->ShowFrame(RealIndex);
+		Array[i]->ShowFrame(RealIndex + 1);
 		switch (Alignment.GetHAlignment())
 		{
 			case WidgetAnchorH::Left:
@@ -140,6 +140,8 @@ void Widget::SetText(std::string NewText)
 			default:
 				break;
 		}
+
+		Array[i]->Gettransform()->SetLocation(Array[i]->Gettransform()->GetLocation() + Vector::CreateVector(20.f, -10.f, 0));
 		++i;
 	}
 	AnimComponents = Array;
