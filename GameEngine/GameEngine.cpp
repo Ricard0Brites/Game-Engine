@@ -6,6 +6,10 @@ GameEngine::~GameEngine()
 {
 	delete _Window;
 	delete sdl;
+	glDeleteProgram(ShaderProgram);
+	// Delete shaders
+	glDeleteShader(VertexShader);
+	glDeleteShader(FragmentShader);
 	for(auto Actor : _Actors)
 	{
 		delete Actor;
@@ -30,6 +34,24 @@ void GameEngine::init(std::string windowTitle, int windowWidth, int windowHeight
 	SDL_Joystick* joystick = SDL_JoystickOpen(0);
 	_Window = new Window(windowTitle, windowWidth, windowHeight);
 	GameplayStatics::SetScreenDimentions(windowWidth, windowHeight);
+
+	VertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(VertexShader, 1, &vertexShaderSource, NULL);
+	glCompileShader(VertexShader);
+
+	// Create fragment shader
+	FragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(FragmentShader, 1, &fragmentShaderSource, NULL);
+	glCompileShader(FragmentShader);
+
+	// Link shaders into a program
+	ShaderProgram = glCreateProgram();
+	glAttachShader(ShaderProgram, VertexShader);
+	glAttachShader(ShaderProgram, FragmentShader);
+	glLinkProgram(ShaderProgram);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void GameEngine::start()

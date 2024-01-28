@@ -20,24 +20,6 @@ SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY
 
 	#pragma region OpenGL
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	VertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(VertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(VertexShader);
-
-	// Create fragment shader
-	FragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(FragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(FragmentShader);
-
-	// Link shaders into a program
-	ShaderProgram = glCreateProgram();
-	glAttachShader(ShaderProgram, VertexShader);
-	glAttachShader(ShaderProgram, FragmentShader);
-	glLinkProgram(ShaderProgram);
-
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 
@@ -72,21 +54,12 @@ SpriteComponent::~SpriteComponent()
 		MyTransform = nullptr;
 	}
 
-	// Delete shaders
-	glDeleteShader(VertexShader);
-	glDeleteShader(FragmentShader);
-
-	// Delete shader program
-	glDeleteProgram(ShaderProgram);
-
 	// Delete Buffers
 	glDeleteBuffers(1, &VBO);
 	glDeleteVertexArrays(1, &VAO);
 
 	// Delete texture
 	glDeleteTextures(1, &MyTextureID);
-
-
 }
 
 void SpriteComponent::Tick(float DeltaSeconds)
@@ -113,7 +86,7 @@ void SpriteComponent::Tick(float DeltaSeconds)
 
 		#pragma region Render
 		// Use the shader program
-		glUseProgram(ShaderProgram);
+		glUseProgram(*GameplayStatics::GetGameEngine()->GetShader());
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -123,7 +96,7 @@ void SpriteComponent::Tick(float DeltaSeconds)
 		glBindTexture(GL_TEXTURE_2D, MyTextureID);
 
 		// Set uniform variables
-		GLint resolutionLocation = glGetUniformLocation(ShaderProgram, "resolution");
+		GLint resolutionLocation = glGetUniformLocation(*GameplayStatics::GetGameEngine()->GetShader(), "resolution");
 		glUniform2f(resolutionLocation, (float)GameplayStatics::GetScreenWidth(), (float)GameplayStatics::GetScreenHeight());
 
 		// Set texture wrapping parameters

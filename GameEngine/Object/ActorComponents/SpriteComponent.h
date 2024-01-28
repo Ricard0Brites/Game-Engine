@@ -64,40 +64,10 @@ protected:
 
 	int CurrentFrame = 0;
 private:
-	GLuint MyTextureID = 0, ShaderProgram = 0, VBO = 0, VAO = 0;
-	GLuint VertexShader, FragmentShader;
+	GLuint MyTextureID = 0, VBO = 0, VAO = 0;
 	void UpdateVerticesLocations();
 	float vertices[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-#pragma region Shaders Source
 
-	const char* vertexShaderSource = R"(
-    #version 330 core
-    in vec2 position;
-    in vec2 InTextureCoordinates;
-    out vec2 TexCoords;
-
-    uniform vec2 resolution; // Screen resolution
-
-    void main()
-    {
-        gl_Position = vec4(position.x / resolution.x * 2.0 - 1.0, (position.y / resolution.y * 2.0 - 1.0) * -1, 0.0, 1.0);
-        TexCoords = InTextureCoordinates;
-    }
-)";
-
-	const char* fragmentShaderSource = R"(
-    #version 330 core
-    in vec2 TexCoords;
-    out vec4 FragColor;
-
-    uniform sampler2D spriteTexture;
-
-    void main()
-    {
-        FragColor = texture(spriteTexture, TexCoords);
-    }
-)";
-#pragma endregion
 	
 };
 
