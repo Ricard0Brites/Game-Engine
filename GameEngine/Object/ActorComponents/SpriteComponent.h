@@ -40,7 +40,6 @@ public:
 	int GetSpriteWidth() { return fw; }
 	int GetSpriteHeight() { return fh; }
 	void SetColorKey(float R, float G, float B) { CKR = R; CKG = G; CKB = B;}
-
 protected:
 	//
 	Transform* MyTransform = nullptr;
@@ -63,10 +62,8 @@ protected:
 
 	float CKR = 255, CKG = 0, CKB = 255;
 
-private:
 	int CurrentFrame = 0;
-	
-
+private:
 	GLuint MyTextureID = 0, ShaderProgram = 0, VBO = 0, VAO = 0;
 	GLuint VertexShader, FragmentShader;
 	void UpdateVerticesLocations();

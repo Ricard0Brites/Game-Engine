@@ -19,16 +19,13 @@ XennonStaticSpriteComponent::XennonStaticSpriteComponent(std::string TexturePath
 
 	fw = tw / TextureAmountX;
 	fh = th / TextureAmountY;
-
-// 	Quad.x = 0; Quad.y = 0;
-// 	Quad.w = fw; Quad.h = fh;
-
-	SetTextureIndexToDisplay(TextureIndexToDisplay);
+	
+	ShowFrame(TextureIndexToDisplay);
 }
 
 void XennonStaticSpriteComponent::Tick(float DeltaSeconds)
 {
-	
+	SpriteComponent::Tick(DeltaSeconds);
 }
 
 //this component does not loop, loop is irrelevant
@@ -42,45 +39,24 @@ void XennonStaticSpriteComponent::StopAnimation()
 	IsPlayingAnimation = false;
 }
 
-void XennonStaticSpriteComponent::SetTextureIndexToDisplay(int NewIndex)
-{
-	_CurrentIndex = NewIndex;
-// 	Quad.x = 0;
-// 	Quad.y = 0;
-// 	for (int i = 0; i < NewIndex - 1; ++i)
-// 	{
-// 		//Animation->Forward
-// 		Quad.x += fw;
-// 		if (Quad.x >= tw)
-// 		{
-// 			Quad.x = 0;
-// 			Quad.y += fh;
-// 			if (Quad.y >= th)
-// 			{
-// 				Quad.y = 0;
-// 			}
-// 		}
-// 	}
-}
-
 void XennonStaticSpriteComponent::AnimTansitionToIndex(int Index, float TotalSeconds, bool *StateReset)
 {
-	int maxNumberOfLoops = abs(Index - _CurrentIndex);
+	int maxNumberOfLoops = abs(Index - CurrentFrame);
 	std::thread t1([=]() 
 	{
 		*StateReset = true;
 		int loopCounter = 0;
-		if (Index > _CurrentIndex)
+		if (Index > CurrentFrame)
 		{	
 			//++
-			while (_CurrentIndex < Index && loopCounter <= maxNumberOfLoops)
+			while (CurrentFrame < Index && loopCounter <= maxNumberOfLoops)
 			{
-				if (_CurrentIndex < 0)
+				if (CurrentFrame < 0)
 				{
 					return;
 				}
-				GameplayStatics::Delay(fabs(TotalSeconds / (Index - _CurrentIndex)));
-				SetTextureIndexToDisplay(_CurrentIndex + 1);
+				GameplayStatics::Delay(fabs(TotalSeconds / (Index - CurrentFrame)));
+				ShowFrame(CurrentFrame + 1);
 				loopCounter++;
 			}
 		}
@@ -88,14 +64,14 @@ void XennonStaticSpriteComponent::AnimTansitionToIndex(int Index, float TotalSec
 		{
 			//--
 			loopCounter = 0;
-			while (_CurrentIndex > Index && loopCounter <= maxNumberOfLoops)
+			while (CurrentFrame > Index && loopCounter <= maxNumberOfLoops)
 			{	
-				if (_CurrentIndex < 0)
+				if (CurrentFrame < 0)
 				{
 					return;
 				}
-				GameplayStatics::Delay(fabs(TotalSeconds / (_CurrentIndex - Index)));
-				SetTextureIndexToDisplay(_CurrentIndex - 1);
+				GameplayStatics::Delay(fabs(TotalSeconds / (CurrentFrame - Index)));
+				ShowFrame(CurrentFrame - 1);
 				loopCounter++;
 			}
 		}

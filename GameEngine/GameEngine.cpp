@@ -43,8 +43,9 @@ void GameEngine::start()
 	//------- Game Loop -------------------------------------------------------------------------------
 	while (IsRunning)
 	{
-		if(_PlayerReference->IsPendingKill)
-			QuitGame();
+		if(_PlayerReference)
+			if(_PlayerReference->IsPendingKill)
+				QuitGame();
 		#pragma region Delta Time
 		last = now;
 		now = SDL_GetPerformanceCounter();
