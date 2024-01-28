@@ -20,52 +20,15 @@ XennonStaticSpriteComponent::XennonStaticSpriteComponent(std::string TexturePath
 	fw = tw / TextureAmountX;
 	fh = th / TextureAmountY;
 
-	Quad.x = 0; Quad.y = 0;
-	Quad.w = fw; Quad.h = fh;
+// 	Quad.x = 0; Quad.y = 0;
+// 	Quad.w = fw; Quad.h = fh;
 
 	SetTextureIndexToDisplay(TextureIndexToDisplay);
 }
 
 void XennonStaticSpriteComponent::Tick(float DeltaSeconds)
 {
-	if (IsPlayingAnimation)
-	{
-		#pragma region Dimentions
-		//TEXTURE POSITION -----------------------------------------------------------
-		if (Owner != nullptr)
-		{
-			DisplayQuad.x = (int)MyTransform->GetLocation().X + (int)Owner->GetTransform()->GetLocation().X;
-			DisplayQuad.y = (int)MyTransform->GetLocation().Y + (int)Owner->GetTransform()->GetLocation().Y;
-		}
-		else
-		{
-			DisplayQuad.x = (int)MyTransform->GetLocation().X;
-			DisplayQuad.y = (int)MyTransform->GetLocation().Y;
-		}
-
-
-
-		//TEXTURE SCALE --------------------------------------------------------------
-		// Quad Scale X = (Texture width / Texture Amount horizontally) * X Scale
-		if (Owner != nullptr)
-		{
-			DisplayQuad.w = (int)((float)(tw / TextureAmountX) * (MyTransform->GetScale().X * Owner->GetTransform()->GetScale().X));
-			// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
-			DisplayQuad.h = (int)((float)(th / TextureAmountY) * (MyTransform->GetScale().Y * Owner->GetTransform()->GetScale().Y));
-		}
-		else
-		{
-			DisplayQuad.w = (int)((float)(tw / TextureAmountX) * MyTransform->GetScale().X);
-			// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
-			DisplayQuad.h = (int)((float)(th / TextureAmountY) * MyTransform->GetScale().Y);
-		}
-
-
-
-#pragma endregion
-
-		GameplayStatics::RenderTexture(DisplaySprite, &Quad, &DisplayQuad);
-	}
+	
 }
 
 //this component does not loop, loop is irrelevant
@@ -82,22 +45,22 @@ void XennonStaticSpriteComponent::StopAnimation()
 void XennonStaticSpriteComponent::SetTextureIndexToDisplay(int NewIndex)
 {
 	_CurrentIndex = NewIndex;
-	Quad.x = 0;
-	Quad.y = 0;
-	for (int i = 0; i < NewIndex - 1; ++i)
-	{
-		//Animation->Forward
-		Quad.x += fw;
-		if (Quad.x >= tw)
-		{
-			Quad.x = 0;
-			Quad.y += fh;
-			if (Quad.y >= th)
-			{
-				Quad.y = 0;
-			}
-		}
-	}
+// 	Quad.x = 0;
+// 	Quad.y = 0;
+// 	for (int i = 0; i < NewIndex - 1; ++i)
+// 	{
+// 		//Animation->Forward
+// 		Quad.x += fw;
+// 		if (Quad.x >= tw)
+// 		{
+// 			Quad.x = 0;
+// 			Quad.y += fh;
+// 			if (Quad.y >= th)
+// 			{
+// 				Quad.y = 0;
+// 			}
+// 		}
+// 	}
 }
 
 void XennonStaticSpriteComponent::AnimTansitionToIndex(int Index, float TotalSeconds, bool *StateReset)

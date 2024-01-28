@@ -29,9 +29,6 @@ SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY
 	fw = tw / max(TextureAmountX, 1);
 	fh = th / max(TextureAmountY, 1);
 
-	Quad.x = 0; Quad.y = 0;
-	Quad.w = fw; Quad.h = fh;
-
 	AnimationTimeInMS = AnimationTimeInSeconds * 1000;
 	ElapsedTime = 0;
 
@@ -63,7 +60,7 @@ SpriteComponent::SpriteComponent(std::string TexturePath, int TilesX, int TilesY
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (void*)(sizeof(float) * 2));
-	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
@@ -105,114 +102,57 @@ SpriteComponent::~SpriteComponent()
 
 void SpriteComponent::Tick(float DeltaSeconds)
 {
-	
 	if (IsPlayingAnimation)
 	{
-
-	#pragma region Animations
-		ElapsedTime += DeltaSeconds;
-
-		if (_IsAnimationReverse)
+		if (!PlaySingleFrame)
 		{
-			//play anim reverse
-			if (ElapsedTime >= AnimationTimeInMS / (TextureAmountY * TextureAmountX))
+			ElapsedTime += DeltaSeconds;
+			if (ElapsedTime > AnimationTimeInMS)
 			{
+				if (!LoopAnimation)
+					IsPlayingAnimation = false;
 				ElapsedTime = 0;
-				Quad.x -= fw;
-				if (Quad.x < 0)
-				{
-					Quad.x = tw - fw;
-
-					Quad.y -= fh;
-					if (Quad.y > 0)
-					{
-						Quad.y = th - fh;
-						if (!LoopAnimation) StopAnimation();
-					}
-
-				}
+			}
+			if (ElapsedTime / (TextureAmountX * TextureAmountY) > AnimationTimeInMS / (TextureAmountX * TextureAmountY))
+			{
+				if(++CurrentFrame > (TextureAmountX * TextureAmountY))
+					CurrentFrame = 0;
 			}
 		}
-		else
-		{
-			//Animation->Forward
-			if (ElapsedTime >= AnimationTimeInMS / (TextureAmountY * TextureAmountX))
-			{
-				ElapsedTime = 0;
-				Quad.x += fw;
-				if (Quad.x >= tw)
-				{
-					Quad.x = 0;
-					Quad.y += fh;
-					if (Quad.y >= th)
-					{
-						Quad.y = 0;
-						if (!LoopAnimation) StopAnimation();
-					}
-				}
-			}
-		}
+
+		UpdateVerticesLocations();
+
+		#pragma region Render
+		// Use the shader program
+		glUseProgram(ShaderProgram);
+
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		// Bind the texture
+		glBindTexture(GL_TEXTURE_2D, MyTextureID);
+
+		// Set uniform variables
+		GLint resolutionLocation = glGetUniformLocation(ShaderProgram, "resolution");
+		glUniform2f(resolutionLocation, (float)GameplayStatics::GetScreenWidth(), (float)GameplayStatics::GetScreenHeight());
+
+		// Set texture wrapping parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		// Set texture filtering parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		// Draw the sprite
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+		glBindVertexArray(0);
+		glBindTexture(GL_TEXTURE_2D, 0);
 #pragma endregion
 
-
-		//SDL_RenderCopy(GameplayStatics::GetGameEngine()->GetRenderer(), DisplaySprite, &Quad, &DisplayQuad);
 	}
-
-	if (PlaySingleFrame)
-	{
-		//TEXTURE POSITION -----------------------------------------------------------
-		if (Owner != nullptr)
-		{
-			DisplayQuad.x = (int)MyTransform->GetLocation().X + (int)Owner->GetTransform()->GetLocation().X;
-			DisplayQuad.y = (int)MyTransform->GetLocation().Y + (int)Owner->GetTransform()->GetLocation().Y;
-		}
-		else
-		{
-			DisplayQuad.x = (int)MyTransform->GetLocation().X;
-			DisplayQuad.y = (int)MyTransform->GetLocation().Y;
-		}
-
-
-
-		//TEXTURE SCALE --------------------------------------------------------------
-		// Quad Scale X = (Texture width / Texture Amount horizontally) * X Scale
-		if (Owner != nullptr)
-		{
-			DisplayQuad.w = (int)((float)(tw / max(TextureAmountX, 1)) * (MyTransform->GetScale().X * Owner->GetTransform()->GetScale().X));
-			// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
-			DisplayQuad.h = (int)((float)(th / max(TextureAmountY, 1)) * (MyTransform->GetScale().Y * Owner->GetTransform()->GetScale().Y));
-		}
-		else
-		{
-			DisplayQuad.w = (int)((float)(tw / max(TextureAmountX, 1)) * MyTransform->GetScale().X);
-			// Quad Scale y = (Texture height / Texture Amount vertically) * Y Scale
-			DisplayQuad.h = (int)((float)(th / max(TextureAmountY, 1)) * MyTransform->GetScale().Y);
-		}
-
-
-		//SDL_RenderCopy(GameplayStatics::GetGameEngine()->GetRenderer(), DisplaySprite, &Quad, &DisplayQuad);
-	}
-
-	UpdateVerticesLocations();
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	// Use the shader program
-	glUseProgram(ShaderProgram);
-
-	// Bind the texture
-	glBindTexture(GL_TEXTURE_2D, MyTextureID);
-
-	// Set uniform variables
-	GLint resolutionLocation = glGetUniformLocation(ShaderProgram, "resolution");
-	glUniform2f(resolutionLocation, (float)GameplayStatics::GetScreenWidth(), (float)GameplayStatics::GetScreenHeight());
-
-	// Draw the sprite
-	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-	glBindVertexArray(0);
 }
 
 void SpriteComponent::SetLocation(Vector NewLocation, Actor* Owner)
@@ -261,20 +201,9 @@ void SpriteComponent::SetScale(Vector NewScale, Actor* Owner)
 
 void SpriteComponent::PlayAnimation(bool Loop)
 {
-	
-	_IsAnimationReverse = false;
 	IsPlayingAnimation = true;
 	LoopAnimation = Loop;
 	
-}
-
-void SpriteComponent::PlayAnimationReverse(bool Loop)
-{
-	Quad.x = tw - fw;
-	Quad.y = th - fh;
-	LoopAnimation = Loop;
-	IsPlayingAnimation = true;
-	_IsAnimationReverse = true;
 }
 
 void SpriteComponent::StopAnimation()
@@ -284,14 +213,13 @@ void SpriteComponent::StopAnimation()
 
 void SpriteComponent::ShowFrame(int FrameIndex)
 {
-	FrameToRender = FrameIndex;
-	Quad.x = FrameIndex * GetSpriteWidth();
-	Quad.y = 0; // only should be used with 1D spritesheets
-	PlaySingleFrame = true;
-}
+	CurrentFrame = FrameIndex;
+ 	PlaySingleFrame = true;
+ }
 
 GLuint SpriteComponent::LoadTexture(const char* filePath)
 {
+	stbi_set_flip_vertically_on_load(false);
 	int width, height, nrChannels;
 	unsigned char* data = stbi_load(filePath, &width, &height, &nrChannels, 0);
 	if (!data) {
@@ -336,38 +264,42 @@ void SpriteComponent::UpdateVerticesLocations()
 		CurrentLocation = Owner->GetTransform()->GetLocation() + Gettransform()->GetLocation();
 		CurrentScale = Owner->GetTransform()->GetScale() * Gettransform()->GetScale();
 	}
-		
 	else
 	{
 		CurrentLocation = Gettransform()->GetLocation();
 		CurrentScale = Gettransform()->GetScale();
 	}
+
+	float SpriteStepX = 1.f / (float)TextureAmountX;
+	float SpriteStepY = 1.f / (float)TextureAmountY;
+
+	float CurrentFrameX = (CurrentFrame % TextureAmountX) == 0 ? (float)TextureAmountX : (float)(CurrentFrame % TextureAmountX);
+	float CurrentFrameY = (CurrentFrame % TextureAmountY) == 0 ? (float)TextureAmountY : (float)(CurrentFrame % TextureAmountY);
 	
-	float SpriteStepX = 1.f / TextureAmountX;
-	float SpriteStepY = 1.f / TextureAmountY;
 
 	//Top Left
 	vertices[0] = (CurrentLocation.X - (fw / 2) * CurrentScale.X);/* X */
 	vertices[1] = (CurrentLocation.Y + (fh / 2) * CurrentScale.Y);/* Y */
-	vertices[2] = 0;
-	vertices[3] = 1;
+	vertices[2] = (CurrentFrameX  - 1) * SpriteStepX;
+	vertices[3] = CurrentFrameY * SpriteStepY;
 
 	//Bottom Left
 	vertices[4] = (CurrentLocation.X - (fw / 2) * CurrentScale.X);/* X */
 	vertices[5] = (CurrentLocation.Y - (fh / 2) * CurrentScale.Y);/* Y */
-	vertices[6] = 0;
-	vertices[7] = 0;
+	vertices[6] = (CurrentFrameX - 1) * SpriteStepX;
+	vertices[7] = (CurrentFrameY - 1) * SpriteStepY;
 
 
 	//Bottom Right
 	vertices[8] = (CurrentLocation.X + (fw / 2) * CurrentScale.X);/* X */
 	vertices[9] = (CurrentLocation.Y - (fh / 2) * CurrentScale.Y);/* Y */
-	vertices[10] = 1;
-	vertices[11] = 0;
+	vertices[10] = CurrentFrameX * SpriteStepX;
+	vertices[11] = (CurrentFrameY - 1) * SpriteStepY;
 
 	//Top Right
 	vertices[12] = (CurrentLocation.X + (fw / 2) * CurrentScale.X);/* X */
 	vertices[13] = (CurrentLocation.Y + (fh / 2) * CurrentScale.Y);/* Y */
-	vertices[14] = 1;
-	vertices[15] = 1;
+	vertices[14] = CurrentFrameX * SpriteStepX;
+	vertices[15] = CurrentFrameY * SpriteStepY;
+
 }

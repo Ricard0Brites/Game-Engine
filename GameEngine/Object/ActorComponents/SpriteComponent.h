@@ -31,8 +31,6 @@ public:
 
 	//
 	virtual void PlayAnimation(bool Loop);
-	//plays animation in reverse (X reverse, Y Keeps the order)
-	virtual void PlayAnimationReverse(bool Loop);
 	//stops animation from playing
 	virtual void StopAnimation();
 	//Plays Single Frame
@@ -46,7 +44,6 @@ protected:
 	//
 	Transform* MyTransform = nullptr;
 	SDL_Texture* DisplaySprite;
-	SDL_Rect Quad;
 
 	//Animation
 	unsigned int frameCounter = 0;
@@ -58,15 +55,12 @@ protected:
 
 	//Single Frame
 	bool PlaySingleFrame;
-	int FrameToRender = 0;
 	
 	//Animation Timer
 	float AnimationTimeInMS, ElapsedTime;
 	Actor* Owner;
-	SDL_Rect DisplayQuad;
 
 private:
-	bool _IsAnimationReverse = false;
 	int CurrentFrame = 0;
 
 	GLuint MyTextureID = 0, ShaderProgram = 0, VBO = 0, VAO = 0;
@@ -77,8 +71,8 @@ private:
 
 	const char* vertexShaderSource = R"(
     #version 330 core
-    layout (location = 0) in vec2 position;
-    layout (location = 1) in vec2 texCoords;
+    in vec2 position;
+    in vec2 InTextureCoordinates;
     out vec2 TexCoords;
 
     uniform vec2 resolution; // Screen resolution
@@ -86,7 +80,7 @@ private:
     void main()
     {
         gl_Position = vec4(position.x / resolution.x * 2.0 - 1.0, (position.y / resolution.y * 2.0 - 1.0) * -1, 0.0, 1.0);
-        TexCoords = texCoords;
+        TexCoords = InTextureCoordinates;
     }
 )";
 
