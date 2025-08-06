@@ -14,6 +14,9 @@ Window::Window(std::string title, int windowWidth, int windowHeight)
 	_Renderer = SDL_CreateRenderer(_Window, -1, SDL_RENDERER_ACCELERATED);
 	if(!_Renderer) throw InitError();
 	SDL_GLContext context = SDL_GL_CreateContext(_Window);
+
+	SDL_GL_SetSwapInterval(0); // try to disable V-Sync
+
 	glewInit();
 }
 
